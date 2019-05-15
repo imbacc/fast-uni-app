@@ -1,0 +1,152 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "index",
+				"app-plus": {
+					"titleNView":false
+					// "titleNView": {
+					// 	"type": "default",
+					// 	"backgroundColor": "#F5612A",
+					// 	"searchInput": {
+					// 		"backgroundColor": "rgba(255,255,255,1)",
+					// 		"borderRadius": "16px",
+					// 		"placeholder": "     共睹，一个有保障的世界",
+					// 		"disabled": true,
+					// 		"placeholderColor": "rgba(204, 204, 204, 0.5)",
+					// 		"align":"left"
+					// 	},
+					// 	"buttons": [{
+					// 			"fontSrc": "/static/font/yticon.ttf",
+					// 			"text": "\ue60d",
+					// 			"fontSize": "26",
+					// 			"color": "#303133",
+					// 			"float": "left",
+					// 			"background": "rgba(255,255,255,1)"
+					// 		},
+					// 		{
+					// 			"fontSrc": "/static/font/yticon.ttf",
+					// 			"text": "\ue744",
+					// 			"fontSize": "27",
+					// 			"color": "#303133",
+					// 			"background": "rgba(255,255,255,1)",
+					// 			"redDot": false
+					// 		}
+					// 	]
+					// }
+				}
+			}
+		},
+		{
+			"path": "pages/index/order/order",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"app-plus":{
+					"titleNView":{
+						"backgroundColor": "white",
+						"titleColor":"rgba(51, 51, 51, 0.8)"
+					}
+				},
+				"h5":{
+					"titleNView":{
+						"backgroundColor": "white",
+						"titleColor":"rgba(51, 51, 51, 0.8)"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/index/workBar/workBar",
+			"style": {
+				"navigationBarTitleText": "工作台"
+			}
+		},
+		{
+			"path": "pages/index/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"app-plus": {
+				    "titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/login/register",
+			 "style" : {
+				"navigationBarTitleText" : "register",
+				"app-plus":{
+					"bounce":"none"
+				}
+			}
+		},
+		{
+			"path": "pages/login/resetpasswd",
+			 "style" : {
+				"navigationBarTitleText" : "resetpasswd",
+				"app-plus":{
+					"bounce":"none"
+				}
+			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "test"
+			}
+		}
+		
+		
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#f5612A",
+		"backgroundColor": "white"
+	},
+	"tabBar": {
+		"borderStyle": "white",
+		"backgroundColor": "white",
+		"color": "#CCCCCC",
+		"selectedColor": "#F5612A",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				// "iconPath": "static/imgs/ico_default/home.png",
+				// "selectedIconPath": "static/imgs/ico_active/home.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/index/order/order",
+				// "iconPath": "static/imgs/ico_default/game.png",
+				// "selectedIconPath": "static/imgs/ico_active/game.png",
+				"text": "订单"
+			},
+			{
+				"pagePath": "pages/index/workBar/workBar",
+				// "iconPath": "static/imgs/ico_default/race.png",
+				// "selectedIconPath": "static/imgs/ico_active/race.png",
+				"text": "工作台"
+			},
+			{
+				"pagePath": "pages/test/test",
+				// "iconPath": "static/imgs/ico_default/smile.png",
+				// "selectedIconPath": "static/imgs/ico_active/smile.png",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/index/my/my",
+				// "iconPath": "static/imgs/ico_default/my.png",
+				// "selectedIconPath": "static/imgs/ico_active/my.png",
+				"text": "我的"
+			}
+		]
+	}
+
+}

@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/order/order",
+    "pages/index/workBar/workBar",
+    "pages/index/my/my",
+    "pages/login/login",
+    "pages/login/register",
+    "pages/login/resetpasswd",
+    "pages/test/test"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#f5612A",
+    "backgroundColor": "white"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "backgroundColor": "white",
+    "color": "#CCCCCC",
+    "selectedColor": "#F5612A",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/order/order",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/index/workBar/workBar",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/index/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap81.json"
+}

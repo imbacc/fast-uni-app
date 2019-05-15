@@ -1,0 +1,1 @@
+<view class="mix-refresh-content data-v-92bb5e8c" style="{{'transform:'+('translateY('+pageDeviation+'px)')+';'+('transition:'+(pageTransition+'s')+';')+('height:'+('calc(100vh - '+pageTop+'px)')+';')+('max-height:'+('calc(100vh - '+pageTop+'px)')+';')}}" bind:__l="__l"><slot></slot></view>

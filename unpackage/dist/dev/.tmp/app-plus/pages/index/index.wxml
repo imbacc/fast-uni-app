@@ -1,0 +1,1 @@
+<view class="content data-v-f1c1350a" bind:__l="__l">{{''+title+''}}<button data-event-opts="{{[['tap',[['goto_page',['$event']]]]]}}" bindtap="__e" class="data-v-f1c1350a">点击跳转到login</button></view>
