@@ -16,6 +16,4 @@ const app = new Vue({
     ...App
 })
 
-Vue.prototype.api_request = api_request
-
 app.$mount()
