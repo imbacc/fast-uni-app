@@ -1,67 +1,49 @@
-import api from './config/api.js'
 import http from './http_request.js'
 import is_cache from './setting_cache_time.js'
 import qs from 'qs'
 
-//封装的get请求
-const http_get = async (api,json) => {
-	if(json == null || json == "" || json == undefined) json = {}
+//封装的get post请求
+/**
+ * @param {api}		请求API地址
+ * @param {json}	传出json数据参数 自动填充 地址追加参数 和 body表单数据
+ * @param {type}	请求类型type为2是post请求，也可传输字符串post or POST
+ * @param {cache_time}  缓存时间 默认为0 不缓存 分钟单位
+ */
+const http_request = async (api,json = {},type = 2,cache_time = 0) => {
 	
-	return await http.get(api,json)
-	.then(function (res) {
-		if(res){
-			if(res.hasOwnProperty("data")){
-				if(res.data.hasOwnProperty("error")) return false
-			}
-			return res.result
-		}else{
-			return false
-		}
-	})
-	.catch(function (err) {
-		console.log(err)
-		return false
-	})
-}
-
-//封装的post请求
-const http_post = async (api,json) => {
-	if(json == null || json == "" || json == undefined) json = {}
+	api = `${api}?${qs.stringify(json)}`
 	
-	return await http.post(api,json)
-	.then(function (res) {
+	if(cache_time > 0){
+		let cache = is_cache.get_cache('cache_'+api)
+		if(cache) return cache
+	}
+	
+	let is_http = null
+	
+	type == 2 || type == 'post' || type == 'POST' ? is_http = http.post(api,json) : is_http = http.get(api,json)
+	
+	return await is_http.then((res) => {
 		console.log("http_post")
 		console.log(res)
 		if(res){
 			if(res.hasOwnProperty("data")){
-				if(res.data.hasOwnProperty("error")) return false
+				if(res.data.hasOwnProperty("error")){
+					if(res.data.error.hasOwnProperty("message")) return res
+					return false
+				}
 			}
-			console.log("res.result...")
+			if(cache_time > 0) is_cache.set_cache('cache_'+api,res.result,cache_time)
 			return res.result
 		}else{
 			return false
 		}
 	})
-	.catch(function (err) {
+	.catch((err) => {
 		console.log(err)
 		return false
 	})
 }
 
-//获取版本信息
-const app_version = async () =>{
-	
-}
-
-//登陆
-const app_login = async (info) => {
-	
-	return await http_post(`${api.app_login}?${qs.stringify(info)}`)
-}
-
 
 // api服务程序
-module.exports= {
-	app_version,
-	app_login,
-}
+export default http_request
