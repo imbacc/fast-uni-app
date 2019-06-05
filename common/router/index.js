@@ -1,5 +1,5 @@
 //路由路径封装
-module.exports = {
+export default {
 	
 	test:'/pages/test/test',
 	index:'/pages/index/index',

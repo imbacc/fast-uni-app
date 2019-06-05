@@ -3,11 +3,13 @@ import App from './App'
 
 import vuex from './common/vuex'
 
-import api_request from './common/api_request.js'				//导入api方法
+import lazyImage from '@/components/lazy-image/lazy-image.vue';
 
 Vue.config.productionTip = false
 
 App.mpType = 'app'
+
+Vue.component('lazy-image',lazyImage)
 
 const app = new Vue({
 	vuex,
