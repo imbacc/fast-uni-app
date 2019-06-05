@@ -10,7 +10,7 @@
 				</view>
 				<view class="min_search">
 					<view class="min_search_ico"></view>
-					<view class="min_search_lab">共睹，一个有保障的世界</view>
+					<view class="min_search_lab">111111111111</view>
 				</view>
 				<view class="min_right_ico">
 					<image></image>
