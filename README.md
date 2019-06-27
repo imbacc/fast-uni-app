@@ -18,21 +18,8 @@ common/setting_cache_time.js 时间缓存封装<br/>
 <br/>
 <h1>components 组件            插件市场地址</h1>
 <br/>
-cmd-icon                  https://ext.dcloud.net.cn/plugin?id=175<br/>
-cmd-nav-bar               https://ext.dcloud.net.cn/plugin?id=199<br/>
-cmd-transition            https://ext.dcloud.net.cn/plugin?id=211<br/>
 lazy-image	              https://ext.dcloud.net.cn/plugin?id=153<br/>
-mehaotian-search-revision	https://ext.dcloud.net.cn/plugin?id=91<br/>
-mht-loader<br/>
-mix-advert<br/>
 mix-load-more             https://ext.dcloud.net.cn/plugin?id=29<br/>
-mix-loading<br/>
-mix-pulldown-refresh      https://ext.dcloud.net.cn/plugin?id=315<br/>
-tab-nvue<br/>
-uni-icon<br/>
-uni-nav-bar<br/>
-uni-status-bar<br/>
-wuc-tab<br/>
 <br/>
 <br/>
 <br/>
