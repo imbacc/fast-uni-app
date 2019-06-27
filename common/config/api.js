@@ -5,13 +5,10 @@ export default {
 	api_http:'https://xxx.com/',
 	
 	//用户模块api
-	app_login: api + 'app_login/f/login', 					//用户登陆
+	app_login: api + 'app_login/login', 					//用户登陆
 	
 	
 	
-	
-	
-	get_args: (re_json) => get_args({},re_json),
 	get_args_page: (re_json,cur) => get_args({},re_json,true,cur),
 }
 	

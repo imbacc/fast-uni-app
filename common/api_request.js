@@ -23,8 +23,6 @@ const http_request = async (api,json = {},type = 2,cache_time = 0) => {
 	type == 2 || type == 'post' || type == 'POST' ? is_http = http.post(api,json) : is_http = http.get(api,json)
 	
 	return await is_http.then((res) => {
-		console.log("http_post")
-		console.log(res)
 		if(res){
 			if(res.hasOwnProperty("data")){
 				if(res.data.hasOwnProperty("error")){
@@ -44,6 +42,4 @@ const http_request = async (api,json = {},type = 2,cache_time = 0) => {
 	})
 }
 
-
-// api服务程序
 export default http_request

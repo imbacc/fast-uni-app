@@ -3,19 +3,20 @@
  * @param {Object} data 存放数据
  * @param {Object} time 分钟计算
  */
-const set_cache = function (key,data,time) {
-	
-	console.log("set_cache key="+key)
-	console.log("set_cache data="+JSON.stringify(data))
+const set_cache = function (key,data,time = 5) {
 	
 	if(data == {}) return false
+	
+	data instanceof Object ? data = JSON.stringify(data) : false
+	
+	// console.log("set_cache key="+key)
+	// console.log("set_cache data="+JSON.stringify(data))
 
 	try{
-		if(time == null || time == "") time = 5 //默认5分钟
 		let now = new Date().getTime()
 		now += time * 60 * 1000
 		
-		uni.setStorageSync(key,JSON.stringify(data))
+		uni.setStorageSync(key,data)
 		uni.setStorageSync(key+'_time',now)
 	}catch(e){
 		return false
@@ -56,7 +57,7 @@ const get_cache = function (key) {
 }
 
 
-module.exports= {
+export default {
 	set_cache,
 	get_cache
 }

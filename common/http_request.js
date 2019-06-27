@@ -33,15 +33,15 @@ http.interceptor.response = (res) => {
 		return false
 	}
 	
-	console.log("res...")
-	console.log(res)
+	// console.log("res...")
+	// console.log(res)
 	
 	if(res.data.hasOwnProperty("result")){
 		 return res.data
 	}else{
-		console.log('---------------------------------------------')
-		console.log(res)
-		console.log('---------------------------------------------')
+		// console.log('---------------------------------------------')
+		// console.log(res)
+		// console.log('---------------------------------------------')
 		if(res.data.error == "invalid_token"){
 			call_fun_vuex_error_msg('服务器',res)
 		}else{
@@ -50,7 +50,8 @@ http.interceptor.response = (res) => {
 			} 
 			if(res.statusCode != 200) call_fun_vuex_error_msg()
 		}
-		console.log("res.data.error="+res.data.error)
+		console.log("res.data.error=")
+		console.log(res.data.error)
 		return false
 	}
 	

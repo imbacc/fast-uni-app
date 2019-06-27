@@ -1,7 +1,7 @@
 <template>
 	<view class="lazy-image">
 		<image class="real-image" @load="onLoaded" :src="realSrc" :mode="img_mode"></image>
-		<view :class="loaded?'loaded':''">
+		<view @tap="click" :class="loaded?'loaded':''">
 			<image :src="placeholdSrc"></image>
 		</view>
 	</view>
@@ -43,6 +43,9 @@
 						clearTimeout(time)
 					},_this.time_num)
 				}
+			},
+			click(){
+				if(this.loaded) this.$emit('imgClick')
 			}
 		}
 	}
