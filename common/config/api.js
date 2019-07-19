@@ -1,11 +1,12 @@
 //api接口地址
-var api = 'https://xxx.com/api/',api_coco = 'https://xxx.com/api/coco/'
+var api = 'https://www.easy-mock.com/mock/5d317415c1c54515fd62020f/',api_coco = 'https://xxx.com/api/coco/'
 
 export default {
 	api_http:'https://xxx.com/',
 	
 	//用户模块api
 	app_login: api + 'app_login/login', 					//用户登陆
+	app_index: api + 'fast/index', 					//主页信息
 	
 	
 	

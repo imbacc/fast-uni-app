@@ -18,7 +18,7 @@ http.interceptor.request = (config) => {
 	
 	//添加通用参数 Token
 	config.header = {
-		Authorization: `Bearer ${token}`
+		Authorization: `${token}`
 	}
 	
 	// config.requestId = new Date().getTime()
@@ -33,27 +33,25 @@ http.interceptor.response = (res) => {
 		return false
 	}
 	
-	// console.log("res...")
-	// console.log(res)
+	console.log("res...")
+	console.log(res)
 	
-	if(res.data.hasOwnProperty("result")){
-		 return res.data
-	}else{
-		// console.log('---------------------------------------------')
-		// console.log(res)
-		// console.log('---------------------------------------------')
-		if(res.data.error == "invalid_token"){
-			call_fun_vuex_error_msg('服务器',res)
-		}else{
-			if(res.data.error.hasOwnProperty("message")){
-				return res
-			} 
-			if(res.statusCode != 200) call_fun_vuex_error_msg()
-		}
-		console.log("res.data.error=")
-		console.log(res.data.error)
-		return false
-	}
+	//响应拦截  根据后台格式设定拦截
+	// if(res.data.hasOwnProperty("result")){
+	// 	 return res.data
+	// }else{
+	// 	if(res.data.error == "invalid_token"){
+	// 		call_fun_vuex_error_msg('服务器',res)
+	// 	}else{
+	// 		if(res.data.error.hasOwnProperty("message")){
+	// 			return res
+	// 		} 
+	// 		if(res.statusCode != 200) call_fun_vuex_error_msg()
+	// 	}
+	// 	console.log("res.data.error=")
+	// 	console.log(res.data.error)
+	// 	return false
+	// }
 	
     return res
 }

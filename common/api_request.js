@@ -14,7 +14,7 @@ const http_request = async (api,json = {},type = 2,cache_time = 0) => {
 	api = `${api}?${qs.stringify(json)}`
 	
 	if(cache_time > 0){
-		let cache = is_cache.get_cache('cache_'+api)
+		const cache = is_cache.get_cache('cache_'+api)
 		if(cache) return cache
 	}
 	
@@ -23,15 +23,18 @@ const http_request = async (api,json = {},type = 2,cache_time = 0) => {
 	type == 2 || type == 'post' || type == 'POST' ? is_http = http.post(api,json) : is_http = http.get(api,json)
 	
 	return await is_http.then((res) => {
+		console.log(res)
 		if(res){
-			if(res.hasOwnProperty("data")){
-				if(res.data.hasOwnProperty("error")){
-					if(res.data.error.hasOwnProperty("message")) return res
-					return false
-				}
-			}
-			if(cache_time > 0) is_cache.set_cache('cache_'+api,res.result,cache_time)
-			return res.result
+			// 返回有效数据 根据格式返回
+			// if(res.hasOwnProperty("data")){
+			// 	if(res.data.hasOwnProperty("error")){
+			// 		if(res.data.error.hasOwnProperty("message")) return res
+			// 		return false
+			// 	}
+			// }
+			
+			if(cache_time > 0) is_cache.set_cache('cache_'+api,res.data,cache_time)
+			return res.data
 		}else{
 			return false
 		}

@@ -4,17 +4,18 @@
 			<mht-loader loadingType="circle" :iconMarginRight="-65"></mht-loader>
 		</view>
 		<view v-else class="index_body">
+			默认懒加载
 			<lazy-image @imgClick="look_img(0)" :placeholdSrc="placeholdSrc" :realSrc="realSrc[0]"></lazy-image>
+			延迟懒加载
 			<lazy-image @imgClick="look_img(1)" :placeholdSrc="placeholdSrc" :realSrc="realSrc[1]" :time_num="2000" img_mode="aspectFill"></lazy-image>
-			img_mode 参考 http://uniapp.dcloud.io/component/image 
-			
-			
+			<!-- img_mode 参考 http://uniapp.dcloud.io/component/image -->
 			
 			<view @tap="get_size" id="size" class="test_size">
+				{{lab}}点我时间
 				{{time_format(time)}}
 			</view>
 			
-			<view @tap="check_login">手动检测登陆</view>
+			<view @tap="check_login">点我 手动检测登陆</view>
 			
 			是否检测登陆:{{is_vuex.state.is_check_login}}
 		</view>
@@ -30,10 +31,12 @@
 		},
 		data() {
 			return {
-				placeholdSrc:'http://p6.qhimg.com/dmfd/160_90_/t015ce7193a5ed634ef.jpg', //加载图片
-				realSrc:['http://p8.qhimg.com/dmfd/160_90_/t01efba9fd4f9b3fb38.jpg','http://p9.qhimg.com/dmfd/160_90_/t0139ca449fda80e3df.jpg'],
+				placeholdSrc:'/static/img/loading.png', //加载图片
+				realSrc:[],
 				show_loading:true,
-				time:''
+				time:'',
+				img_mode_doc:false,
+				lab:''
 			}
 		},
 		onLoad() {
@@ -48,16 +51,21 @@
 		},
 		methods: {
 			is_init(){
-				let _this = this
+				// this.is_vuex.dispatch('api_action',['app_index',{}]) app_index 为 /config/api.js 里命名名称
 				
-				//模拟加载
-				setTimeout(()=>{
-					_this.show_loading = false
-				},1000)
+				//false 不分页, 30缓存时间/分钟 请求方式get 默认是post
+				this.is_vuex.dispatch('api_action',['app_index',{},false,30,'get']).then((res)=>{
+					console.log(res)
+					this.realSrc = res.data.img
+					this.lab = res.data.lab
+					this.show_loading = false
+				})
 				
-				setTimeout(()=>{
-					_this.check_login()
-				},4000)
+				// 4秒后检测登陆
+				// let _this = this
+				// setTimeout(()=>{
+				// 	_this.check_login()
+				// },4000)
 			},
 			check_login(){
 				let _this = this

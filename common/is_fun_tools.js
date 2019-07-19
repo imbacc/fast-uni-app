@@ -1,11 +1,63 @@
 import Vue from 'vue'
 import vuex from './vuex'
+import is_router from './router'
+
+var startTime = 0,timer = null,_this = this
+
+const goto_fun = (url,type,acg,fun) => {
+	vuex.dispatch('goto_page',{url:url,type:type,acg:acg})
+	typeof fun === "function" ? fun() : false
+}
 
 const fun = {
 	//跳转封装函数
 	goto_page:(url,type = 1,acg = 'pop-in',fun) => {
-		vuex.dispatch('goto_page',{url:url,type:type,acg:acg})
-		typeof fun === "function" ? fun() : false
+		goto_fun(url,type,acg,fun)
+	},
+	
+	//路由名字跳转
+	goto_router:(name,query = '',type = 1,acg = 'pop-in',fun) => {
+		let router = is_router[name],url = query != '' ? router + query : router
+		goto_fun(url,type,acg,fun)
+	},
+	
+	//分页封装 - 下一页
+	page_next:(list = [],obj = {},fun1,fun2) => {
+		list.length < obj.total ? fun1() : (list.length === obj.total ? fun2() : console.log('last_next'))
+	},
+	
+	//分页封装 - 加载和初始化
+	page_append:(list,res,append) => {
+		if(append){
+			list = list.concat(res.list)
+		}else{
+			list = []
+			if(res.hasOwnProperty('list')) list = res.list
+		}
+		return list
+	},
+	
+	//切割字符串
+	str_splic:(name,start,end) => {
+		return name.length > end ? name.substring(start,end) + '...' : name
+	},
+	
+	//创建一个对象
+	create_obj:(map) => {
+		let obj = Object.create(null)
+		for (let [key, value] of map) {
+			obj[key] = value
+		}
+		return obj
+	},
+	
+	//H5下载APP
+	goto_down_app:()=> {
+		fun.to_msg('请前往下载APP')
+		let url = vuex.state.app_sysinfo.platform !== 'ios' ? url = 'http://img.gongdu.info/app/gongdu_v1.0.0.apk' : url = ''
+		// #ifdef H5
+			window.location = url
+		// #endif
 	},
 	
 	////显示相应消息
@@ -124,9 +176,9 @@ const fun = {
 		let _this = this,args = arguments
 		if(type == 1){
 			let curTime = (new Date()).getTime()
-			startTime = startTime == 0 ? curTime : startTime,
-			console.log('curTime='+curTime)
-			console.log('startTime='+startTime)
+			startTime = startTime == 0 ? curTime : startTime
+			// console.log('curTime='+curTime)
+			// console.log('startTime='+startTime)
 			
 			if((curTime - startTime) > wait){ // 固定上一次操作离这一次操作间隔>1000ms，则发送一次。
 				startTime = curTime
@@ -138,7 +190,7 @@ const fun = {
 				 clearTimeout(timer)
 				 timer = null
 				 console.log('重置防抖...')
-				 if(msg) uni.showToast({ title: msg,icon: 'none'})
+				 if(msg) uni.showToast({ title: msg,icon: 'none',mask: true})
 				 return
 			}
 			timer = setTimeout(() => {
