@@ -2,10 +2,15 @@ import Vue from 'vue'
 import vuex from './vuex'
 import is_router from './router'
 
-var startTime = 0,timer = null,_this = this
+var startTime = 0,timer = null
 
 const goto_fun = (url,type,acg,fun) => {
-	vuex.dispatch('goto_page',{url:url,type:type,acg:acg})
+	const obj = {url: url,animationType: acg}
+	if (type === 1) uni.navigateTo(obj)
+	if (type === 2) uni.redirectTo(obj)
+	if (type === 3) uni.reLaunch(obj)
+	if (type === 4) uni.switchTab(obj)
+	if (type === 5) uni.navigateBack(url)
 	typeof fun === "function" ? fun() : false
 }
 
@@ -176,15 +181,18 @@ const fun = {
 		let _this = this,args = arguments
 		if(type == 1){
 			let curTime = (new Date()).getTime()
-			startTime = startTime == 0 ? curTime : startTime
+			startTime = startTime === 0 ? curTime : startTime
+			
 			// console.log('curTime='+curTime)
 			// console.log('startTime='+startTime)
 			
-			if((curTime - startTime) > wait){ // 固定上一次操作离这一次操作间隔>1000ms，则发送一次。
+			const run = () => {
 				startTime = curTime
 				console.log('节流处理...')
 				fun(_this,args)
 			}
+			
+			(curTime - startTime) > wait ? run() : ((curTime - startTime) === 0 ? run() : false)
 		}else{
 			if(timer){
 				 clearTimeout(timer)

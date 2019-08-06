@@ -8,9 +8,9 @@ import cache from '../setting_cache_time.js' 	//导入缓存时间控制
 
 Vue.use(Vuex)
 
-const TOKEN = cache.get_cache("token") || "" 			//获取TOKEN缓存
-const OPENID = cache.get_cache("openId") || "" 			//获取OPENID缓存
-const USER_INFO = cache.get_cache("userInfo") || {} 	//获取USERINFO缓存
+const TOKEN = uni.getStorageSync("token") || false	//获取TOKEN缓存	用uni.getStorageSync 或者用 封装的时间控制
+const OPENID = cache.get_cache("openId") || false 		//获取OPENID缓存
+const USER_INFO = cache.get_cache("userInfo") || false 	//获取USERINFO缓存
 
 //全局状态
 const state = {
@@ -48,7 +48,7 @@ const mutations = {
 	},
 	set_logout(state) {
 		state.token = ""
-		state.userInfo = {}
+		state.userInfo = null
 		uni.clearStorage()
 	},
 }
@@ -58,7 +58,7 @@ const getters = {
 	// 用户是否登录
 	hasLogin: state => {
 		if (state.nojmp_login) return true
-		if (state.token == 0 || state.token == '0' || state.token == undefined) return false
+		if (state.token == 0 || state.token == '0' || state.token == false || state.token == undefined) return false
 		if (state.token) {
 			return true
 		} else {
@@ -69,18 +69,6 @@ const getters = {
 
 //异步方法
 const actions = {
-	//路由跳转
-	goto_page({commit}, info) {
-		if (!info.hasOwnProperty('type')) info = {url: info,type: 1}
-		if (!info.hasOwnProperty('acg')) info.acg = 'pop-in'
-		console.log("goto_page type="+info.type)
-		console.log("goto_page url="+info.url)
-		if (info.type === 1) uni.navigateTo({url: info.url,animationType: info.acg})
-		if (info.type === 2) uni.redirectTo({url: info.url,animationType: info.acg})
-		if (info.type === 3) uni.reLaunch({url: info.url,animationType: info.acg})
-		if (info.type === 4) uni.switchTab({url: info.url,animationType: info.acg})
-		if (info.type === 5) uni.navigateBack(info)
-	},
 	/**
 	 * 统一API info[0,1,2,3,4]
 	 * 0是api名称 例 => 'app_login'
@@ -94,11 +82,16 @@ const actions = {
 		return Promise.resolve(http_request(api_config[info[0]], api_json, info[4], info[3]))
 	},
 	//检查是否登陆状态
+	//检查是否登陆状态
 	check_login({commit}) {
 		if (!store.getters.hasLogin) {
-			if (!store.is_login_page) {
-				store.commit('set_is_login_page')
-				store.dispatch("goto_page", router.login, 2)
+			if (!store.state.is_login_page) {
+				uni.removeStorageSync('userinfo')
+				uni.removeStorageSync('openId')
+				uni.removeStorageSync('token')
+				commit('set_vuex',['userInfo',null])
+				commit('set_vuex',['is_login_page',true])
+				uni.navigateTo({url:router.login})
 			}
 		}
 		return Promise.resolve(store.getters.hasLogin)
@@ -108,7 +101,7 @@ const actions = {
 		uni.getSystemInfo({
 			success: (res) => {
 				let code = res.platform + '_app'
-				store.dispatch('api_action',['get_sys_config',{code:code}]).then((info) => {
+				store.dispatch('api_action',['get_sys_config_wait',{code:code},false,1]).then((info) => {
 					console.log(info)
 					if (info) {
 						console.log('now version=' + res.version)
@@ -116,10 +109,10 @@ const actions = {
 						if (info.sysName == res.version) {
 							console.log('已经是最新版本!')
 						} else {
-							store.dispatch("goto_page", router.app_update, 3)
+							uni.reLaunch({url:router.app_update})
 						}
-						store.commit('set_vuex', ['app_sysinfo', res])
-						store.commit('set_vuex', ['app_version', info])
+						commit('set_vuex', ['app_sysinfo', res])
+						commit('set_vuex', ['app_version', info])
 					}
 				})
 			}
@@ -173,7 +166,7 @@ const actions = {
 				if(json.type == 2 || json.type == "2"){
 					store.commit('set_vuex',['get_msg_id',json.sendUserId])	//push过来的id
 					store.commit('set_vuex',['get_msg_text',json.content])	//push过来的内容
-					if(store.state.is_msg_page === false) store.dispatch("goto_page", router.chat)
+					if(store.state.is_msg_page === false) uni.navigateTo({url:router.chat})
 				}else{
 					uni.navigateTo({url:json.appUrl})
 				}

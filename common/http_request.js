@@ -5,10 +5,15 @@ import http from './vmeitime-http/interface.js'
 import is_fun_tools from './is_fun_tools'
 
 const call_fun_vuex_error_msg = (msg) => {
-	is_fun_tools.check_login().then((res)=>{
-		!res ? is_fun_tools.to_msg('请登录授权...') : (msg ? is_fun_tools.to_msg(msg) : is_fun_tools.to_msg()) 
-	})
+	is_fun_tools.dou_fun(()=>{
+		is_fun_tools.check_login().then((res)=>{
+			console.log(res)
+			!res ? is_fun_tools.to_msg('请登录...') : (msg ? is_fun_tools.to_msg(msg) : is_fun_tools.to_msg()) 
+		})
+	},2,500,'')
 }
+
+const dev = process.env.NODE_ENV
 
 //设置请求拦截
 http.interceptor.request = (config) => {
