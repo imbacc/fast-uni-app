@@ -12,7 +12,7 @@
 			
 			<view @tap="get_size" id="size" class="test_size">
 				{{lab}}点我时间
-				{{time_format(time)}}
+				{{time_format_com(time)}}
 			</view>
 			
 			<view @tap="check_login">点我 手动检测登陆</view>
@@ -43,18 +43,19 @@
 			this.is_init()
 		},
 		computed: {
-			time_format(){
-				return (time) => {
-					return this.is_fun_tools.time_format(time)
-				}
+			time_format_com(){
+				return (time) => this.time_format(time)
 			}
 		},
 		methods: {
+			time_format(time){
+				return this.is_fun_tools.time_format(time)
+			}
 			is_init(){
 				// this.is_vuex.dispatch('api_action',['app_index',{}]) app_index 为 /config/api.js 里命名名称
 				
 				//false 不分页, 30缓存时间/分钟 请求方式get 默认是post
-				this.is_vuex.dispatch('api_action',['app_index',{},false,30,'get']).then((res)=>{
+				this.is_vuex.dispatch('api_action',['app_index',{},{},false,30,'get']).then((res)=>{
 					console.log(res)
 					this.realSrc = res.data.img
 					this.lab = res.data.lab
@@ -68,12 +69,11 @@
 				// },4000)
 			},
 			check_login(){
-				let _this = this
-				const msg = (msg) => { this.is_fun_tools.to_msg(msg)}
+				const msg = (msg) => {this.is_fun_tools.to_msg(msg)}
 				if(this.is_vuex.state.is_check_login){
-					_this.is_fun_tools.to_showModal('是否检测登陆','系统提示',()=>{
+					this.is_fun_tools.to_showModal('是否检测登陆','系统提示',()=>{
 						msg('检测到没有登陆')
-						_this.is_vuex.dispatch("check_login")
+						this.is_vuex.dispatch("check_login")
 					})
 				}else{
 					msg('已经关闭检测登陆')

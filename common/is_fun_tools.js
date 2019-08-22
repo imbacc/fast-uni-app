@@ -209,6 +209,37 @@ const fun = {
 			}, wait)
 		}
 	},
+	
+	share:(title = 'xx的分享',id) => {
+		// #ifdef MP-WEIXIN
+			fun.to_msg('请点击右上方的分享按钮邀请好友')
+			return false
+		// #endif
+		let provider = 'weixin', scene = 'WXSenceTimeline',list = ['WXSenceTimeline','WXSceneSession','WXSceneFavorite'];
+		let itemList = ['微信朋友圈', '微信聊天', '微信收藏'];
+		uni.showActionSheet({
+			itemList,
+			success: (res) => {
+				scene = list[res.tapIndex]
+				uni.share({
+					provider,
+					scene,
+					type: 0,
+					href: 'http://xxxxxxxxxxx/?id=' + id,
+					title: title,
+					summary: '加入我xxxxxxxxxx！',
+					imageUrl: '',
+					success: (res) => {
+						console.log('success:' + JSON.stringify(res))
+					},
+					fail: (err) => {
+						console.log('fail:' + JSON.stringify(err))
+					}
+				})
+			}
+		})
+	},
+	
 }
 
 export default fun

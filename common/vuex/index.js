@@ -72,14 +72,19 @@ const actions = {
 	/**
 	 * 统一API info[0,1,2,3,4]
 	 * 0是api名称 例 => 'app_login'
-	 * 1是api参数 => {username:1}
-	 * 2是api分页参数 格式[1,10]
-	 * 3是api缓存时间 默认0
-	 * 4是api请求方式 默认post 或 get
+	 * 1是api param参数 => {t:1} url?t=1 携带参数 json格式
+	 * 2是api body参数 => {t:1} json对象参数 json格式
+	 * 3是api分页参数 格式[1,10]
+	 * 4是api缓存时间 默认0
+	 * 5是api请求方式 默认post 或 get
 	 */
-	api_action({commit}, info = ['', {}, false, 0, 'post']) {
-		const api_json = info[2] === false || info[2] === undefined ? info[1] : api_config.get_args_page(info[1], info[2])
-		return Promise.resolve(http_request(api_config[info[0]], api_json, info[4], info[3]))
+	async api_action({}, info = ['',{},{}, false, 0, 'post']) {
+		const api_json = info[3] === false || info[3] === undefined ? info[1] : api_config.get_args_page(info[1], info[3])
+		const load = info[0].indexOf('wait') === -1
+		if(load) uni.showLoading()
+		const request = await api.http_request(api_config[info[0]],api_json,info[2], info[5], info[4])
+		if(load) uni.hideLoading()
+		return Promise.resolve(request)
 	},
 	//检查是否登陆状态
 	//检查是否登陆状态
@@ -100,18 +105,20 @@ const actions = {
 	get_app_version({commit}) {
 		uni.getSystemInfo({
 			success: (res) => {
+				commit('set_vuex', ['app_sysinfo', res])
+				const sys_version = plus.runtime.version
+				commit('set_app_sysversion',sys_version)
 				let code = res.platform + '_app'
-				store.dispatch('api_action',['get_sys_config_wait',{code:code},false,1]).then((info) => {
+				store.dispatch('api_action',['get_sys_config_wait',{code:code}]).then((info) => {
 					console.log(info)
 					if (info) {
-						console.log('now version=' + res.version)
+						console.log('now version=' + sys_version)
 						console.log('get version=' + info.sysName)
-						if (info.sysName == res.version) {
+						if (info.sysName == sys_version) {
 							console.log('已经是最新版本!')
 						} else {
 							uni.reLaunch({url:router.app_update})
 						}
-						commit('set_vuex', ['app_sysinfo', res])
 						commit('set_vuex', ['app_version', info])
 					}
 				})
