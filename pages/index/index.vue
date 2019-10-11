@@ -50,7 +50,7 @@
 		methods: {
 			time_format(time){
 				return this.is_fun_tools.time_format(time)
-			}
+			},
 			is_init(){
 				// this.is_vuex.dispatch('api_action',['app_index',{}]) app_index 为 /config/api.js 里命名名称
 				

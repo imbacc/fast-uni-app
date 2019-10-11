@@ -2,7 +2,9 @@ import Vue from 'vue'
 import vuex from './vuex'
 import is_router from './router'
 
-var startTime = 0,timer = null
+import moment from 'moment'
+
+var startTime = 0,timer = null,_this = this
 
 const goto_fun = (url,type,acg,fun) => {
 	const obj = {url: url,animationType: acg}
@@ -14,6 +16,13 @@ const goto_fun = (url,type,acg,fun) => {
 	typeof fun === "function" ? fun() : false
 }
 
+//检查用户登录状态
+const check_login = async () => {
+	let is_login = uni.getStorageSync('token') || false
+	if(is_login) return true
+	return await vuex.dispatch('check_login')
+}
+
 const fun = {
 	//跳转封装函数
 	goto_page:(url,type = 1,acg = 'pop-in',fun) => {
@@ -23,8 +32,13 @@ const fun = {
 	//路由名字跳转
 	goto_router:(name,query = '',type = 1,acg = 'pop-in',fun) => {
 		let router = is_router[name],url = query != '' ? router + query : router
-		goto_fun(url,type,acg,fun)
+		check_login().then((res)=>{
+			res ? goto_fun(url,type,acg,fun) : uni.reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
+		})
 	},
+	
+	//跳转到登录页面
+	gologin:()=> login_page(),
 	
 	//分页封装 - 下一页
 	page_next:(list = [],obj = {},fun1,fun2) => {
@@ -45,15 +59,6 @@ const fun = {
 	//切割字符串
 	str_splic:(name,start,end) => {
 		return name.length > end ? name.substring(start,end) + '...' : name
-	},
-	
-	//创建一个对象
-	create_obj:(map) => {
-		let obj = Object.create(null)
-		for (let [key, value] of map) {
-			obj[key] = value
-		}
-		return obj
 	},
 	
 	//H5下载APP
@@ -77,8 +82,22 @@ const fun = {
 	//提示框消息
 	to_showModal:(msg = '确定跳过此步骤吗?',title = '系统提示',fun) => uni.showModal({ title: title,content: msg, success: (res) => res.confirm ? fun() : console.log('用户点击取消') }),
 	
-	//检查用户登录状态
-	check_login:(msg) => vuex.dispatch('check_login').then((res)=>{ return res }),
+	//上传文件
+	is_upload_file:(file,fun1,fun2) => {
+			fun.to_showload()
+			let token = uni.getStorageSync("token")
+			if(token instanceof String) token = JSON.parse(token)
+		
+			let task = plus.uploader.createUpload('http://39.100.85.163:9791/uoload_api/f/upload', {method:"POST"}, ( t, status ) => {
+					// 上传完成
+					status == 200 ? fun1(t,status) : fun2(t,status)
+					fun.to_hideload()
+				}
+			)
+			task.addFile(file, {key:"file"})
+			task.setRequestHeader('Authorization','Bearer '+token)
+			task.start()
+	},
 	
 	//获取元素大小
 	getElment: (id) => { 
@@ -94,39 +113,6 @@ const fun = {
 		})
 	},
 	
-	//格式化时间
-	time_format:(dateTimeStamp) => {
-			dateTimeStamp = Date.parse(dateTimeStamp.replace(/-/gi,"/"))
-			let minute = 1000 * 60
-			let hour = minute * 60
-			let day = hour * 24
-			let halfamonth = day * 15
-			let month = day * 30
-			let now = new Date().getTime()
-			let diffValue = now - dateTimeStamp
-			if(diffValue < 0) return
-			let monthC = diffValue/month
-			let weekC = diffValue/(7*day)
-			let dayC = diffValue/day
-			let hourC = diffValue/hour
-			let minC = diffValue/minute
-			let result = ""
-			if(monthC>=1){
-				result = parseInt(monthC) + "月前"
-			}else if(weekC>=1){
-				result = parseInt(weekC) + "周前"
-			}else if(dayC>=1){
-				result = parseInt(dayC) + "天前"
-			}else if(hourC>=1){
-				result = parseInt(hourC) + "小时前"
-			}else if(minC>=1){
-				result = parseInt(minC) + "分钟前"
-			}else{
-				result = "刚刚"
-			}
-			return result
-	},
-	
 	//获取元素数据
 	getElment:(id) => { 
 		return new Promise((res, rej) => {
@@ -139,6 +125,16 @@ const fun = {
 				res(data)
 			}).exec()
 		})
+	},
+	
+	//格式化 - 日期格式化
+	time_format:(datetime,fmt_datetime = 'YYYY-MM-DD HH:mm:ss') => {
+		return moment(datetime,fmt_datetime).fromNow()
+	},
+	
+	//格式化 - 相对时间
+	get_date_time:(fmt_datetime = 'YYYY-MM-DD HH:mm:ss')=> {
+		return moment().format(fmt_datetime)
 	},
 	
 	//预览图片
