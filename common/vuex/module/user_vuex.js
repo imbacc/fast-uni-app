@@ -18,6 +18,14 @@ const state = {
 
 //同步方法
 const mutations = {
+	/**
+	 * @param {Object} info
+	 * 0是状态属性名称
+	 * 1是赋予状态属性的值
+	 */
+	set_vuex_user(state, info) {
+		state[info[0]] = info[1]
+	},
 	set_token(state, token) {
 		state.token = token
 		uni.setStorageSync("token", token)
