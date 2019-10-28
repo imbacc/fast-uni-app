@@ -16,8 +16,8 @@ const http_request = async (api,param = {},body = {},type = 'POST',cache_time = 
 	
 	let body_md5,sum_body
 	
-	body_md5 = md5(qs.stringify(body))
-	sum_body = api+'bodymd5='+body_md5
+	body_md5 = md5(qs.stringify(body))	//md5 body用于缓存
+	sum_body = api+'bodymd5='+body_md5	//缓存存取名称
 	
 	if(cache_time > 0){
 		let cache = is_cache.get_cache('cache_'+sum_body)

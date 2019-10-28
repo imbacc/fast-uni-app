@@ -24,7 +24,7 @@ const check_login = async () => {
 }
 
 const fun = {
-	//跳转封装函数
+	//跳转封装函数 可根据路径直接跳转 /pages/index/index
 	goto_page:(url,type = 1,acg = 'pop-in',fun) => {
 		goto_fun(url,type,acg,fun)
 	},

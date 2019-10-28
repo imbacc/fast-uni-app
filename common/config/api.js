@@ -15,7 +15,8 @@ export default {
 	
 	get_args_page: (json,cur) => get_args(json,cur), //分页封装
 }
-	
+
+//pageNum,pageSize 后端字段名称
 const get_args = (json = {},cur = [1,10]) => {
 	cur[0] == 0 ? cur[0] = 1 : false
 	cur[1] == 0 ? cur[1] = 1 : false

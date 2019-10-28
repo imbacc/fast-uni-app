@@ -9,9 +9,7 @@ export default{
 			total_page:0,
 			next_page:0,
 			page_size:10,
-			next_cache:0,
 			loadMoreText: '加载中...',
-			showLoadMore: false,
 			me_type:'post',
 		}
 	},

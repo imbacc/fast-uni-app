@@ -51,7 +51,7 @@ const actions = {
 		const api_json = info[3] === false || info[3] === undefined ? info[1] : api_config.get_args_page(info[1], info[3])
 		const load = info[0].indexOf('wait') === -1
 		if(load) uni.showLoading()
-		const request = await api.http_request(api_config[info[0]],api_json,info[2], info[5], info[4])
+		const request = await http_request(api_config[info[0]],api_json,info[2], info[5], info[4])
 		if(load) uni.hideLoading()
 		return Promise.resolve(request)
 	},

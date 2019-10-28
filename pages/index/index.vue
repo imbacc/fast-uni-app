@@ -4,20 +4,7 @@
 			<mht-loader loadingType="circle" :iconMarginRight="-65"></mht-loader>
 		</view>
 		<view v-else class="index_body">
-			默认懒加载
-			<lazy-image @imgClick="look_img(0)" :placeholdSrc="placeholdSrc" :realSrc="realSrc[0]"></lazy-image>
-			延迟懒加载
-			<lazy-image @imgClick="look_img(1)" :placeholdSrc="placeholdSrc" :realSrc="realSrc[1]" :time_num="2000" img_mode="aspectFill"></lazy-image>
-			<!-- img_mode 参考 http://uniapp.dcloud.io/component/image -->
-			
-			<view @tap="get_size" id="size" class="test_size">
-				{{lab}}点我时间
-				{{time_format_com(time)}}
-			</view>
-			
-			<view @tap="check_login">点我 手动检测登陆</view>
-			
-			是否检测登陆:{{is_vuex.state.is_check_login}}
+			加载完毕
 		</view>
 	</view>
 </template>
@@ -25,70 +12,76 @@
 <script>
 	import mhtLoader from '@/components/mht-loader/mht-loader.vue';
 	
+	//导入Minix
+	import {init_append,load_by_id,update_data} from '@/common/minix/index.js';
+	
 	export default {
 		components: {
 			mhtLoader
 		},
+		mixins:[init_append,load_by_id,update_data],
 		data() {
 			return {
-				placeholdSrc:'/static/img/loading.png', //加载图片
-				realSrc:[],
 				show_loading:true,
-				time:'',
-				img_mode_doc:false,
-				lab:''
 			}
 		},
 		onLoad() {
-			this.is_init()
-		},
-		computed: {
-			time_format_com(){
-				return (time) => this.time_format(time)
-			}
+			let time = setTimeout(()=>{
+				clearTimeout(time)
+				this.show_loading = false
+			},800)
 		},
 		methods: {
-			time_format(time){
-				return this.is_fun_tools.time_format(time)
-			},
-			is_init(){
-				// this.is_vuex.dispatch('api_action',['app_index',{}]) app_index 为 /config/api.js 里命名名称
-				
-				//false 不分页, 30缓存时间/分钟 请求方式get 默认是post
-				this.is_vuex.dispatch('api_action',['app_index',{},{},false,30,'get']).then((res)=>{
-					console.log(res)
-					this.realSrc = res.data.img
-					this.lab = res.data.lab
-					this.show_loading = false
+			//跳转路由
+			goto_router(){
+				// common/router/index.js 配置路由
+				//1 uni.navigateTo	保留当前页面，跳转到应用内的某个页面
+				//2 uni.redirectTo	关闭当前页面，跳转到应用内的某个页面。
+				//3 uni.reLaunch		关闭所有页面，打开到应用内的某个页面。
+				//4 uni.switchTab		跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。
+				//5 uni.navigateBack	关闭当前页面，返回上一页面或多级页面。
+				//pop-in 为动画效果 具体参考uni文档
+				this.goto_router('名字','?id=参数',1,'pop-in',()=>{
+					//跳转后执行方法,可以在 is_fun_tools 设置全局拦截 设置跳转前 或自定设置 跳转后
 				})
-				
-				// 4秒后检测登陆
-				// let _this = this
-				// setTimeout(()=>{
-				// 	_this.check_login()
-				// },4000)
 			},
-			check_login(){
-				const msg = (msg) => {this.is_fun_tools.to_msg(msg)}
-				if(this.is_vuex.state.is_check_login){
-					this.is_fun_tools.to_showModal('是否检测登陆','系统提示',()=>{
-						msg('检测到没有登陆')
-						this.is_vuex.dispatch("check_login")
-					})
-				}else{
-					msg('已经关闭检测登陆')
+			//加载分页数据
+			init_data_is_page(){
+				//  common/config/index.js 配置接口
+				//详情看 common/minix/index => init_append 函数
+				this.api_action = '接口名称'
+				this.api_param = {}	//param参数
+				this.api_body = {}	//body参数
+				this.api_fun = (res) => {
+					//运行回调
 				}
+				this.me_type = 'POST' //post or get
+				this.is_init(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
+				console.log(this.page_list)	//默认返回到data数据
+				this.loadMoreText = '设置的加载字符'
 			},
-			look_img(index){
-				this.is_fun_tools.look_img(index,this.realSrc)
+			//加载数据
+			init_data(){
+				//函数参数顺序 接口名称,parm参数,body参数,缓存时间,回调,post or get
+				this.load_byid('接口名称',{},{},0,(res)=>{'回调'},'post')
+				console.log(this.byid_obj)	//默认返回到data数据
+				this.is_update = false //是否更新替换 默认data数据 用于第二次 使用 this.load_byid()函数 时保留 this.byid_obj 数据
 			},
-			get_size(){
-				this.is_fun_tools.getElment('#size').then((res)=>{
-					console.log(res)
-					this.time = '2019-05-05 05:05:05'
-				})
+			//修改数据
+			update_data(){
+				//用法跟 load_byid 相同 只是少了 缓存参数 必须在回调里获取执行结果
+				this.update_info('接口名称',{},{},(res)=>{'回调'},'post')
+			},
+			//vuex用法
+			vuex_fff(){
+				this.is_vuex.commit('set_vuex',['名称','值'])		//set_vuex 是主模块 mutations
+				this.is_vuex.commit('set_vuex_user',['名称','值']) 	//set_vuex_user 是子模块user_module mutations
+				
+				this.is_vuex.dispatch('action名称')	//全局名称
+				
+				this.is_vuex.app_version			//主模块state
+				this.is_vuex.user_module.userInfo	//user_module模块state
 			}
-			
 		}
 	}
 </script>
