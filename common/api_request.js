@@ -6,7 +6,8 @@ import md5 from 'js-md5'
 //封装的get post请求
 /**
  * @param {api}		请求API地址
- * @param {json}	传出json数据参数 自动填充 地址追加参数 和 body表单数据
+ * @param {json}	追加参数
+ * @param {body}	表单数据
  * @param {type}	默认请求类型type为是post请求
  * @param {cache_time}  缓存时间 默认为0 不缓存 分钟单位
  */

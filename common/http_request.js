@@ -2,10 +2,9 @@
  * 拦截请求
  */
 import http from './vmeitime-http/interface.js'
-import is_fun_tools from './is_fun_tools'
 
 const error_msg = (msg) => {
-	is_tools.to_msg(msg)
+	uni.showToast({ title: msg,icon: 'none',mask: false})
 }
 
 const dev = process.env.NODE_ENV
