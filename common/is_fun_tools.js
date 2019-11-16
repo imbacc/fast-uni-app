@@ -61,6 +61,48 @@ const fun = {
 		return name.length > end ? name.substring(start,end) + '...' : name
 	},
 	
+	//分组 集合 对比对象名字字段
+	group_bylist:(list,name) => {
+		const groupBy = (array, f) => {
+			const groups = {}
+			array.forEach((o) => {
+				const group = JSON.stringify(f(o))
+				groups[group] = groups[group] || []
+				groups[group].push(o)
+			})
+			return Object.keys(groups).map((group) => groups[group])
+		}
+		
+		return groupBy(list, (item) => [item[name]])
+	},
+	
+	//深度拷贝对象
+	deep_clone:(data) => {
+		  const type = judgeType(data)
+		  let obj
+		  if (type === 'array') {
+			obj = []
+		  } else if (type === 'object') {
+			obj = {}
+		  } else {
+			// 不再具有下一层次
+			return data
+		  }
+		  if (type === 'array') {
+			// eslint-disable-next-line
+			for (let i = 0, len = data.length; i < len; i++) {
+				obj.push(fun.deepClone(data[i]))
+			}
+		  } else if (type === 'object') {
+			// 对原型上的方法也拷贝了....
+			// eslint-disable-next-line
+			for (const key in data) {
+			  obj[key] = fun.deepClone(data[key])
+			}
+		  }
+		  return obj
+	},
+	
 	//H5下载APP
 	goto_down_app:()=> {
 		fun.to_msg('请前往下载APP')
@@ -206,6 +248,8 @@ const fun = {
 		}
 	},
 	
+	
+	//分享
 	share:(title = 'xx的分享',id) => {
 		// #ifdef MP-WEIXIN
 			fun.to_msg('请点击右上方的分享按钮邀请好友')

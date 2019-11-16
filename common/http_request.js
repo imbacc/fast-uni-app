@@ -37,8 +37,13 @@ http.interceptor.response = (res) => {
 		return 'false'
 	}
 	
+	if(res.statusCode === 503){
+		error_msg("503错误")
+		return 'false'
+	}
+	
 	if(res.errMsg.toString().indexOf("fail") !== -1 || res.statusCode === 0){
-		error_msg()
+		error_msg('网络异常')
 		return 'false'
 	}
 	
@@ -46,7 +51,7 @@ http.interceptor.response = (res) => {
 	// if(res.data.hasOwnProperty("error")){
 	// 	const error = res.data.error
 	// 	if(error.code === "sys_error"){
-	// 		error_msg('请求失败')
+	// 		error_msg('网络异常')
 	// 		console.error('服务报错:',error.message)
 	// 		return 'false'
 	// 	}

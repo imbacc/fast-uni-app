@@ -11,12 +11,11 @@ import cache from '../setting_cache_time.js' 	//导入缓存时间控制
 //vuex 模块
 import user_module from './module/user_vuex.js'
 import push_module from './module/push_vuex.js'
+import version_module from './module/version_vuex.js'
 
 //全局状态
 const state = {
-	app_version: '',		//app verison
-	app_sysinfo: '', 		//app 系统信息
-	sys_push_info: '', 		//app 用于推送
+	
 }
 
 //同步方法
@@ -55,35 +54,13 @@ const actions = {
 		if(load) uni.hideLoading()
 		return Promise.resolve(request)
 	},
-	//app版本更新 在App.vue onLaunch 调用 | 需要在lv_update里checkLatest函数修改字段内容
-	get_app_version({commit}) {
-		uni.getSystemInfo({
-			success: (res) => {
-				commit('set_vuex', ['app_sysinfo', res])
-				const sys_version = plus.runtime.version
-				commit('set_app_sysversion',sys_version)
-				let code = res.platform + '_app'
-				store.dispatch('api_action',['get_sys_config_wait',{code:code}]).then((info) => {
-					console.log(info)
-					if (info) {
-						console.log('now version=' + sys_version)
-						console.log('get version=' + info.sysName)
-						if (info.sysName == sys_version) {
-							console.log('已经是最新版本!')
-						} else {
-							uni.reLaunch({url:router.app_update})
-						}
-						commit('set_vuex', ['app_version', info])
-					}
-				})
-			}
-		})
-	},
+	
 }
 
 const modules = {
 	user_module,
 	push_module,
+	version_module,
 }
 
 const store = new Vuex.Store({
