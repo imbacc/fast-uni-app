@@ -12,7 +12,7 @@ const mutations = {
 	 * 0是状态属性名称
 	 * 1是赋予状态属性的值
 	 */
-	set_version_vuex(state, info) {
+	set_vuex_version(state, info) {
 		console.log(state)
 		state[info[0]] = info[1]
 	},

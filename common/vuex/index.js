@@ -3,15 +3,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import api_config from '../config/api' 			//导入API
-import http_request from '../api_request' 		//导入http封装拦截
-import router from '../router' 					//导入路由路径
-import cache from '../setting_cache_time.js' 	//导入缓存时间控制
+// import api_config from '../config/api' 			//导入API
+// import http_request from '../api_request' 		//导入http封装拦截
+// import router from '../router' 					//导入路由路径
+// import cache from '../setting_cache_time.js' 	//导入缓存时间控制
 
 //vuex 模块
 import user_module from './module/user_vuex.js'
-import push_module from './module/push_vuex.js'
-import version_module from './module/version_vuex.js'
+// import push_module from './module/push_vuex.js'
+// import version_module from './module/version_vuex.js'
 
 //全局状态
 const state = {
@@ -46,21 +46,21 @@ const actions = {
 	 * 4是api缓存时间 默认0
 	 * 5是api请求方式 默认post 或 get
 	 */
-	async api_action({}, info = ['',{},{}, false, 0, 'post']) {
-		const api_json = info[3] === false || info[3] === undefined ? info[1] : api_config.get_args_page(info[1], info[3])
-		const load = info[0].indexOf('wait') === -1
-		if(load) uni.showLoading()
-		const request = await http_request(api_config[info[0]],api_json,info[2], info[5], info[4])
-		if(load) uni.hideLoading()
-		return Promise.resolve(request)
-	},
+	// async api_action({}, info = ['',{},{}, false, 0, 'post']) {
+	// 	const api_json = info[3] === false || info[3] === undefined ? info[1] : api_config.get_args_page(info[1], info[3])
+	// 	const load = info[0].indexOf('wait') === -1
+	// 	if(load) uni.showLoading()
+	// 	const request = await http_request(api_config[info[0]],api_json,info[2], info[5], info[4])
+	// 	if(load) uni.hideLoading()
+	// 	return Promise.resolve(request)
+	// },
 	
 }
 
 const modules = {
 	user_module,
-	push_module,
-	version_module,
+	// push_module,
+	// version_module,
 }
 
 const store = new Vuex.Store({
@@ -71,8 +71,8 @@ const store = new Vuex.Store({
 	modules
 })
 
-Vue.prototype.is_vuex = store
-Vue.prototype.is_router = router
-Vue.prototype.is_cache = cache
+// Vue.prototype.is_vuex = store
+// Vue.prototype.is_router = router
+// Vue.prototype.is_cache = cache
 
 export default store

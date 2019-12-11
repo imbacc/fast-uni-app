@@ -1,3 +1,5 @@
+import apiAction from '../../bean/api_action.js';
+
 export default{
 	data() {
 		return {
@@ -9,7 +11,9 @@ export default{
 			total_page:0,
 			next_page:0,
 			page_size:10,
+			next_cache:0,
 			loadMoreText: '加载中...',
+			showLoadMore: false,
 			me_type:'post',
 		}
 	},
@@ -23,14 +27,14 @@ export default{
 			body = this.api_body,
 			fun = this.api_fun,
 			type = this.me_type,
-			pginfo = type === 'post' ? [page,size] : false
+			pginfo = type === 'post' ? [page,size] : false,
 			
-			this.is_vuex.dispatch('api_action',[api,param,body,pginfo,cache,type]).then((res)=>{
+			new apiAction(api,param,body,pginfo,cache,type).then((res)=>{
 				this.total_page = res.total
 				this.next_page = res.nextPage
 				this.loadMoreText = '已加载完毕'
 				this.page_list = type === 'post' ? this.is_fun_tools.page_append(page_list,res,is_append) : res
-				typeof fun === "function" ? fun(res) : console.log('init_append method...')
+				typeof fun === "function" ? fun(res) : console.log('init_append default method...')
 			})
 		},
 	},

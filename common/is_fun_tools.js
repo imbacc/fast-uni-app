@@ -1,45 +1,10 @@
-import Vue from 'vue'
-import vuex from './vuex'
-import is_router from './router'
+// import vuex from './vuex'
 
 import moment from 'moment'
 
 var startTime = 0,timer = null,_this = this
 
-const goto_fun = (url,type,acg,fun) => {
-	const obj = {url: url,animationType: acg}
-	if (type === 1) uni.navigateTo(obj)
-	if (type === 2) uni.redirectTo(obj)
-	if (type === 3) uni.reLaunch(obj)
-	if (type === 4) uni.switchTab(obj)
-	if (type === 5) uni.navigateBack(url)
-	typeof fun === "function" ? fun() : false
-}
-
-//检查用户登录状态
-const check_login = async () => {
-	let is_login = uni.getStorageSync('token') || false
-	if(is_login) return true
-	return await vuex.dispatch('check_login')
-}
-
 const fun = {
-	//跳转封装函数 可根据路径直接跳转 /pages/index/index
-	goto_page:(url,type = 1,acg = 'pop-in',fun) => {
-		goto_fun(url,type,acg,fun)
-	},
-	
-	//路由名字跳转
-	goto_router:(name,query = '',type = 1,acg = 'pop-in',fun) => {
-		let router = is_router[name],url = query != '' ? router + query : router
-		check_login().then((res)=>{
-			res ? goto_fun(url,type,acg,fun) : uni.reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
-		})
-	},
-	
-	//跳转到登录页面
-	gologin:()=> login_page(),
-	
 	//分页封装 - 下一页
 	page_next:(list = [],obj = {},fun1,fun2) => {
 		list.length < obj.total ? fun1() : (list.length === obj.total ? fun2() : console.log('last_next'))
@@ -104,13 +69,13 @@ const fun = {
 	},
 	
 	//H5下载APP
-	goto_down_app:()=> {
-		fun.to_msg('请前往下载APP')
-		let url = vuex.state.app_sysinfo.platform !== 'ios' ? url = 'http://img.gongdu.info/app/gongdu_v1.0.0.apk' : url = ''
-		// #ifdef H5
-			window.location = url
-		// #endif
-	},
+	// goto_down_app:()=> {
+	// 	fun.to_msg('请前往下载APP')
+	// 	let url = vuex.state.app_sysinfo.platform !== 'ios' ? url = 'http://xxxx/app/xxx_v1.0.0.apk' : url = ''
+	// 	// #ifdef H5
+	// 		window.location = url
+	// 	// #endif
+	// },
 	
 	////显示相应消息
 	to_hideload:() => uni.hideLoading(),
@@ -130,7 +95,7 @@ const fun = {
 			let token = uni.getStorageSync("token")
 			if(token instanceof String) token = JSON.parse(token)
 		
-			let task = plus.uploader.createUpload('http://39.100.85.163:9791/uoload_api/f/upload', {method:"POST"}, ( t, status ) => {
+			let task = plus.uploader.createUpload('http://xxxxxx/uoload_api/f/upload', {method:"POST"}, ( t, status ) => {
 					// 上传完成
 					status == 200 ? fun1(t,status) : fun2(t,status)
 					fun.to_hideload()
@@ -283,5 +248,3 @@ const fun = {
 }
 
 export default fun
-
-Vue.prototype.is_fun_tools = fun

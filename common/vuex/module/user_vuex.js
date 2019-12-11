@@ -1,9 +1,9 @@
-import api_config from '../../config/api' //导入API
-import http_request from '../../api_request' //导入API方法
+// import api_config from '../../config/api' //导入API
+// import http_request from '../../api_request' //导入API方法
 
 const TOKEN = uni.getStorageSync('token') || false //获取TOKEN缓存
 const OPENID = uni.getStorageSync('openid') || false //获取OPENID缓存
-const USER_INFO = uni.getStorageSync('userinfo') || false //获取USERINFO缓存
+const USER_INFO = uni.getStorageSync('user_info') || false //获取USERINFO缓存
 const USER_ROLE = uni.getStorageSync('user_role') || false //获取USERINFO缓存
 
 //全局状态
@@ -36,7 +36,7 @@ const mutations = {
 	},
 	set_userinfo(state, userInfo) {
 		state.userInfo = userInfo
-		uni.setStorageSync('userinfo', userInfo)
+		uni.setStorageSync('user_info', userInfo)
 	},
 	set_userRole(state, role) {
 		state.user_role = role
@@ -48,8 +48,8 @@ const mutations = {
 		state.get_msg_num = 0
 		state.get_msg_text = ''
 		state.userInfo = null
-		uni.removeStorageSync('userinfo')
-		uni.removeStorageSync('openId')
+		uni.removeStorageSync('user_info')
+		uni.removeStorageSync('openid')
 		uni.removeStorageSync('token')
 	},
 }
@@ -68,11 +68,11 @@ const getters = {
 //异步方法
 const actions = {
 	//获取用户信息
-	async get_userinfo({commit}) {
-		let user = await http_request(api_config.get_userinfo)
-		commit('set_userinfo', user)
-		return Promise.resolve(user)
-	},
+	// async get_userinfo({commit}) {
+	// 	let user = await http_request(api_config.get_userinfo)
+	// 	commit('set_userinfo', user)
+	// 	return Promise.resolve(user)
+	// },
 	//检查是否登陆状态
 	check_login({commit,state,getters,rootState}) {
 		// console.log(rootState)
