@@ -1,5 +1,3 @@
-import apiAction from '../../bean/api_action.js';
-
 export default{
 	data() {
 		return {
@@ -19,7 +17,7 @@ export default{
 	},
 	methods: {
 		//初始化加载
-		is_init(page = 1,cache = 0,is_append = false){
+		is_init(pageNum = 1,cache = 0,is_append = false){
 			let page_list = this.page_list,
 			size = this.page_size,
 			api = this.api_action,
@@ -27,9 +25,9 @@ export default{
 			body = this.api_body,
 			fun = this.api_fun,
 			type = this.me_type,
-			pginfo = type === 'post' ? [page,size] : false,
-			
-			new apiAction(api,param,body,pginfo,cache,type).then((res)=>{
+			pginfo = type === 'post' ? [pageNum,size] : false
+			console.log(api)
+			this.is_action.http_request(api,param,body,pginfo,cache,type).then((res)=>{
 				this.total_page = res.total
 				this.next_page = res.nextPage
 				this.loadMoreText = '已加载完毕'
