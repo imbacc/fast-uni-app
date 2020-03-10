@@ -12,22 +12,13 @@ const error_msg = (msg) => {
 	})
 }
 
-// #ifdef APP-PLUS
-	const uuid = plus.device.uuid
-// #endif
-// #ifndef APP-PLUS
-	const uuid = '000000000000000'
-// #endif
-
 //设置请求拦截
 http.interceptor.request = (config) => {
 	
-	// if(config.url.toString().indexOf("okingc") != -1){
-		let token = uni.getStorageSync("token")
-		
-		//添加通用参数
-		config.header = {"token": token}
-	// }
+	let token = uni.getStorageSync("token")
+	
+	//添加通用参数
+	config.header = {'authorization':`Bearer ${token}`}
 	
 	// console.log("【config】 "+JSON.stringify(config))
 }
@@ -55,12 +46,16 @@ http.interceptor.response = (res) => {
 		return 'false'
 	}
 	
-	// console.log("res...")
+	// console.log('【response】 ')
 	// console.log(res)
 	
 	if(res.data.code === -403 || res.data.code === -404 || res.data.code === -444 || res.data.code === -500) return false
 	
 	if(res.data.code === 1 || res.data.code === 2){
+		if(res.data.hasOwnProperty('token')){
+			uni.setStorageSync('token',res.data.token)
+			console.log('token success')
+		}
 		console.log('拦截通知:',res.data.msg)
 		return res.data.data
 	}else{

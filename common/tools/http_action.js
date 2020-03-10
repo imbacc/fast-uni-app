@@ -26,6 +26,9 @@ const http_action = async (api, param = {}, body = {}, is_page = false, cache_ti
 	if(api) api = api_name[api]
 	if(is_page) param = get_args(param,is_page)
 	
+	console.log(api)
+	console.log(param)
+	
 	let key_api = `${api}?${qs.stringify(param)}`
 	let body_md5 = md5(qs.stringify(body))
 	let sum_body = key_api + 'bodymd5=' + body_md5
@@ -40,8 +43,8 @@ const http_action = async (api, param = {}, body = {}, is_page = false, cache_ti
 	
 	return await is_http.then((res) => {
 		if(res === 'false') return false
-		if(cache_time > 0) is_cache.set_cache('cache_'+sum_body,res,cache_time)
-		console.log('service:'+ca_api, res)
+		if(cache_time > 0 && res) is_cache.set_cache('cache_'+sum_body,res,cache_time)
+		console.log('service:'+key_api, res)
 		return res || false
 	})
 	.catch((err) => {

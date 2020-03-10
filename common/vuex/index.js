@@ -7,7 +7,6 @@ Vue.use(Vuex)
 import version_module from './module/version_vuex.js'
 import user_module from './module/user_vuex.js'
 import push_module from './module/push_vuex.js'
-import movies_module from './module/movies_vuex.js'
 
 //全局状态
 const state = {
@@ -41,7 +40,6 @@ const modules = {
 	version_module,
 	user_module,
 	push_module,
-	movies_module,
 }
 
 const store = new Vuex.Store({

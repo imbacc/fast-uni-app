@@ -39,14 +39,6 @@ const getters = {
 const actions = {
 	//app更新
 	app_version({commit}, id) {
-		let app_version_cache = is_cache.get_cache('capp_no_update')
-		if(!app_version_cache){
-			console.log('app_version缓存已过期')
-		}else{
-			console.log('读取app_version缓存')
-			return Promise.resolve(app_version_cache)
-		}
-		
 		console.log('检测Version版本...')
 		
 		const sysinfo = state.system_info
@@ -54,7 +46,7 @@ const actions = {
 		id = sysinfo.platform === 'android' ? 1 : 2
 		if(parseFloat(sysinfo.system) < 4.4) id = 3
 		
-		http_action('app_version',{id:id},{},false,5,'post').then((res)=>{
+		http_action('app_version',{id:id},{},false,0,'get').then((res)=>{
 			if(res){
 				if(NODE_DEV === 'development'){
 					console.log('开发环境')
@@ -71,9 +63,6 @@ const actions = {
 						uni.navigateTo({url:router.version})
 					}
 				}
-				is_cache.set_cache('capp_no_update', res, 30)
-				commit('set_token',res.token)
-				console.log('token success')
 			}
 		})
 	},

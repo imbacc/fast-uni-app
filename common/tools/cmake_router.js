@@ -1,5 +1,6 @@
 import is_router from '../router'
 import is_vuex from '../vuex'
+import cfg from '../config/cfg.js';
 
 //检查用户登录状态
 const check_login = async () => {
@@ -16,14 +17,13 @@ const check_login = async () => {
 * @param {Object} fun 跳转后执行方法
 * @param {Object} last 跳转后 默认跳转后执行 改为false 执行完方法在执行跳转
 */
-const goto_fun = (url,type = 1,acg = 'pop-in',fun,last = true) => {
+const goto_fun = (url,type,acg,fun,last) => {
 	if (!last){//先执行函数,后执行跳转
 		typeof fun === "function" ? fun() : false
 		goto_fun(url,type,acg,fun,true)
 		return
 	}
 	const obj = {url: url,animationType: acg}
-	console.log(obj)
 	if (type === 1) uni.navigateTo(obj)
 	if (type === 2) uni.redirectTo(obj)
 	if (type === 3) uni.reLaunch(obj)
@@ -38,12 +38,12 @@ const goto_router = (name,query = '',type = 1,acg = 'pop-in',fun,last = true) =>
 	console.log(router)
 	check_login().then((res)=> {
 		console.log('check_login',res)
-		goto_fun(url,type,acg,fun,last)
-		res ? goto_fun() : uni.reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
+		if(!cfg.check_login){
+			goto_fun(url,type,acg,fun,last)
+			return
+		}
+		res ? goto_fun(url,type,acg,fun,last) : uni.reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
 	})
 }
 
-export {
-	goto_fun,
-	goto_router
-}
+export default goto_router

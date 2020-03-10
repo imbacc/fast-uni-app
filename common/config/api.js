@@ -1,10 +1,10 @@
 //api接口地址
-// var api = 'http://www.okingc.com/'
+// var api = 'http://www.xxx.com/'
 
-import movies_api from './module/movies_api.js';	//影视API
+import test_api from './module/test_api.js';	//分模块API
 
 export default {
-	...movies_api,
+	...test_api,
 	
 	app_version:'ddd'
 }

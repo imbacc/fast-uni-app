@@ -32,7 +32,6 @@ export default{
 			type = this_class.me_type,
 			cache = is_cache || 0
 			pginfo = [page,size]
-			console.log(api)
 			this.is_action(api,param,body,pginfo,cache,type).then((res)=>{
 				this.total_page = res.total
 				this.next_page = res.nextPage
