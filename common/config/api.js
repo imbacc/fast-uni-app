@@ -1,15 +1,10 @@
-//api接口 额外地址
-var api = ''
+//api接口地址
+// var api = 'http://www.okingc.com/'
 
-//导入test api模块
-import test_api from './module/test_api.js';
+import movies_api from './module/movies_api.js';	//影视API
 
 export default {
-	...test_api,
+	...movies_api,
 	
-	//api
-	dddd: 'dddd/ffff',
-	
-	
-	app_index: 'fast/index', 				//baseUrl + api ,在vmeitime-http/interface.js 里 baseUrl
+	app_version:'ddd'
 }

@@ -13,13 +13,13 @@
 	import mhtLoader from '@/components/mht-loader/mht-loader.vue';
 	
 	//导入Minix
-	import {init_append,load_by_id,update_data} from '@/common/minix/index.js';
+	import {load_append,load_info,update_data} from '@/common/minix/index.js';
 	
 	export default {
 		components: {
 			mhtLoader
 		},
-		mixins:[init_append,load_by_id,update_data],
+		mixins:[load_append,load_info,update_data],
 		data() {
 			return {
 				show_loading:true,
@@ -41,31 +41,41 @@
 				//4 uni.switchTab		跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。
 				//5 uni.navigateBack	关闭当前页面，返回上一页面或多级页面。
 				//pop-in 为动画效果 具体参考uni文档
-				this.goto_router('名字','?id=参数',1,'pop-in',()=>{
+				this.is_goto('名字','?id=参数',1,'pop-in',()=>{
 					//跳转后执行方法,可以在 goto_router 设置全局拦截 设置跳转前 或自定设置 跳转后
 				})
 			},
 			//加载分页数据
 			init_data_is_page(){
+				
 				//  common/config/index.js 配置接口
-				//详情看 common/minix/index => init_append 函数
-				this.api_action = '接口名称'
-				this.api_param = {}	//param参数
-				this.api_body = {}	//body参数
-				this.api_fun = (res) => {
-					//运行回调
-				}
-				this.me_type = 'POST' //post or get
-				this.is_init(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
-				console.log(this.page_list)	//默认返回到data数据
-				this.loadMoreText = '设置的加载字符'
+				//详情看 common/minix/index => load_append.js
+				this.load_append_obj.set({
+					api_action:'接口名称',
+					api_param:{
+						//param参数
+					},
+					api_body:{
+						//body参数
+					},
+					api_fun:(res)=>{
+						//运行回调
+					},
+					me_type:'POST',
+				})
+				this.load_append_fun(1,0,false)// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
+				console.log(this.load_append_obj.page_list)	//默认返回到data数据
 			},
 			//加载数据
 			init_data(){
 				//函数参数顺序 接口名称,parm参数,body参数,缓存时间,回调,post or get
-				this.load_byid('接口名称',{},{},0,(res)=>{'回调'},'post')
-				console.log(this.byid_obj)	//默认返回到data数据
-				this.is_update = false //是否更新替换 默认data数据 用于第二次 使用 this.load_byid()函数 时保留 this.byid_obj 数据
+				const new_obj = this.get_load_info_class()
+				this.load_info_fun('接口名称',{},{},0,(res)=>{'回调'},'post',new_obj)
+				console.log(new_obj.byid_obj)	//默认返回到data数据
+				new_obj.set({
+					//是否更新替换 默认data数据 用于第二次 使用 this.load_byid()函数 时保留 this.byid_obj 数据
+					is_update:true,
+				})
 			},
 			//修改数据
 			update_data(){

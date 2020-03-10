@@ -1,8 +1,3 @@
-const CHAT_EMOJI = [
-	[{"url":"100.gif",alt:"[微笑]"}],
-	[{"url":"124.gif",alt:"[饿]"}],
-]
-
 const sql_exec = (sql,type = 'exec')=>{
 	console.log(sql)
 	return new Promise((resolve, reject)=>{
@@ -24,20 +19,8 @@ const sql_exec = (sql,type = 'exec')=>{
 	})
 }
 
-const get_date_time = ()=> {
-	let change = (t) => {
-		return t < 10 ? "0" + t : t
-	}
-	
-	let d = new Date(),
-	year = d.getFullYear(),
-	month = change(d.getMonth()+1),
-	day = change(d.getDate()),
-	hour = change(d.getHours()),
-	minute = change(d.getMinutes()),
-	second = change(d.getSeconds())
-	
-	return year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second
+const get_date_time = ()=> (fmt_datetime = 'YYYY-MM-DD HH:mm:ss')=> {
+	return moment().format(fmt_datetime)
 }
 
 //全局状态
@@ -48,7 +31,6 @@ const state = {
 	get_msg_text:'',	//消息文本
 	get_msg_num:0,		//消息数量
 	is_msg_page:false,	//是否在消息当前页
-	is_emoji:CHAT_EMOJI	,//消息表情
 	sql_exec:sql_exec,	//执行sql
 }
 
@@ -60,6 +42,7 @@ const mutations = {
 	 * 1是赋予状态属性的值
 	 */
 	set_vuex_push(state, info) {
+		console.log(state)
 		state[info[0]] = info[1]
 	},
 }
@@ -112,7 +95,7 @@ const actions = {
 				// 	title: 'two - push',
 				// 	content: JSON.stringify(res)
 				// })
-				store.commit('set_vuex', ['sys_push_info', res])
+				store.commit('set_push_vuex', ['sys_push_info', res])
 			}
 		})
 	
@@ -149,8 +132,8 @@ const actions = {
 						myid = store.state.userInfo.id
 					
 					if(store.state.is_msg_page){
-						commit('set_vuex',['get_msg_id',userid])
-						commit('set_vuex',['get_msg_text',content])
+						commit('set_push_vuex',['get_msg_id',userid])
+						commit('set_push_vuex',['get_msg_text',content])
 					}else{
 						sql_exec(`select * from user_msg where send_str = '${userid}_${myid}'`,'select').then((res)=>{
 							// console.log("res: " + JSON.stringify(res))
@@ -175,7 +158,7 @@ const actions = {
 							
 							sql_exec(res.length === 0 ? insert : update).then((res)=>{
 								console.log(res)
-								if(res) commit('set_vuex',['get_msg_num',sel_read])
+								if(res) commit('set_push_vuex',['get_msg_num',sel_read])
 							})
 						})
 					}
