@@ -71,5 +71,18 @@
         "setting" : {
             "es6" : true
         }
-    }
+    },
+	"h5": {
+		//"devServer": {
+		//       "port": 8080,
+		//       "disableHostCheck": true,
+		//       "proxy": {
+		//           "/mock": {
+		//               "target": "http://yapi.demo.qunar.com",
+		//               "changeOrigin": true,
+		//               "secure": false
+		//           }
+		//       }
+		// }
+	}
 }

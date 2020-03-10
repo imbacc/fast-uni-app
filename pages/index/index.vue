@@ -5,6 +5,9 @@
 		</view>
 		<view v-else class="index_body">
 			加载完毕
+			
+			<!-- 路由配置 => common/router/index -->
+			<view @tap="is_goto('login')">点我登录</view>
 		</view>
 	</view>
 </template>
