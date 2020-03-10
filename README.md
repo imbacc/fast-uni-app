@@ -5,11 +5,13 @@
 <br/>
 <h1>common lib</h1>
 <br/>
-config/api 管理api接口<br/>
+common/config/api 管理api接口<br/>
+common/lib	js库
+common/minix	vue minix
 router/index 管理页面路由地址<br/>
 vmeitime-http/interface.js 请求封装的插件<br/>
 vuex/index 管理全局变量和事务<br/>
-common/api_request.js 请求封装，请求缓存<br/>
+common/api_request.js 请求封装，请求缓存 已过期 (当前使用的是cmomon/bean/api_action)<br/>
 common/http_request.js 拦截请求，拦截响应<br/>
 common/is_fun_tools.js 工具lib封装<br/>
 common/setting_cache_time.js 时间缓存封装<br/>
