@@ -72,4 +72,20 @@
             "es6" : true
         }
     }
+	// "h5": {
+	// 	"devServer": {
+	// 	      "port": 8080,
+	// 	      "disableHostCheck": true,
+	// 	      "proxy": {
+	// 	          "/api": {
+	// 	              "target": "http://192.168.0.106:3000/",
+	// 	              "changeOrigin": true,
+	// 	              "secure": false,
+	// 				  "pathRewrite": {
+	// 					"^/api": "/"
+	// 				  }
+	// 	          }
+	// 	      }
+	// 	}
+	// }
 }
