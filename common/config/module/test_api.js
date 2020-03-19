@@ -1,4 +1,4 @@
+
 export default {
-	aa: 'aa',
-	bb: 'bb',
+	get_xxx: 'xxxx', //xxx
 }

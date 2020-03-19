@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 var startTime = 0,timer = null
 
 const fun = {

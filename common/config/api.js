@@ -1,15 +1,10 @@
-//api接口 额外地址
-var api = ''
+//api接口地址
+// var api = 'http://www.xxx.com/'
 
-//导入test api模块
-import test_api from './module/test_api.js';
+import test_api from './module/test_api.js';	//分模块API
 
 export default {
 	...test_api,
 	
-	//api
-	dddd: 'dddd/ffff',
-	
-	
-	app_index: 'fast/index', 				//baseUrl + api ,在vmeitime-http/interface.js 里 baseUrl
+	app_version:'ddd'
 }

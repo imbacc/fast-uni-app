@@ -5,12 +5,16 @@
 		</view>
 		<view v-else class="index_body">
 			加载完毕
+			
+			<!-- 路由配置 => common/router/index -->
+			<view @tap="is_goto('login')">点我登录</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import mhtLoader from '@/components/mht-loader/mht-loader.vue';
+	import md5 from '../../common/lib/md5.min.js';
 	
 	//导入Minix
 	import {load_append,load_info,update_data} from '@/common/minix/index.js';
@@ -30,6 +34,8 @@
 				clearTimeout(time)
 				this.show_loading = false
 			},800)
+			
+			console.log(md5('123456'))
 		},
 		methods: {
 			//跳转路由
@@ -43,9 +49,8 @@
 				//pop-in 为动画效果 具体参考uni文档
 				// (name,query = '',type = 1,acg = 'pop-in',fun,last = true) 
 				this.is_goto('名字','?id=参数',1,'pop-in',()=>{
-					//跳转后执行方法,可以在 is_goto 设置全局拦截 设置跳转前 或自定设置 跳转后
+					//跳转后执行方法,可以在 goto_router 设置全局拦截 设置跳转前 或自定设置 跳转后
 				})
-				
 				//参数同上
 				this.is_gopage('路径跳转')
 			},
@@ -69,6 +74,8 @@
 				const obj = this.get_load_append_class() //重新获取对象
 				obj.api_action = '接口名称'
 				//... 以上相同步骤 => obj.fun()
+				this.load_append_fun(1,0,false)// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
+				console.log(this.load_append_obj.page_list)	//默认返回到data数据
 			},
 			//加载数据
 			init_data(){
@@ -95,6 +102,8 @@
 				 * @param {type}	默认请求类型type为是post请求
 				 */
 				this.is_action('API名称',{body:'body'},false,0,'post')
+				
+				//代理进入manifest.json h5 注释部分代理
 			},
 			//工具集合
 			tools_fun(){

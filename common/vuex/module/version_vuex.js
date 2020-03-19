@@ -1,5 +1,13 @@
+import http_action from '../../tools/http_action.js';
+import is_cache from '../../tools/cache_time.js' 	//导入缓存时间控制
+
+const SYSTEM_INFO = uni.getSystemInfoSync() 		//获取system信息
+const NODE_DEV = process.env.NODE_ENV
+
+
 //全局状态
 const state = {
+	system_info:SYSTEM_INFO,	//system信息
 	app_version: '', //app verison
 	app_sysinfo: '', //app 系统信息
 	app_sysversion:'',//系统 version
@@ -30,26 +38,31 @@ const getters = {
 //异步方法
 const actions = {
 	//app更新
-	get_app_version({commit}) {
-		uni.getSystemInfo({
-			success: (res) => {
-				commit('set_version_vuex', ['app_sysinfo', res])
-				const sys_version = plus.runtime.version
-				commit('set_app_sysversion',sys_version)
-				// let code = res.platform + '_app'
-				// store.dispatch('api_action',['get_sys_config_wait',{code:code}]).then((info) => {
-				// 	console.log(info)
-				// 	if (info) {
-				// 		console.log('now version=' + sys_version)
-				// 		console.log('get version=' + info.sysName)
-				// 		if (info.sysName == sys_version) {
-				// 			console.log('已经是最新版本!')
-				// 		} else {
-				// 			uni.reLaunch({url:router.app_update})
-				// 		}
-				// 		commit('set_version_vuex', ['app_version', info])
-				// 	}
-				// })
+	app_version({commit}, id) {
+		console.log('检测Version版本...')
+		
+		const sysinfo = state.system_info
+		
+		id = sysinfo.platform === 'android' ? 1 : 2
+		if(parseFloat(sysinfo.system) < 4.4) id = 3
+		
+		http_action('app_version',{id:id},{},false,0,'get').then((res)=>{
+			if(res){
+				if(NODE_DEV === 'development'){
+					console.log('开发环境')
+				}else{
+					let sys_version = res.version.replace('.','')
+					sys_version = sys_version.indexOf('.') !== -1 ? sys_version.replace('.','') : parseInt(sys_version)
+					
+					console.log("系统sys_version"+sys_version)
+					console.log("app version"+r.version)
+					console.log("手机系统版本"+res.system)
+					
+					if(sys_version != res.version){
+						is_cache.set_cache('capp_update', res, 30)
+						uni.navigateTo({url:router.version})
+					}
+				}
 			}
 		})
 	},

@@ -5,16 +5,19 @@
 <br/>
 <h1>common lib</h1>
 <br/>
-common/config/api 管理api接口<br/>
+common/config/api.js 管理api接口<br/>
+common/config/cfg.js 管理请求地址<br/>
 common/lib	js库
 common/minix	vue minix
-router/index 管理页面路由地址<br/>
-vmeitime-http/interface.js 请求封装的插件<br/>
-vuex/index 管理全局变量和事务<br/>
-common/api_request.js 请求封装，请求缓存 已过期 (当前使用的是cmomon/bean/api_action)<br/>
-common/http_request.js 拦截请求，拦截响应<br/>
-common/is_fun_tools.js 工具lib封装<br/>
-common/setting_cache_time.js 时间缓存封装<br/>
+common/router/index 管理页面路由地址<br/>
+common/router/module 管理页面路由分模块<br/>
+common/vuex/index 管理全局变量和事务<br/>
+common/tools/http_request.js 请求封装<br/>
+common/tools/http_interceptor.js 请求拦截,响应拦截<br/>
+common/tools/http_action.js 请求加缓存二次封装<br/>
+common/tools/cmake_tools.js 定义工具<br/>
+common/tools/cmake_router 路由跳转封装<br/>
+common/tools/cache_time.js 时间缓存封装<br/>
 <br/>
 <br/>
 <br/>
@@ -47,16 +50,19 @@ App.vue
 <br/>
 <br/>
 <br/>
-main.js
-全局载入lazy-image
-<br/>
-<br/>
-<br/>
 pages.json
 页面配置 页面属性
 配置好 记得添到router
 <br/>
 <br/>
 <br/>
+manifest.json
+配置h5 devServer 可代理
+<br/>
+<br/>
+<br/>
 uni.scss
 scss 预处理 常用样式变量
+<br/>
+<br/>
+<br/>

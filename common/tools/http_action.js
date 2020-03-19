@@ -2,7 +2,7 @@ import api_name from '../config/api.js' 			//导入API
 import http_intercept from './http_interceptor.js'	//拦截请求
 import is_cache from './cache_time.js'				//缓存
 import qs from 'qs'
-import md5 from 'js-md5'
+import md5 from '../lib/md5.min.js';
 
 const get_args = (json = {},cur = [1,10]) => {
   cur[0] <= 0 ? cur[0] = 1 : false
