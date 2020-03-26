@@ -1,7 +1,7 @@
 <template>
 	<view class="index_content">
 		<view v-if="show_loading">
-			<mht-loader loadingType="circle" :iconMarginRight="-65"></mht-loader>
+			加载中...
 		</view>
 		<view v-else class="index_body">
 			加载完毕
@@ -13,17 +13,13 @@
 </template>
 
 <script>
-	import mhtLoader from '@/components/mht-loader/mht-loader.vue';
 	import md5 from '../../common/lib/md5.min.js';
 	
 	//导入Minix
-	import {load_append,load_info,update_data} from '@/common/minix/index.js';
+	import {append_data,update_data} from '@/common/minix/index.js';
 	
 	export default {
-		components: {
-			mhtLoader
-		},
-		mixins:[load_append,load_info,update_data],
+		mixins:[append_data,update_data],
 		data() {
 			return {
 				show_loading:true,
@@ -58,40 +54,31 @@
 			init_data_page(){
 				//  common/config/index.js 配置接口
 				//详情看 common/minix/index => load_append 函数
-				this.init_append_obj.api_action = '接口名称'
-				this.init_append_obj.api_param = {}	//param参数
-				this.init_append_obj.api_body = {}	//body参数
-				this.init_append_obj.api_fun = (res) => {
+				this.append_obj.api_action = '接口名称'
+				this.append_obj.api_param = {}	//param参数
+				this.append_obj.api_body = {}	//body参数
+				this.append_obj.api_fun = (res) => {
 					//运行回调
 				}
-				this.init_append_obj.me_type = 'POST' //post or get
+				this.append_obj.me_type = 'POST' //post or get
 				//执行单个对象fun
-				this.init_append_obj.fun(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
-				console.log(this.init_append_obj.page_list)	//默认返回到data数据
-				this.init_append_obj.loadMoreText = '设置的加载字符'
+				this.append_obj.fun(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
+				console.log(this.append_obj.page_list)	//默认返回到data数据
+				this.append_obj.loadMoreText = '设置的加载字符'
 				
-				//复用 minix init_append_obj 不冲突 ↓
+				//复用 minix append_obj 不冲突 ↓
 				const obj = this.get_load_append_class() //重新获取对象
 				obj.api_action = '接口名称'
 				//... 以上相同步骤 => obj.fun()
 				this.load_append_fun(1,0,false)// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
-				console.log(this.load_append_obj.page_list)	//默认返回到data数据
-			},
-			//加载数据
-			init_data(){
-				//函数参数顺序 接口名称,parm参数,body参数,缓存时间,回调,post or get
-				this.load_info_obj.fun('接口名称',{},{},0,(res)=>{'回调'},'post')
-				console.log(this.load_info_obj.is_obj)	//默认返回到data数据
-				this.load_info_obj.is_update = false //是否更新替换 默认data数据 用于第二次 使用 this.load_byid()函数 时保留 this.byid_obj 数据
-				
-				const obj = this.get_load_info_class()
-				//... 以上相同步骤 => obj.fun()
+				console.log(this.append_obj.page_list)	//默认返回到data数据
 			},
 			//修改数据
 			update_data(){
 				//用法跟 load_info 相同 只是少了 缓存参数 必须在回调里获取执行结果
-				this.update_info('接口名称',{},{},(res)=>{'回调'},'post')
+				this.update_info('接口名称',{},{},(res)=>{'回调'})
 			},
+			//加载数据
 			action_fun(){
 				/**
 				 * @param {api}		请求API地址

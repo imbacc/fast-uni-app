@@ -40,14 +40,6 @@ export default {
 		options.url = options.baseUrl + options.url
 		options.data = options.data || {}
 		options.method = options.method || this.config.method
-		//TODO 加密数据
-		
-		//TODO 数据签名
-		/* 
-		_token = {'token': getStorage(STOREKEY_LOGIN).token || 'undefined'},
-		_sign = {'sign': sign(JSON.stringify(options.data))}
-		options.header = Object.assign({}, options.header, _token,_sign) 
-		*/
 	   
 		return new Promise((resolve, reject) => {
 			let _config = null
@@ -83,12 +75,4 @@ export default {
 		const options = re_method(url,data,option,'POST')
 		return this.request(options)
 	},
-	// put(url, data, option) {
-	// 	const options = re_method(url,data,option,'PUT')
-	// 	return this.request(options)
-	// },
-	// del(url, data, option) {
-	// 	const options = re_method(url,data,option,'DELETE')
-	// 	return this.request(options)
-	// }
 }

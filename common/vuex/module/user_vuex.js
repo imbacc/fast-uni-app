@@ -70,12 +70,6 @@ const getters = {
 
 //异步方法
 const actions = {
-	//获取用户信息
-	async get_userinfo({commit}) {
-		let user = await http_request(api_config.get_userinfo)
-		commit('set_userinfo', user)
-		return Promise.resolve(user)
-	},
 	//检查是否登陆状态
 	check_login({commit,state,getters,rootState}) {
 		// console.log(rootState)

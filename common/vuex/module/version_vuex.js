@@ -24,10 +24,6 @@ const mutations = {
 		console.log(state)
 		state[info[0]] = info[1]
 	},
-	set_app_sysversion(state, version) {
-		state.app_sysversion = version
-		uni.setStorageSync('sys_version', version)
-	},
 }
 
 //get方法

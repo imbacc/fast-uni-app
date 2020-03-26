@@ -1,4 +1,4 @@
-class load_append_class{
+class append_data_class{
 	constructor(vm) {
 	    this.api_action = ''
 	    this.api_param = {}
@@ -35,4 +35,4 @@ class load_append_class{
 	}
 }
 
-export default load_append_class
+export default append_data_class

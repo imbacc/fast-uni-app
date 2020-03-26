@@ -32,33 +32,13 @@
 		"selectedColor": "#F5612A",
 		"list": [{
 				"pagePath": "pages/index/index",
-				// "iconPath": "static/imgs/ico_default/home.png",
-				// "selectedIconPath": "static/imgs/ico_active/home.png",
+				"iconPath": "static/img/index/home.png",
+				"selectedIconPath": "static/img/index/home.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/index/22",
-				// "iconPath": "static/imgs/ico_default/game.png",
-				// "selectedIconPath": "static/imgs/ico_active/game.png",
 				"text": "22"
-			},
-			{
-				"pagePath": "pages/index/33",
-				// "iconPath": "static/imgs/ico_default/race.png",
-				// "selectedIconPath": "static/imgs/ico_active/race.png",
-				"text": "33"
-			},
-			{
-				"pagePath": "pages/index/44",
-				// "iconPath": "static/imgs/ico_default/smile.png",
-				// "selectedIconPath": "static/imgs/ico_active/smile.png",
-				"text": "44"
-			},
-			{
-				"pagePath": "pages/index/55",
-				// "iconPath": "static/imgs/ico_default/my.png",
-				// "selectedIconPath": "static/imgs/ico_active/my.png",
-				"text": "55"
 			}
 		]
 	},

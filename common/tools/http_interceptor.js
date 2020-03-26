@@ -2,7 +2,6 @@
  * 拦截请求
  */
 import http from './http_request.js'
-import {cmake_token_fun} from './cmake_token.js'
 
 const error_msg = (msg) => {
 	uni.showToast({
@@ -13,28 +12,15 @@ const error_msg = (msg) => {
 	})
 }
 
-// #ifdef APP-PLUS
-	const uuid = plus.device.uuid
-// #endif
-// #ifndef APP-PLUS
-	const uuid = '000000000000000'
-// #endif
-
 //设置请求拦截
 http.interceptor.request = (config) => {
+		
+	//添加通用参数
+	config.header = {
+		'authorization':`Bearer ${token}`,
+	}
 	
-	// if(config.url.toString().indexOf('okingc') != -1){
-		let token = uni.getStorageSync('token'),cmake_token = cmake_token_fun()
-		
-		//添加通用参数
-		config.header = {
-			'authorization':`Bearer ${token}`,
-			'uuid': uuid,
-			'cmakeToken': cmake_token,
-		}
-		
-		if(config.url.indexOf('version') !== -1) config.header['nocheck'] = true
-	// }
+	if(config.url.indexOf('version') !== -1) config.header['nocheck'] = true
 	
 	// console.log('【config】 '+JSON.stringify(config))
 }
