@@ -35,7 +35,6 @@ const goto_fun = (url,type,acg,fun,last) => {
 //根据配置的路由名字跳转
 const goto_router = (name,query = '',type = 1,acg = 'pop-in',fun,last = true) => {
 	let router = is_router[name],url = query != '' ? router + query : router;
-	console.log(router)
 	check_login().then((res)=> {
 		console.log('check_login',res)
 		if(!cfg.check_login){

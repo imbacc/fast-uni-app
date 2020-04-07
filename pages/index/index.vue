@@ -9,11 +9,15 @@
 			<!-- 路由配置 => common/router/index -->
 			<view @tap="is_goto('login')">点我登录</view>
 		</view>
+		
+		<view @tap="test">测试方法</view>
 	</view>
 </template>
 
 <script>
 	import md5 from '../../common/lib/md5.min.js';
+	
+	import cache_time from '../../common/tools/cache_time.js';
 	
 	//导入Minix
 	import {append_data,update_data} from '@/common/minix/index.js';
@@ -30,10 +34,113 @@
 				clearTimeout(time)
 				this.show_loading = false
 			},800)
-			
-			console.log(md5('123456'))
+			console.log(md5('fast-uni-app'+Math.floor((Math.random()*100)+1)))
 		},
 		methods: {
+			//测试
+			test() {
+				let timeout = window.setTimeout
+				// setTimeout = (fun, time) => {
+				// 	if(typeof fun === "function"){
+				// 		return timeout(() => {
+				// 			try {
+				// 				fun.apply(this, arguments)
+				// 			} catch (error) {
+				// 				// 对 error 进行加工后上报给服务器
+				// 				console.log(error)
+				// 				throw error
+				// 			}
+				// 		}, time)
+				// 	}else{
+				// 		console.log('不是个有效的setTimeout')
+				// 	}
+				// }
+				// let newt = setTimeout(()=>{
+				// 	console.log('执行了新的setTimeout')
+				// },1000)
+				
+				let p = new Proxy(this.is_goto, {
+					get (target, key, proxy) {
+						console.log('get---------------')
+						console.log('target=',target)
+						console.log('key=',key)
+						console.log('proxy=',proxy)
+						return Reflect.get(target, key, proxy)
+					},
+					set (target, key, value, proxy) {
+						console.log('set---------------')
+						console.log('target=',target)
+						console.log('key=',key)
+						console.log('value=',value)
+						console.log('proxy=',proxy)
+						return Reflect.set(target, key, value, proxy)
+					},
+					apply (target, _this, args) {
+						console.log('apply---------------')
+						console.log('target=',target)
+						console.log('_this=',_this)
+						console.log('args=',args)
+						if(args.length === 0) {
+							throw '请填写路由名称'
+						}
+						return Reflect.apply(...arguments)
+				    }
+				})
+				
+				// let dd = {dd:'ddd',p,check:true}
+				// dd.p('login')
+				// p()
+				
+				let setStorageSync = uni.setStorageSync
+				let is_cache = new Proxy(uni.setStorageSync, {
+					apply (target, _this, args) {
+						console.log('apply---------------')
+						console.log('target=',target)
+						console.log('_this=',_this)
+						console.log('args=',args)
+						let key = args[0],val = args[1],time = args[2] || 5
+						console.log(time)
+						if(!key || !val) throw '必须填写键和值!'
+						if(key && val && time > 0) {
+							if(val === '{}') return false
+							if(val instanceof Object) val = JSON.stringify(val)
+							let now = new Date().getTime() + time * 60 * 1000
+							setStorageSync(key,val,-1)
+							setStorageSync(key+'_time',now,-1)
+							Reflect.apply(...arguments)
+							return true
+						}
+						return false
+				    }
+				})
+				
+				uni.setStorageSync = is_cache
+				
+				// let a = is_cache('aa','i am val',60)
+				// console.log(a)
+				let b = uni.setStorageSync('key','val')
+				console.log(b)
+				
+				// const set_cache = (key,data,time = 5) => {
+					
+				// 	if(data === '{}') return false
+				// 	if(data instanceof Object) data = JSON.stringify(data)
+					
+				// 	// console.log("set_cache key="+key)
+				// 	// console.log("set_cache data="+JSON.stringify(data))
+				
+				// 	try{
+				// 		let now = new Date().getTime() + time * 60 * 1000
+						
+				// 		uni.setStorageSync(key,data)
+				// 		uni.setStorageSync(key+'_time',now)
+				// 	}catch(e){
+				// 		return false
+				// 	}
+					
+				// 	return true
+				// }
+			},
 			//跳转路由
 			goto_router(){
 				// common/router/index.js 配置路由
@@ -64,13 +171,13 @@
 				//执行单个对象fun
 				this.append_obj.fun(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
 				console.log(this.append_obj.page_list)	//默认返回到data数据
-				this.append_obj.loadMoreText = '设置的加载字符'
 				
-				//复用 minix append_obj 不冲突 ↓
-				const obj = this.get_load_append_class() //重新获取对象
+				//获取 append_obj 对象 ↓
+				const obj = this.get_append_class() //重新获取对象
 				obj.api_action = '接口名称'
+				obj.api_param = {}	//param参数
+				obj.fun()
 				//... 以上相同步骤 => obj.fun()
-				this.load_append_fun(1,0,false)// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
 				console.log(this.append_obj.page_list)	//默认返回到data数据
 			},
 			//修改数据
