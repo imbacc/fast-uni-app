@@ -5,11 +5,11 @@
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
-	//请求时间设置
-	"networkTimeout" : {
-	    "request" : 6789,		//请求时间
-	    "uploadFile" : 6789		//上传文件时间
-	},
+    //请求时间设置
+    "networkTimeout" : {
+        "request" : 6789, //请求时间
+        "uploadFile" : 6789 //上传文件时间
+    },
     "app-plus" : {
         /* 5+App特有相关 */
         "usingComponents" : true,
@@ -60,10 +60,11 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wxc1bc3b653c3df85d",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "minified" : true
         },
         "usingComponents" : true
     },
@@ -71,21 +72,22 @@
         "setting" : {
             "es6" : true
         }
-	// "h5": {
-	// 	"devServer": {
-	// 	      "port": 8080,
-	// 	      "disableHostCheck": true,
-	// 	      "proxy": {
-	// 	          "/api": {
-	// 	              "target": "http://192.168.0.106:3000/",
-	// 	              "changeOrigin": true,
-	// 	              "secure": false,
-	// 				  "pathRewrite": {
-	// 					"^/api": "/"
-	// 				  }
-	// 	          }
-	// 	      }
-	// 	}
-	// }
-	}
+    }
 }
+// "h5": {
+// 	"devServer": {
+// 	      "port": 8080,
+// 	      "disableHostCheck": true,
+// 	      "proxy": {
+// 	          "/api": {
+// 	              "target": "http://192.168.0.106:3000/",
+// 	              "changeOrigin": true,
+// 	              "secure": false,
+// 				  "pathRewrite": {
+// 					"^/api": "/"
+// 				  }
+// 	          }
+// 	      }
+// 	}
+// }
+
