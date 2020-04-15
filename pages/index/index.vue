@@ -39,7 +39,7 @@
 		methods: {
 			//测试
 			test() {
-				let timeout = window.setTimeout
+				// let timeout = window.setTimeout
 				// setTimeout = (fun, time) => {
 				// 	if(typeof fun === "function"){
 				// 		return timeout(() => {
@@ -120,26 +120,6 @@
 				// console.log(a)
 				let b = uni.setStorageSync('key','val')
 				console.log(b)
-				
-				// const set_cache = (key,data,time = 5) => {
-					
-				// 	if(data === '{}') return false
-				// 	if(data instanceof Object) data = JSON.stringify(data)
-					
-				// 	// console.log("set_cache key="+key)
-				// 	// console.log("set_cache data="+JSON.stringify(data))
-				
-				// 	try{
-				// 		let now = new Date().getTime() + time * 60 * 1000
-						
-				// 		uni.setStorageSync(key,data)
-				// 		uni.setStorageSync(key+'_time',now)
-				// 	}catch(e){
-				// 		return false
-				// 	}
-					
-				// 	return true
-				// }
 			},
 			//跳转路由
 			goto_router(){
