@@ -1,3 +1,4 @@
+// check选中选项
 export default {
 	methods: {
 		check_child(index,name,obj = false,ck = 'none') {

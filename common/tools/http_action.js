@@ -20,27 +20,48 @@ const get_args = (json = {},cur = [1,10]) => {
  * @param {page}	是否分页
  * @param {cache}   缓存时间 默认为0 不缓存 分钟单位
  * @param {type}	默认请求类型type为是post请求
+ * @param {onec}	外链请求
  */
-const http_action = async (api, param = {}, body = {}, is_page = false, cache_time = 0, req_type = 'POST') => {
+const http_action = async (api, param = {}, body = {}, is_page = false, cache_time = 0, req_type = 'POST', onec = false) => {
 	
-	if(api) api = api_name[api]
-	if(is_page) param = get_args(param,is_page)
+	if (api && !onec) {
+	  if (api.constructor === String && api.length > 0) api = api_name[api]
+	  if (api.constructor === Array && api.length > 0) {
+		const [name, type, time] = api
+		if (name) api = name
+		if (type) req_type = type
+		if (time) cache_time = time
+	  }
+	}
+	
+	if (is_page) param = get_args(param,is_page)
+	if (api.indexOf(':id') !== -1) {
+		if (param['_id'] === undefined) {
+			console.error('没有传参ID...')
+			return false
+		}
+		api = api.replace(':id', param['_id'])
+		delete param['_id']
+	}
 	
 	let key_api = `${api}?${qs.stringify(param)}`
-	let body_md5 = md5(qs.stringify(body))
-	let sum_body = key_api + 'bodymd5=' + body_md5
+	const body_md5 = md5(qs.stringify(body))
+	const sum_body = `${key_api}?bodymd5=${body_md5}`
+	
+	if (key_api.length === key_api.lastIndexOf('?') + 1) key_api = key_api.substring(0, key_api.length - 1)
 	
 	if(cache_time > 0){
-		let cache = is_cache.get_cache('cache_'+sum_body)
+		const cache = is_cache.get_cache('cache_'+sum_body)
 		console.log('cache service:'+api, cache)
 		if(cache) return cache
 	}
 	
-	let is_http = http_intercept[req_type.toLocaleLowerCase()](key_api, body)
+	const is_http = http_intercept[req_type.toLocaleLowerCase()](key_api, body)
 	
 	return await is_http.then((res) => {
 		if(res === 'false') return false
 		if(cache_time > 0 && res) is_cache.set_cache('cache_'+sum_body,res,cache_time)
+		if(cache_time === 0 && res) is_cache.del_cache('cache_'+sum_body)
 		console.log('service:'+key_api, res)
 		return res || false
 	})

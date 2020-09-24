@@ -1,9 +1,18 @@
 //路由路径封装
 
-import user_router from './module/user_router.js';
+// 获取module文件下子模块内容
+const modulesFiles = require.context('./module', true, /\.js$/)
+const modules = modulesFiles.keys().reduce((module, modulePath) => {
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  module = {...module, ...value.default} 
+  return module
+}, {})
+
+console.log('router modules=', modules)
 
 export default {
-	...user_router,
+	...modules,
 	
 	index:'/pages/index/index',
 	login:'/pages/login/login',

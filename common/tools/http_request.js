@@ -63,8 +63,12 @@ export default {
 			if (this.interceptor.request) {
 				this.interceptor.request(_config)
 			}
+			
+			console.log('_config=', _config)
 
-			uni.request(_config)
+			const uni_request = uni.request(_config)
+			
+			if (_config.data._roolback) uni_request.abort()
 		});
 	},
 	get(url, data, option) {

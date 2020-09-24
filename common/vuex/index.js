@@ -3,10 +3,16 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-//vuex 模块
-import version_module from './module/version_vuex.js'
-import user_module from './module/user_vuex.js'
-import push_module from './module/push_vuex.js'
+// 获取module文件下子模块内容
+const modulesFiles = require.context('./module', true, /\.js$/)
+const modules = modulesFiles.keys().reduce((module, modulePath) => {
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  module[moduleName] = value.default
+  return module
+}, {})
+
+console.log('vuex modules=', modules)
 
 //全局状态
 const state = {
@@ -33,13 +39,6 @@ const getters = {
 //异步方法
 const actions = {
 	
-}
-
-//模块
-const modules = {
-	version_module,
-	user_module,
-	push_module,
 }
 
 const store = new Vuex.Store({

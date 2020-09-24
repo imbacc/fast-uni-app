@@ -14,19 +14,23 @@ const error_msg = (msg) => {
 
 //设置请求拦截
 http.interceptor.request = (config) => {
-		
+	
+	console.log(config)
+	
+	let token = uni.getStorageSync('token') || ''
+	
 	//添加通用参数
 	config.header = {
 		'authorization':`Bearer ${token}`,
 	}
-	
-	if(config.url.indexOf('version') !== -1) config.header['nocheck'] = true
 	
 	// console.log('【config】 '+JSON.stringify(config))
 }
 
 //设置响应拦截
 http.interceptor.response = (res) => {
+	
+	// console.log('【response】 ', res)
 	
 	if(res.statusCode === 401){
 		console.log('401错误',res.errMsg)
@@ -47,9 +51,6 @@ http.interceptor.response = (res) => {
 		error_msg('网络异常')
 		return 'false'
 	}
-	
-	// console.log('【response】 ')
-	// console.log(res)
 	
 	if(res.data.code === -403 || res.data.code === -404 || res.data.code === -444 || res.data.code === -500) return false
 	

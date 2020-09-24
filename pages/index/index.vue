@@ -15,15 +15,14 @@
 </template>
 
 <script>
-	import md5 from '../../common/lib/md5.min.js';
-	
-	import cache_time from '../../common/tools/cache_time.js';
+	import md5 from '@/common/lib/md5.min.js';
+	import cache_time from '@/common/tools/cache_time.js';
 	
 	//导入Minix
-	import {append_data,update_data} from '@/common/minix/index.js';
+	import minix from '@/common/minix/index.js';
 	
 	export default {
-		mixins:[append_data,update_data],
+		mixins:[minix.append_data],
 		data() {
 			return {
 				show_loading:true,
@@ -35,62 +34,23 @@
 				this.show_loading = false
 			},800)
 			console.log(md5('fast-uni-app'+Math.floor((Math.random()*100)+1)))
+			console.log('minix=',minix.append_data)
+			console.log(this.get_append_class())
+			console.log(this.is_vuex.state.user_vuex)
+			
+			this.action()
 		},
 		methods: {
-			//测试
+			action() {
+				this.is_action('app_111', {}, {_roolback:true})	// 中断请求 放在body里面
+				this.is_action('app_222', {_id:222})			// api/:id/fff
+				this.is_action('app_333')
+				this.is_action('app_444')
+				this.is_action('app_555')
+				this.is_action('app_666', {_id:666})
+			},
+			//测试proxy
 			test() {
-				// let timeout = window.setTimeout
-				// setTimeout = (fun, time) => {
-				// 	if(typeof fun === "function"){
-				// 		return timeout(() => {
-				// 			try {
-				// 				fun.apply(this, arguments)
-				// 			} catch (error) {
-				// 				// 对 error 进行加工后上报给服务器
-				// 				console.log(error)
-				// 				throw error
-				// 			}
-				// 		}, time)
-				// 	}else{
-				// 		console.log('不是个有效的setTimeout')
-				// 	}
-				// }
-				// let newt = setTimeout(()=>{
-				// 	console.log('执行了新的setTimeout')
-				// },1000)
-				
-				let p = new Proxy(this.is_goto, {
-					get (target, key, proxy) {
-						console.log('get---------------')
-						console.log('target=',target)
-						console.log('key=',key)
-						console.log('proxy=',proxy)
-						return Reflect.get(target, key, proxy)
-					},
-					set (target, key, value, proxy) {
-						console.log('set---------------')
-						console.log('target=',target)
-						console.log('key=',key)
-						console.log('value=',value)
-						console.log('proxy=',proxy)
-						return Reflect.set(target, key, value, proxy)
-					},
-					apply (target, _this, args) {
-						console.log('apply---------------')
-						console.log('target=',target)
-						console.log('_this=',_this)
-						console.log('args=',args)
-						if(args.length === 0) {
-							throw '请填写路由名称'
-						}
-						return Reflect.apply(...arguments)
-				    }
-				})
-				
-				// let dd = {dd:'ddd',p,check:true}
-				// dd.p('login')
-				// p()
-				
 				let setStorageSync = uni.setStorageSync
 				let is_cache = new Proxy(uni.setStorageSync, {
 					apply (target, _this, args) {
@@ -116,8 +76,8 @@
 				
 				uni.setStorageSync = is_cache
 				
-				// let a = is_cache('aa','i am val',60)
-				// console.log(a)
+				let a = is_cache('aa','i am val',60)
+				console.log(a)
 				let b = uni.setStorageSync('key','val')
 				console.log(b)
 			},
@@ -160,11 +120,6 @@
 				//... 以上相同步骤 => obj.fun()
 				console.log(this.append_obj.page_list)	//默认返回到data数据
 			},
-			//修改数据
-			update_data(){
-				//用法跟 load_info 相同 只是少了 缓存参数 必须在回调里获取执行结果
-				this.update_info('接口名称',{},{},(res)=>{'回调'})
-			},
 			//加载数据
 			action_fun(){
 				/**
@@ -175,7 +130,7 @@
 				 * @param {cache}   缓存时间 默认为0 不缓存 分钟单位
 				 * @param {type}	默认请求类型type为是post请求
 				 */
-				this.is_action('API名称',{body:'body'},false,0,'post')
+				this.is_action('API名称',{body:'body'},{},false,0,'post')
 				
 				//代理进入manifest.json h5 注释部分代理
 			},
@@ -192,7 +147,7 @@
 				this.is_vuex.dispatch('action名称')	//全局名称
 				
 				this.is_vuex.app_version			//主模块state
-				this.is_vuex.user_module.userInfo	//user_module模块state
+				this.is_vuex.user_vuex.userInfo		//user_module模块state
 			}
 		}
 	}

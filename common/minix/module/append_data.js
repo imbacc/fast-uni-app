@@ -1,5 +1,6 @@
 import append_data_class from '../../class/append_data_class.js';
 
+// 初始化数据和上拉,下拉加载
 export default{
 	data() {
 		return {

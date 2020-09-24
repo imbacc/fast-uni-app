@@ -26,7 +26,7 @@
  ├── components                  组件 插件市场 https://ext.dcloud.net.cn/plugin
  ├── hybrid                      混合html
  ├── pages                       页面
- ├── pagesA                      分包页面 可配置分包路由 https://uniapp.dcloud.io/collocation/pages?id=subpackages
+ ├── pagesA                      可配置分包路由 https://uniapp.dcloud.io/collocation/pages?id=subpackages
  ├── static                      静态资源
  ├── .gitignore                  忽略提交到git目录文件
  ├── App.vue                     入口生命周期
