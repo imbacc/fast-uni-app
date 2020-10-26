@@ -37,19 +37,19 @@ http.interceptor.response = (res) => {
 		error_msg('登录信息已失效')
 		uni.clearStorage()
 		uni.reLaunch({url:'/pages/login/login',animationType:'slide-in-bottom'})
-		return 'false'
+		return Boolean(false)
 	}
 	
 	if(res.statusCode === 503){
 		console.log('503错误',res.errMsg)
 		error_msg('503错误')
-		return 'false'
+		return Boolean(false)
 	}
 	
 	if(res.errMsg.toString().indexOf('fail') !== -1 || res.statusCode === 0){
 		console.log('网络异常:',res.errMsg)
 		error_msg('网络异常')
-		return 'false'
+		return Boolean(false)
 	}
 	
 	if(res.data.code === -403 || res.data.code === -404 || res.data.code === -444 || res.data.code === -500) return false
@@ -68,7 +68,7 @@ http.interceptor.response = (res) => {
 			error_msg('网络异常')
 		}
 		console.error('服务报错:',res.data.msg)
-		return 'false'
+		return Boolean(false)
 	}
 	
     return res

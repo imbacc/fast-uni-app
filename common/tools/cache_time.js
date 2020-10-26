@@ -54,8 +54,13 @@ const get_cache = (key) => {
 	return false
 }
 
+const del_cache = (key) => {
+  uni.removeStorageSync(key)
+  uni.removeStorageSync(key + '_time')
+}
 
 export default {
 	set_cache,
-	get_cache
+	get_cache,
+	del_cache
 }
