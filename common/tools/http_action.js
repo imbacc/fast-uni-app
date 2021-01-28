@@ -1,8 +1,6 @@
-import api_name from '../config/api.js' 			//导入API
 import http_intercept from './http_interceptor.js'	//拦截请求
-import is_cache from './cache_time.js'				//缓存
+import { set_cache, get_cache, del_cache } from './cache_time.js'				//缓存
 import qs from 'qs'
-import md5 from '../lib/md5.min.js';
 
 const get_args = (json = {},cur = [1,10]) => {
   cur[0] <= 0 ? cur[0] = 1 : false
@@ -12,27 +10,27 @@ const get_args = (json = {},cur = [1,10]) => {
   return json
 }
 
-//封装的get post请求
 /**
+ * 封装的get post请求
  * @param {api}		请求API地址
- * @param {param}	追加参数
+ * @param {param}	追加参数(_cache 缓存时间 默认为0 分钟单位) (_page 是否分页) (_onec 外链请求)
  * @param {body}	表单数据
- * @param {page}	是否分页
- * @param {cache}   缓存时间 默认为0 分钟单位
- * @param {type}	默认请求类型type为是post请求
- * @param {onec}	外链请求
+ * @param {type}	默认请求类型type为是POST请求
  */
-const http_action = async (api, param = {}, body = {}, req_type = 'POST', onec = false) => {
+const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 	let cache_time = 0
 
-	if (api && !onec) {
-	  if (api.constructor === String && api.length > 0) api = api_name[api]
+	if (api && !param['_onec']) {
 	  if (api.constructor === Array && api.length > 0) {
 		const [name, type, time] = api
 		if (name) api = name
 		if (type) req_type = type
 		if (time) cache_time = time
 	  }
+	}
+	
+	if (param['_onec']) {
+		delete param['_onec']
 	}
 
 	if (param['_page']) {
@@ -47,7 +45,7 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST', onec =
 	
 	if (api.indexOf(':id') !== -1) {
 		if (param['_id'] === undefined) {
-			console.error('没有传参ID...')
+			console.error(`${api} 没有传参数ID 格式 param -> { _id: 10086 }`)
 			return false
 		}
 		api = api.replace(':id', param['_id'])
@@ -55,23 +53,22 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST', onec =
 	}
 	
 	let key_api = `${api}?${qs.stringify(param)}`
-	const body_md5 = md5(qs.stringify(body))
-	const sum_body = `${key_api}?bodymd5=${body_md5}`
+	const cache_name = `cache_${key_api}?base64=${btoa(qs.stringify(body))}`
 	
 	if (key_api.length === key_api.lastIndexOf('?') + 1) key_api = key_api.substring(0, key_api.length - 1)
 	
 	if (cache_time > 0){
-		const cache = is_cache.get_cache('cache_' + sum_body)
+		const cache = get_cache(cache_name)
 		console.log('cache service:' + api, cache)
-		if (cache) return cache
+		if (cache && cache !== false) return await cache
 	}
 	
 	const is_http = http_intercept[req_type.toLocaleLowerCase()](key_api, body)
 	
 	return await is_http.then((res) => {
 		if (res === false) return false
-		if (cache_time > 0 && res) is_cache.set_cache('cache_' + sum_body, res, cache_time)
-		if (cache_time === 0 && res) is_cache.del_cache('cache_' + sum_body)
+		if (cache_time > 0 && res) set_cache(cache_name, res, cache_time)
+		if (cache_time === 0 && res) del_cache(cache_name)
 		console.log('service:' + key_api, res)
 		return res || false
 	})

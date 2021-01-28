@@ -1,4 +1,4 @@
-import send_code_class from '../../class/send_code_class.js';
+import sendCode from '@/common/class/send_code.js';
 
 export default{
 	data(){
@@ -8,7 +8,7 @@ export default{
 	},
 	methods: {
 		get_send_class(){
-			return new send_code_class(this)
+			return new sendCode(this)
 		}
 	},
 }

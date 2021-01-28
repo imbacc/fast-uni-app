@@ -1,13 +1,12 @@
-import is_router from '../router'
-import is_vuex from '../vuex'
-import cfg from '../config/cfg.js';
+import is_router from '@/common/router/index.js'
+import { dispatch } from '@/common/store/index.js'
+import cfg from '@/common/config/cfg.js';
+
+// 解构出来提升js执行速度
+const { navigateTo, redirectTo, reLaunch, switchTab, navigateBack } = uni
 
 //检查用户登录状态
-const check_login = async () => {
-	let is_login = uni.getStorageSync('token') || false
-	if(is_login) return true
-	return await is_vuex.dispatch('check_login')
-}
+const checkLoginStore = async () => await dispatch('user_vuex/check_login')
 
 /**
  * 跳转封装 - 默认根据页面路径跳转
@@ -24,24 +23,23 @@ const goto_fun = (url,type,acg,fun,last) => {
 		return
 	}
 	const obj = {url: url,animationType: acg}
-	if (type === 1) uni.navigateTo(obj)
-	if (type === 2) uni.redirectTo(obj)
-	if (type === 3) uni.reLaunch(obj)
-	if (type === 4) uni.switchTab(obj)
-	if (type === 5) uni.navigateBack({url: url,animationType: acg,delta: 1})
+	if (type === 1) navigateTo(obj)
+	if (type === 2) redirectTo(obj)
+	if (type === 3) reLaunch(obj)
+	if (type === 4) switchTab(obj)
+	if (type === 5) navigateBack({ ...obj, delta: 1 })
 	if (last) typeof fun === "function" ? fun() : false
 }
 
 //根据配置的路由名字跳转
 const goto_router = (name,query = '',type = 1,acg = 'pop-in',fun,last = true) => {
-	let router = is_router[name],url = query != '' ? router + query : router;
-	check_login().then((res)=> {
-		console.log('check_login',res)
-		if(!cfg.check_login){
-			goto_fun(url,type,acg,fun,last)
-			return
-		}
-		res ? goto_fun(url,type,acg,fun,last) : uni.reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
+	let router = is_router[name], url = query != '' ? router + query : router;
+	if(!cfg.checkLogin){
+		goto_fun(url,type,acg,fun,last)
+		return
+	}
+	checkLoginStore().then((res)=> {
+		res ? goto_fun(url,type,acg,fun,last) : reLaunch({url:is_router.login,animationType:'slide-in-bottom'})
 	})
 }
 

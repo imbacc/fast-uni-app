@@ -2,6 +2,7 @@
  * 拦截请求
  */
 import http from './http_request.js'
+import store from '../store/index.js'
 
 const error_msg = (msg) => {
 	uni.showToast({
@@ -14,10 +15,8 @@ const error_msg = (msg) => {
 
 //设置请求拦截
 http.interceptor.request = (config) => {
-	
-	console.log(config)
-	
-	let token = uni.getStorageSync('token') || ''
+	// console.log(config)
+	let token = store.state.user_vuex.token || ''
 	
 	//添加通用参数
 	config.header = {
@@ -32,42 +31,42 @@ http.interceptor.response = (res) => {
 	
 	// console.log('【response】 ', res)
 	
-	if(res.statusCode === 401){
-		console.log('401错误',res.errMsg)
+	const { statusCode, errMsg } = res
+	
+	if(statusCode === 401){
+		console.log('401错误',errMsg)
 		error_msg('登录信息已失效')
 		uni.clearStorage()
 		uni.reLaunch({url:'/pages/login/login',animationType:'slide-in-bottom'})
 		return Boolean(false)
 	}
 	
-	if(res.statusCode === 503){
-		console.log('503错误',res.errMsg)
+	if(statusCode === 503){
+		console.log('503错误',errMsg)
 		error_msg('503错误')
 		return Boolean(false)
 	}
 	
-	if(res.errMsg.toString().indexOf('fail') !== -1 || res.statusCode === 0){
-		console.log('网络异常:',res.errMsg)
+	if(errMsg.toString().indexOf('fail') !== -1 || statusCode === 0){
+		console.log('网络异常:',errMsg)
 		error_msg('网络异常')
 		return Boolean(false)
 	}
 	
-	if(res.data.code === -403 || res.data.code === -404 || res.data.code === -444 || res.data.code === -500) return false
+	const { data } = res
 	
-	if(res.data.code === 1 || res.data.code === 2){
-		if(res.data.hasOwnProperty('token')){
-			uni.setStorageSync('token',res.data.token)
+	if(data.code === -403 || data.code === -404 || data.code === -444 || data.code === -500) return false
+	
+	if(data.code === 1 || data.code === 2){
+		if(data.hasOwnProperty('token')){
+			uni.setStorageSync('token',data.token)
 			console.log('token success')
 		}
-		console.log('拦截通知:',res.data.msg)
-		return res.data.data
+		console.log('拦截通知:',data.msg)
+		return data.data
 	}else{
-		try{
-			error_msg(res.data.msg ? res.data.msg : 'loading...')
-		}catch(e){
-			error_msg('网络异常')
-		}
-		console.error('服务报错:',res.data.msg)
+		error_msg(data.msg ? data.msg : 'loading...')
+		console.error('服务报错:',data.msg)
 		return Boolean(false)
 	}
 	

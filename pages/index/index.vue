@@ -11,12 +11,15 @@
 		</view>
 		
 		<view @tap="test">测试方法</view>
+		
+		<button @tap="api3_action">我是vue2 Action api</button>
+		<hr/>
+		<button @tap="api3_action">我是模仿vue3 Action api</button>
 	</view>
 </template>
 
 <script>
-	import md5 from '@/common/lib/md5.min.js';
-	import cache_time from '@/common/tools/cache_time.js';
+	import api from '@/common/config/api.js'
 	
 	//导入Minix
 	import minix from '@/common/minix/index.js';
@@ -33,21 +36,43 @@
 				clearTimeout(time)
 				this.show_loading = false
 			},800)
-			console.log(md5('fast-uni-app'+Math.floor((Math.random()*100)+1)))
-			console.log('minix=',minix.append_data)
-			console.log(this.get_append_class())
-			console.log(this.is_vuex.state.user_vuex)
+			// console.log('minix=',minix.append_data)
+			// console.log(this.get_append_class())
+			// console.log(this.is_vuex.state.user_vuex)
 			
-			this.action()
+			// this.action()
 		},
 		methods: {
+			api3_action() {
+				// console.log('11111111', 11111111)
+				const test_api_get_test = () => api('test_api/get_test') // 请求test_api.js 里的 get_test
+				const test_api_get_test222 = () => api('test_api/get_test222', { _id: 222 }) // 请求test_api.js 里的 get_test222
+				const test_api_get_test333 = () => api('test_api/get_test333', { is: 'param' }, { body: '我是body' }, 'POST') // 请求test_api.js 里的 get_test222
+				const app_111 = () => api('app_111')
+				const app_222 = () => api('app_222', { _id: 222 })
+				const app_333 = () => api('app_333', { _id: 333 })
+				const app_444 = () => api('app_444')
+				const app_555 = () => api('app_555')
+				const app_666 = () => api('app_666', { _id: 666 }, { body: '这是POST请求,我是body' })
+				const user_get_user = () => api('user/get_user')
+				
+				const all_request = () => {
+					const all = [test_api_get_test, test_api_get_test222, test_api_get_test333, app_111, app_222, app_333, app_444, app_555, app_666, user_get_user]
+					const pro = []
+					all.forEach((request) => pro.push(request()))
+					Promise.allSettled(pro).then((res) => setTimeout(() => console.log('Promise.allSettled=', res), 10))
+				}
+				
+				all_request()
+			},
 			action() {
-				this.is_action('app_111', {}, {_roolback:true})	// 中断请求 放在body里面
-				this.is_action('app_222', {_id:222})			// api/:id/fff
-				this.is_action('app_333')
-				this.is_action('app_444')
-				this.is_action('app_555')
-				this.is_action('app_666', {_id:666})
+				const { is_action } = this
+				is_action('app_111', {}, {_roolback:true})	// 中断请求 放在body里面
+				is_action('app_222', {_id:222})			// api/:id/fff
+				is_action('app_333')
+				is_action('app_444')
+				is_action('app_555')
+				is_action('app_666', {_id:666})
 			},
 			//测试proxy
 			test() {

@@ -1,5 +1,5 @@
-import http_action from '../../tools/http_action.js';
-import is_cache from '../../tools/cache_time.js' 	//导入缓存时间控制
+import http_action from '@/common/tools/http_action.js';
+import { set_cache } from '@/common/tools/cache_time.js' 	//导入缓存时间控制
 
 const SYSTEM_INFO = uni.getSystemInfoSync() 		//获取system信息
 const NODE_DEV = process.env.NODE_ENV
@@ -36,7 +36,6 @@ const actions = {
 	//app更新
 	app_version({commit}, id) {
 		console.log('检测Version版本...')
-		
 		const sysinfo = state.system_info
 		
 		id = sysinfo.platform === 'android' ? 1 : 2
@@ -55,7 +54,7 @@ const actions = {
 					console.log("手机系统版本"+res.system)
 					
 					if(sys_version != res.version){
-						is_cache.set_cache('capp_update', res, 30)
+						set_cache('capp_update', res, 30)
 						uni.navigateTo({url:router.version})
 					}
 				}
@@ -65,6 +64,7 @@ const actions = {
 }
 
 export default {
+	namespaced: true,
 	state,
 	mutations,
 	getters,

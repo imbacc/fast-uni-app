@@ -14,7 +14,8 @@
   "devDependencies": {
     "@dcloudio/uni-helper-json": "^1.0.7",
     "@types/html5plus": "^1.0.1",
-    "@types/uni-app": "^1.4.3"
+    "@types/uni-app": "^1.4.3",
+    "compression-webpack-plugin": "^7.1.2"
   },
   "author": "imbacc",
   "license": "ISC",

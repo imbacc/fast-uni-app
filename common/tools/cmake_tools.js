@@ -2,12 +2,6 @@ var startTime = 0,timer = null
 
 const fun = {
 	
-	////显示相应消息
-	to_hideLoad:() => uni.hideLoading(),
-	
-	//显示加载load
-	to_showLoad:(msg = 'loading...') => uni.showLoading({title: msg}),
-	
 	//显示showToast
 	to_msg:(msg = '服务器打瞌睡了...',mask = false) => uni.showToast({ title: msg,icon: 'none',mask: mask}),
 	
@@ -34,12 +28,12 @@ const fun = {
 			let minute = 1000 * 60
 			let hour = minute * 60
 			let day = hour * 24
-			let halfamonth = day * 15
-			let month = day * 30
+			// let halfamonth = day * 15
+			// let month = day * 30
 			let now = new Date().getTime()
 			let diffValue = now - datetime
 			if(diffValue < 0) return
-			let monthC = diffValue/month
+			let monthC = diffValue/ day * 30
 			let weekC = diffValue/(7*day)
 			let dayC = diffValue/day
 			let hourC = diffValue/hour

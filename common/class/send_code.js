@@ -1,10 +1,10 @@
-class send_code_class{
+class sendCode {
 	constructor(vm) {
 	    this.refush_time = 0
 	    this.is_refushing = false
 	    this.but_lab = '获取验证码'
-		this.is_tools = vm.is_tools
-		this.is_action = vm.is_action
+		this._is_tools = vm.is_tools
+		this._is_action = vm.is_action
 	}
 	
 	refush_code(){
@@ -22,20 +22,21 @@ class send_code_class{
 	}
 	
 	get_code(tel){
+		const { refush_code, _is_tools, _is_action } = this
 		if(this.is_refushing) return
-		if(!this.is_tools.test_tel(tel)){
-			this.is_tools.to_msg('不是有效的手机号码!','warning')
+		if(!_is_tools.test_tel(tel)){
+			_is_tools.to_msg('不是有效的手机号码!','warning')
 			return
 		}
+		let _this = this
 		this.but_lab = '正在发送...',
 		this.is_refushing = true
-	    let _this = this
-	    this.is_action('send_sms',{phone:tel},{},false,0,'get').then((res)=>{
-			_this.is_tools.to_msg(res ? '发送成功!' : '发送失败!')
+	    _is_action('send_sms',{phone:tel},{},false,0,'get').then((res)=>{
+			_is_tools.to_msg(res ? '发送成功!' : '发送失败!')
 			if(res){
-				_this.refush_time = 120,
+				_this.refush_time = 120
 				_this.is_refushing = true
-				_this.refush_code()
+				refush_code()
 			}else{
 				_this.is_refushing = false
 				_this.but_lab = '重新发送'
@@ -44,4 +45,4 @@ class send_code_class{
 	}
 }
 
-export default send_code_class
+export default sendCode

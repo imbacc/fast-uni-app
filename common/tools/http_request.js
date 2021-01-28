@@ -64,7 +64,7 @@ export default {
 				this.interceptor.request(_config)
 			}
 			
-			console.log('_config=', _config)
+			// console.log('_config=', _config)
 
 			const uni_request = uni.request(_config)
 			

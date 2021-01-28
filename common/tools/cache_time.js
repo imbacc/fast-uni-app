@@ -1,3 +1,6 @@
+
+const { setStorageSync, getStorageSync, removeStorageSync } = uni
+
 /**
  * @param {Object} key	存放名称
  * @param {Object} data 存放数据
@@ -14,8 +17,8 @@ const set_cache = (key,data,time = 5) => {
 	try{
 		let now = new Date().getTime() + time * 60 * 1000
 		
-		uni.setStorageSync(key,data)
-		uni.setStorageSync(key+'_time',now)
+		setStorageSync(key,data)
+		setStorageSync(key+'_time',now)
 	}catch(e){
 		return false
 	}
@@ -28,8 +31,8 @@ const set_cache = (key,data,time = 5) => {
  */
 const get_cache = (key) => {
 
-	let data = uni.getStorageSync(key)
-	let time = uni.getStorageSync(key+'_time')
+	let data = getStorageSync(key)
+	let time = getStorageSync(key+'_time')
 	
 	if(time){
 		let now = new Date().getTime()
@@ -55,8 +58,14 @@ const get_cache = (key) => {
 }
 
 const del_cache = (key) => {
-  uni.removeStorageSync(key)
-  uni.removeStorageSync(key + '_time')
+  removeStorageSync(key)
+  removeStorageSync(key + '_time')
+}
+
+export {
+	set_cache,
+	get_cache,
+	del_cache
 }
 
 export default {

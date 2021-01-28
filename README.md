@@ -3,19 +3,22 @@
  ├── node_modules                依赖包
  ├── common                      源码
  │   ├── class                   对象
- │   │      ├── append_data_class.js            minix里append_data.js对象为了能重复利用
- │   │      ├── send_code_class.js              minix里send_code.js对象为了能重复利用
+ │   │      ├── append_data.js            minix里appendData.js对象为了能重复利用
+ │   │      ├── send_code.js              minix里sendCode.js对象为了能重复利用
  │   ├── config                  配置
- │   │      ├── module           api子配置
- │   │      ├── api.js           api接口配置设定
+ │   │      ├── module           api模块配置
+ │   │      ├── api.js           api入口配置
  │   │      ├── cfg.js           全局配置设定
  │   ├── lib                     js包
  │   ├── minix                   混入函数
- │   │      ├── module           minix子模块
- │   │      ├── index.js         minix统一管理
+ │   │      ├── module           minix模块模块
+ │   │      ├── index.js         minix入口管理
  │   ├── router                  路由页面地址配置
- │   │      ├── module           router子配置
- │   │      ├── index.js         router统一管理
+ │   │      ├── module           router模块配置
+ │   │      ├── index.js         router入口管理
+ │   ├── store                   全局状态管理
+ │   │      ├── module           store模块配置
+ │   │      ├── index.js         store入口管理
  │   ├── tools                   路由页面地址配置
  │   │      ├── cache_time.js    缓存数据时间设定
  │   │      ├── cmake_router.js  路由跳转封装和路由验证拦截
