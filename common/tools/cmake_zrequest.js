@@ -3,7 +3,7 @@
  * 基于 Promise 对象实现更简单的 request 使用方式，支持请求和响应拦截
  */
 
-import cfg from '../config/cfg.js';
+import { baseUrl } from '../config/cfg.js';
 
 const re_method = (url, data, options, method) => {
 	if (!options) options = {}
@@ -15,15 +15,14 @@ const re_method = (url, data, options, method) => {
 
 export default {
 	config: {
-		baseUrl: cfg.baseUrl,
+		baseUrl,
 		header: {
-			'Content-Type':'application/json;charset=UTF-8',
-			'Content-Type':'application/x-www-form-urlencoded'
-		},  
+			'content-Type': 'application/json;charset=UTF-8',
+			// 'content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
+		},
 		data: {},
 		method: "GET",
-		dataType: "json",  /* 如设为json，会对返回的数据做一次 JSON.parse */
-		responseType: "text",
+		dataType: "json",
 		success() {},
 		fail() {},
 		complete() {}
@@ -34,17 +33,17 @@ export default {
 	},
 	request(options) {
 		if (!options) options = {}
-		
+
 		options.baseUrl = options.baseUrl || this.config.baseUrl
 		options.dataType = options.dataType || this.config.dataType
 		options.url = options.baseUrl + options.url
 		options.data = options.data || {}
 		options.method = options.method || this.config.method
-	   
+
 		return new Promise((resolve, reject) => {
 			let _config = null
 			// let dev = process.env.NODE_ENV
-			
+
 			options.complete = (response) => {
 				let statusCode = response.statusCode
 				response.config = _config
@@ -54,7 +53,7 @@ export default {
 						response = newResponse
 					}
 				}
-				
+
 				statusCode === 200 ? resolve(response) : reject(response)
 			}
 
@@ -63,20 +62,26 @@ export default {
 			if (this.interceptor.request) {
 				this.interceptor.request(_config)
 			}
-			
-			// console.log('_config=', _config)
 
+			// _config.withCredentials = true
 			const uni_request = uni.request(_config)
-			
-			if (_config.data._roolback) uni_request.abort()
+			// if (_config.data._roolback) uni_request.abort()
 		});
 	},
 	get(url, data, option) {
-		const options = re_method(url,data,option,'GET')
+		const options = re_method(url, data, option, 'GET')
 		return this.request(options)
 	},
 	post(url, data, option) {
-		const options = re_method(url,data,option,'POST')
+		const options = re_method(url, data, option, 'POST')
+		return this.request(options)
+	},
+	put(url, data, option) {
+		const options = re_method(url, data, option, 'PUT')
+		return this.request(options)
+	},
+	delete(url, data, option) {
+		const options = re_method(url, data, option, 'DELETE')
 		return this.request(options)
 	},
 }

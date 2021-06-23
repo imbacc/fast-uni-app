@@ -6,7 +6,7 @@ const UUID = getStorageSync('uuid') || false					//获取UUID缓存
 const OPENID = getStorageSync('openid') || false 				//获取OPENID缓存
 const TOKEN = getStorageSync('token') || false 					//获取TOKEN缓存
 const USER_INFO = getStorageSync('user_info') || false 			//获取用户信息缓存
-const USER_ROLE = getStorageSync('user_role') || false 			//获取用户权限缓存
+const USER_ROLE = getStorageSync('user_role') || [] 			//获取用户权限缓存
 
 //全局状态
 const state = {
@@ -27,7 +27,7 @@ const mutations = {
 	 * 0是状态属性名称
 	 * 1是赋予状态属性的值
 	 */
-	set_vuex_user(state, info) {
+	set_vuex(state, info) {
 		state[info[0]] = info[1]
 	},
 	set_token(state, info) {

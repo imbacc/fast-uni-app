@@ -1,16 +1,15 @@
-import http_action from '@/common/tools/http_action.js';
-import { set_cache } from '@/common/tools/cache_time.js' 	//导入缓存时间控制
+import api from '@/common/config/api.js';
+import { set_cache } from '@/common/tools/cache_time.js' //导入缓存时间控制
+import { is_dev } from '@/common/config/cfg.js'
 
-const SYSTEM_INFO = uni.getSystemInfoSync() 		//获取system信息
-const NODE_DEV = process.env.NODE_ENV
-
+const SYSTEM_INFO = uni.getSystemInfoSync() //获取system信息
 
 //全局状态
 const state = {
-	system_info:SYSTEM_INFO,	//system信息
+	system_info: SYSTEM_INFO, //system信息
 	app_version: '', //app verison
 	app_sysinfo: '', //app 系统信息
-	app_sysversion:'',//系统 version
+	app_sysversion: '', //系统 version
 }
 
 //同步方法
@@ -20,7 +19,7 @@ const mutations = {
 	 * 0是状态属性名称
 	 * 1是赋予状态属性的值
 	 */
-	set_vuex_version(state, info) {
+	set_vuex(state, info) {
 		console.log(state)
 		state[info[0]] = info[1]
 	},
@@ -28,34 +27,34 @@ const mutations = {
 
 //get方法
 const getters = {
-	
+
 }
 
 //异步方法
 const actions = {
 	//app更新
-	app_version({commit}, id) {
+	app_version({ commit }, id) {
 		console.log('检测Version版本...')
 		const sysinfo = state.system_info
-		
+
 		id = sysinfo.platform === 'android' ? 1 : 2
-		if(parseFloat(sysinfo.system) < 4.4) id = 3
-		
-		http_action('app_version',{id:id},{},false,0,'get').then((res)=>{
-			if(res){
-				if(NODE_DEV === 'development'){
+		if (parseFloat(sysinfo.system) < 4.4) id = 3
+
+		api('verison_api/app_version', { id }).then((res) => {
+			if (res) {
+				if (is_dev) {
 					console.log('开发环境')
-				}else{
-					let sys_version = res.version.replace('.','')
-					sys_version = sys_version.indexOf('.') !== -1 ? sys_version.replace('.','') : parseInt(sys_version)
-					
-					console.log("系统sys_version"+sys_version)
-					console.log("app version"+r.version)
-					console.log("手机系统版本"+res.system)
-					
-					if(sys_version != res.version){
+				} else {
+					let sys_version = res.version.replace('.', '')
+					sys_version = sys_version.indexOf('.') !== -1 ? sys_version.replace('.', '') : parseInt(sys_version)
+
+					console.log("系统sys_version" + sys_version)
+					console.log("app version" + r.version)
+					console.log("手机系统版本" + res.system)
+
+					if (sys_version != res.version) {
 						set_cache('capp_update', res, 30)
-						uni.navigateTo({url:router.version})
+						// uni.navigateTo({ url: router.version })
 					}
 				}
 			}

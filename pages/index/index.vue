@@ -12,9 +12,9 @@
 		
 		<view @tap="test">测试方法</view>
 		
-		<button @tap="api3_action">我是vue2 Action api</button>
+		<button @tap="vue2_action">我是vue2 通过this Action api</button>
 		<hr/>
-		<button @tap="api3_action">我是模仿vue3 Action api</button>
+		<button @tap="vue3_action">我是模仿vue3 引入调用 Action api</button>
 	</view>
 </template>
 
@@ -22,10 +22,10 @@
 	import api from '@/common/config/api.js'
 	
 	//导入Minix
-	import minix from '@/common/minix/index.js';
+	import append_data from '@/common/minix/append_data.js';
 	
 	export default {
-		mixins:[minix.append_data],
+		mixins:[append_data],
 		data() {
 			return {
 				show_loading:true,
@@ -43,7 +43,7 @@
 			// this.action()
 		},
 		methods: {
-			api3_action() {
+			vue3_action() {
 				// console.log('11111111', 11111111)
 				const test_api_get_test = () => api('test_api/get_test') // 请求test_api.js 里的 get_test
 				const test_api_get_test222 = () => api('test_api/get_test222', { _id: 222 }) // 请求test_api.js 里的 get_test222
@@ -65,14 +65,13 @@
 				
 				all_request()
 			},
-			action() {
-				const { is_action } = this
-				is_action('app_111', {}, {_roolback:true})	// 中断请求 放在body里面
-				is_action('app_222', {_id:222})			// api/:id/fff
-				is_action('app_333')
-				is_action('app_444')
-				is_action('app_555')
-				is_action('app_666', {_id:666})
+			vue2_action() {
+				this.is_action('app_111', {}, {_roolback:true})	// 中断请求 放在body里面
+				this.is_action('app_222', {_id:222})			// api/:id/fff
+				this.is_action('app_333', {_id:222})
+				this.is_action('app_444')
+				this.is_action('app_555')
+				this.is_action('app_666', {_id:666})
 			},
 			//测试proxy
 			test() {
@@ -122,43 +121,6 @@
 				//参数同上
 				this.is_gopage('路径跳转')
 			},
-			//加载分页数据
-			init_data_page(){
-				//  common/config/index.js 配置接口
-				//详情看 common/minix/index => load_append 函数
-				this.append_obj.api_action = '接口名称'
-				this.append_obj.api_param = {}	//param参数
-				this.append_obj.api_body = {}	//body参数
-				this.append_obj.api_fun = (res) => {
-					//运行回调
-				}
-				this.append_obj.me_type = 'POST' //post or get
-				//执行单个对象fun
-				this.append_obj.fun(1,0,false)	// 1当前页,0缓存时间分钟单位,false 是否追加list 分页时用到
-				console.log(this.append_obj.page_list)	//默认返回到data数据
-				
-				//获取 append_obj 对象 ↓
-				const obj = this.get_append_class() //重新获取对象
-				obj.api_action = '接口名称'
-				obj.api_param = {}	//param参数
-				obj.fun()
-				//... 以上相同步骤 => obj.fun()
-				console.log(this.append_obj.page_list)	//默认返回到data数据
-			},
-			//加载数据
-			action_fun(){
-				/**
-				 * @param {api}		请求API地址
-				 * @param {param}	追加参数
-				 * @param {body}	表单数据
-				 * @param {page}	是否分页
-				 * @param {cache}   缓存时间 默认为0 不缓存 分钟单位
-				 * @param {type}	默认请求类型type为是post请求
-				 */
-				this.is_action('API名称',{body:'body'},{},false,0,'post')
-				
-				//代理进入manifest.json h5 注释部分代理
-			},
 			//工具集合
 			tools_fun(){
 				this.is_tools.to_msg('dddd')
@@ -168,7 +130,7 @@
 			//vuex用法
 			vuex_fun(){
 				this.is_vuex.commit('set_vuex',['名称','值'])		//set_vuex 是主模块 mutations
-				this.is_vuex.commit('set_vuex_user',['名称','值']) 	//set_vuex_user 是子模块user_module mutations
+				this.is_vuex.commit('user_vuex/set_vuex',['名称','值']) 	//set_vuex_user 是子模块user_module mutations
 				this.is_vuex.dispatch('action名称')	//全局名称
 				
 				this.is_vuex.app_version			//主模块state
@@ -179,6 +141,10 @@
 </script>
 
 <style scoped>
+	.index_content {
+		font-size: 50rpx;
+	}
+	
 	.test_size{
 		height: 200upx;
 		width: 400upx;

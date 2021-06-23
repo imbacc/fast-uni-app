@@ -10,7 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/imbacc/fast-uni-app.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "qs-stringify": "^1.2.1"
+  },
   "devDependencies": {
     "@dcloudio/uni-helper-json": "^1.0.7",
     "@types/html5plus": "^1.0.1",

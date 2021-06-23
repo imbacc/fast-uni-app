@@ -57,18 +57,12 @@ const get_cache = (key) => {
 	return false
 }
 
-const del_cache = (key) => {
+const del_cache = async (key) => {
   removeStorageSync(key)
   removeStorageSync(key + '_time')
 }
 
 export {
-	set_cache,
-	get_cache,
-	del_cache
-}
-
-export default {
 	set_cache,
 	get_cache,
 	del_cache
