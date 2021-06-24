@@ -17,13 +17,17 @@ const error_msg = (title) => {
 
 //设置请求拦截
 http.interceptor.request = (config) => {
+	let token = store.state.user_vuex.token || false
+	if (token) config.header['x-access-token'] = token
 	
-	// console.log(config)
-	let token = store.state.user_vuex.token || ''
+	if (config.data._noToken) {
+		delete config.data['_noToken']
+		delete config.header['x-access-token']
+	}
 	
-	//添加通用参数
-	config.header = {
-		'authorization':`Bearer ${token}`,
+	if (config.data._header) {
+		config.header = { ...config.header, ...config.data._header }
+		delete config.data['_header']
 	}
 	
 	// console.log('【config】 '+JSON.stringify(config))
@@ -62,14 +66,14 @@ http.interceptor.response = (res) => {
 	
 	if(data.code === 1){
 		console.log('拦截通知:', data.msg)
-		return data.data
+		return data.data === null ? true : data.data
 	}else{
 		if (data.msg) error_msg(data.msg ? data.msg : '服务器打瞌睡了')
 		console.error('服务报错:', data.msg)
 		return 'false'
 	}
 	
-    return res
+    return data.data
 }
 
 export default http

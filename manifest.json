@@ -72,6 +72,13 @@
         "setting" : {
             "es6" : true
         }
+    },
+    "h5" : {
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
     }
 }
 // "h5": {

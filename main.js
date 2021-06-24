@@ -17,8 +17,8 @@ Vue.prototype.is_gopage = goto_fun		//直接跳转页面路径
 Vue.prototype.is_cdn = is_cdn
 
 //导入组件 全局化
-import lazyImage from '@/components/lazy-image/lazy-image.vue'
-Vue.component('lazy-image',lazyImage)
+import skeleton from '@/components/skeleton/skeleton.vue'
+Vue.component('skeleton', skeleton)
 
 //导入Minix 全局化
 // import goto_page from '@/common/minix/module/goto_page.js';		//跳转
