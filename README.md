@@ -2,13 +2,17 @@
 ```
  ├── node_modules                依赖包
  ├── common                      源码
- │   ├── class                   类
+ │   ├── class                   对象
+ │   │      ├── append_data.js            minix里appendData.js对象为了能重复利用
+ │   │      ├── send_code.js              minix里sendCode.js对象为了能重复利用
  │   ├── config                  配置
  │   │      ├── module           api模块配置
  │   │      ├── api.js           api入口配置
  │   │      ├── cfg.js           全局配置设定
  │   ├── lib                     js包
  │   ├── minix                   混入函数
+ │   │      ├── module           minix模块模块
+ │   │      ├── index.js         minix入口管理
  │   ├── router                  路由页面地址配置
  │   │      ├── module           router模块配置
  │   │      ├── index.js         router入口管理
@@ -20,8 +24,8 @@
  │   │      ├── cmake_router.js  路由跳转封装和路由验证拦截
  │   │      ├── cmake_tools.js   自定义工具
  │   │      ├── cmake_action.js   请求封装
- │   │      ├── cmake_zinterceptor.js  请求和响应拦截
- │   │      ├── cmake_zrequest.js  对uni API request封装
+ │   │      ├── cmake_interceptor.js  请求和响应拦截
+ │   │      ├── cmake_request.js  对uni API request封装
  ├── components                  组件 插件市场 https://ext.dcloud.net.cn/plugin
  ├── hybrid                      混合html
  ├── pages                       页面

@@ -1,4 +1,5 @@
 .DS_Store
+.hbuilderx
 node_modules
 dist
 unpackage
@@ -23,5 +24,4 @@ yarn-error.log*
 *.sln
 *.sw*
 
-.hbuilderx
 build/env.js

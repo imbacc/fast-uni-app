@@ -18,16 +18,7 @@ export default new Vuex.Store({
 	//全局状态
 	state: {},
 	//同步方法
-	mutations: {
-		/**
-		 * @param {Object} info
-		 * 0是状态属性名称
-		 * 1是赋予状态属性的值
-		 */
-		set_vuex(state, info) {
-			state[info[0]] = info[1]
-		},
-	},
+	mutations: {},
 	//异步方法
 	actions: {},
 	getters: {},
