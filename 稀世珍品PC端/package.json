@@ -1,0 +1,53 @@
+{
+  "name": "vite2-vue3",
+  "version": "1.0.0",
+  "license": "ISC",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development vite",
+    "force": "cross-env NODE_ENV=development vite --force",
+    "debug": "cross-env NODE_ENV=development vite --debug",
+    "build": " cross-env NODE_ENV=production vite build",
+    "serve": "cross-env NODE_ENV=production vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imbacc/vite2-vue3.git"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "nprogress": "^0.2.0",
+    "qs-stringify": "^1.2.1",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.3"
+  },
+  "devDependencies": {
+    "@iconify/json": "^1.1.353",
+    "@vitejs/plugin-vue": "^1.0.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.3.1",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "mockjs": "^1.1.0",
+    "postcss": "^8.3.5",
+    "postcss-pxtorem": "^6.0.0",
+    "prettier": "^2.2.1",
+    "rollup-plugin-gzip": "^2.5.0",
+    "sass": "^1.32.5",
+    "vite": "^2.0.0-beta.12",
+    "vite-plugin-components": "^0.10.4",
+    "vite-plugin-icons": "^0.6.1",
+    "vite-plugin-mock": "^2.0.0-beta.3",
+    "vite-plugin-remote-assets": "^0.2.2",
+    "vite-plugin-windicss": "^0.17.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  }
+}

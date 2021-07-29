@@ -1,0 +1,69 @@
+/* 全局CSS */
+
+body {
+	margin: 0;
+	padding: 0;
+	// height: 100%;
+	overflow: hidden;
+}
+
+// flex
+
+.flex {
+	display: flex;
+}
+
+.flex_center {
+	@extend .flex;
+	justify-content: center;
+}
+
+.flex_align {
+	@extend .flex;
+	align-items: center;
+}
+
+.flex_center_align {
+	@extend .flex_center;
+	@extend .flex_align;
+}
+
+.flex_nowarp {
+	@extend .flex;
+	flex-wrap: nowrap;
+}
+
+.flex_warp {
+	@extend .flex;
+	flex-wrap: wrap;
+}
+
+.flex_between {
+	@extend .flex;
+	justify-content: space-between;
+}
+
+.flex_around {
+	@extend .flex;
+	justify-content: space-around;
+}
+
+.flex_evenly {
+	@extend .flex;
+	justify-content: space-evenly;
+}
+
+.flex_row {
+	@extend .flex;
+	flex-direction: row;
+}
+
+.flex_column {
+	@extend .flex;
+	flex-direction: column;
+}
+
+.flex_end {
+	@extend .flex;
+	justify-content: flex-end;
+}

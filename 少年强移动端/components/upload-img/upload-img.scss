@@ -1,0 +1,48 @@
+.image_up_but {
+	width: 161rpx;
+	height: 142rpx;
+	border-radius: 12rpx;
+	background-color: #fff;
+	text-align: center;
+	font-size: 28rpx;
+	color: #999999;
+	padding-top: 30rpx;
+	margin-right: 12rpx;
+}
+
+.but_img {
+	height: 34rpx;
+	width: 40rpx;
+}
+
+.but_lab {
+	margin-top: 6rpx;
+	font-size: 28rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #999999;
+}
+
+.up_div {
+	width: 161rpx;
+	height: 142rpx;
+	margin-right: 12rpx;
+	margin-bottom: 19rpx;
+	position: relative;
+}
+
+.up_img {
+	width: 161rpx !important;
+	height: 142rpx !important;
+	border-radius: 12rpx;
+	z-index: 1 !important;
+}
+
+.close_img {
+	height: 36rpx;
+	width: 36rpx;
+	position: absolute;
+	right: -11rpx;
+	top: -12rpx;
+	z-index: 2 !important;
+}

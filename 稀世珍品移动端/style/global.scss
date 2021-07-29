@@ -1,0 +1,183 @@
+$theme-color: #E77200;
+
+.fw400 {
+	font-family: PingFang SC;
+	font-weight: 400;
+}
+
+.font {
+	font-family: PingFangSC-Bold, PingFang SC;
+}
+
+.fbold {
+	font-weight: bold;
+}
+
+.f500 {
+	font-weight: 500;
+}
+
+.bg_white {
+	background: #ffffff;
+}
+
+.c333333 {
+	color: #333333;
+}
+
+.c999999 {
+	color: #999999;
+}
+
+.box_shadow {
+	box-shadow: 4rpx 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.h100b {
+	height: 100%;
+}
+
+.w100b {
+	width: 100%;
+}
+
+.min_h100vh {
+	min-height: 100vh;
+}
+
+.hw100b {
+	@extend .h100b;
+	@extend .w100b;
+}
+
+.mt10 {
+	margin-top: 10rpx;
+}
+
+.mb20 {
+	margin-bottom: 20rpx;
+}
+
+.mt40 {
+	margin-top: 40rpx;
+}
+
+
+// anm
+
+.fade {
+	animation: 0.3s fade;
+}
+
+@keyframes fade {
+	from {
+		opacity: 0.1;
+		will-change: transform;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.fade_out {
+	animation: 0.3s fade_out;
+}
+
+@keyframes fade_out {
+	from {
+		opacity: 1;
+		will-change: transform;
+	}
+	to {
+		opacity: 0.1;
+	}
+}
+
+.zoom_in {
+	animation: 0.3s zoom_in;
+}
+
+@keyframes zoom_in {
+	from {
+		transform: scaleX(0.8) scaleY(0.8);
+		will-change: transform;
+	}
+	to {
+		transform: scaleX(1) scaleY(1);
+	}
+}
+
+.zoom_out {
+	animation: 0.3s zoom_out;
+}
+
+@keyframes zoom_out {
+	from {
+		transform: scaleX(1) scaleY(1);
+		will-change: transform;
+	}
+	to {
+		transform: scaleX(0.8) scaleY(0.8);
+	}
+}
+
+// flex
+
+.flex {
+	display: flex;
+}
+
+.flex_center {
+	@extend .flex;
+	justify-content: center;
+}
+
+.flex_align {
+	@extend .flex;
+	align-items: center;
+}
+
+.flex_center_align {
+	@extend .flex_center;
+	@extend .flex_align;
+}
+
+.flex_nowarp {
+	@extend .flex;
+	flex-wrap: nowrap;
+}
+
+.flex_warp {
+	@extend .flex;
+	flex-wrap: wrap;
+}
+
+.flex_between {
+	@extend .flex;
+	justify-content: space-between;
+}
+
+.flex_around {
+	@extend .flex;
+	justify-content: space-around;
+}
+
+.flex_evenly {
+	@extend .flex;
+	justify-content: space-evenly;
+}
+
+.flex_row {
+	@extend .flex;
+	flex-direction: row;
+}
+
+.flex_column {
+	@extend .flex;
+	flex-direction: column;
+}
+
+.flex_end {
+	@extend .flex;
+	justify-content: flex-end;
+}

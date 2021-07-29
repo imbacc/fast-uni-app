@@ -1,0 +1,6 @@
+# eslint 忽略目录:
+node_modules
+.DS_Store
+dist
+dist-ssr
+.history

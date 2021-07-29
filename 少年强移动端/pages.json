@@ -1,0 +1,414 @@
+{
+	"pages": [
+	{
+		// 首页
+		"path": "pages/home/home",
+		"style": {
+			"enablePullDownRefresh": true,
+			"navigationBarTitleText": "少年强拳击",
+			"titleNView": false
+		}
+	}, 
+	{
+		// 课程
+		"path": "pages/course/course",
+		"style": {
+			"enablePullDownRefresh": true,
+			"navigationBarTitleText": "少年强拳击",
+			"titleNView": false
+		}
+	}, 
+	{
+		// 上课预约
+		"path": "pages/course/makeCourse",
+		"style": {
+			"enablePullDownRefresh": true,
+			"navigationBarTitleText": "上课预约"
+		}
+	},
+	{
+		// 我的
+		"path": "pages/my/my",
+		"style": {
+			"navigationBarTitleText": "少年强拳击",
+			"titleNView": false
+		}
+	}
+	, {
+		"path": "pages/courseDetail/courseDetail",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/seat/seat",
+		"style": {
+			"navigationBarTitleText": "切换场馆",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/seatDetail/seatDetail",
+		"style": {
+			"navigationBarTitleText": "当前场馆",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/coachDetail/coachDetail",
+		"style": {
+			"navigationBarTitleText": "教练详情",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/activity/activity",
+		"style": {
+			"navigationBarTitleText": "最新活动",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/activityDetail/activityDetail",
+		"style": {
+			"navigationBarTitleText": "活动详情",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/courseRecommend/courseRecommend",
+		"style": {
+			"navigationBarTitleText": "课程介绍",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/contest/contest",
+		"style": {
+			"navigationBarTitleText": "赛事活动",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/contestDetail/contestDetail",
+		"style": {
+			"navigationBarTitleText": "赛事详情",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/contestReviewDetail/contestReviewDetail",
+		"style": {
+			"navigationBarTitleText": "赛事回顾",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/courseList/courseList",
+		"style": {
+			"navigationBarTitleText": "课程列表",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/set/set",
+		"style": {
+			"navigationBarTitleText": "设置",
+			"enablePullDownRefresh": false
+		}
+	}, 
+	{
+		"path": "pages/set/update_nick",
+		"style": {
+			"navigationBarTitleText": "修改昵称",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/set/update_phone",
+		"style": {
+			"navigationBarTitleText": "更换手机号码",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/courseUpcoming/courseUpcoming",
+		"style": {
+			"navigationBarTitleText": "即将上课",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/courseUpcomingDetail/courseUpcomingDetail",
+		"style": {
+			"navigationBarTitleText": "课程详情",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/selectStudent/selectStudent",
+		"style": {
+			"navigationBarTitleText": "选择学员",
+			"enablePullDownRefresh": false
+		}
+	}, 
+	{
+		"path": "pages/studentInfo/studentInfo",
+		"style": {
+			"navigationBarTitleText": "学员详情",
+			"enablePullDownRefresh": false
+		}
+	
+	},
+	{
+		"path": "pages/courseQuery/courseQuery",
+		"style": {
+			"navigationBarTitleText": "查看课程",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/courseParticulars/courseParticulars",
+		"style": {
+			"navigationBarTitleText": "课程明细",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/leave/leave",
+		"style": {
+			"navigationBarTitleText": "请假",
+			"enablePullDownRefresh": false,
+			"app-plus": {
+				"scrollIndicator":"none"
+			}
+		}
+
+	}, {
+		"path": "pages/cowrseRepair/cowrseRepair",
+		"style": {
+			"navigationBarTitleText": "补课申请",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/leaveList/leaveList",
+		"style": {
+			"navigationBarTitleText": "请假记录",
+			"enablePullDownRefresh": true
+		}
+
+	}, {
+		"path": "pages/leaveDetail/leaveDetail",
+		"style": {
+			"navigationBarTitleText": "请假记录",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/counselorDetail/counselorDetail",
+		"style": {
+			"navigationBarTitleText": "课程顾问",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integral/integral",
+		"style": {
+			"navigationBarTitleText": "我的积分",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integralDetail/integralDetail",
+		"style": {
+			"navigationBarTitleText": "积分明细",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integralOrder/integralOrder",
+		"style": {
+			"navigationBarTitleText": "积分订单管理",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integralOrderDetail/integralOrderDetail",
+		"style": {
+			"navigationBarTitleText": "订单详情",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integralStoreDetail/integralStoreDetail",
+		"style": {
+			"navigationBarTitleText": "商品详情",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/integralOrderSubmit/integralOrderSubmit",
+		"style": {
+			"navigationBarTitleText": "兑换订单提交",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/growth/growth",
+		"style": {
+			"navigationBarTitleText": "成长之路",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/physical/physical",
+		"style": {
+			"navigationBarTitleText": "体能测试",
+			"enablePullDownRefresh": false
+		}
+
+	},
+	{
+		"path": "pages/physical/show-img",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	
+	},
+	{
+		"path": "pages/task/task",
+		"style": {
+			"navigationBarTitleText": "家庭作业",
+			"enablePullDownRefresh": true
+		}
+
+	}, {
+		"path": "pages/taskUp/taskUp",
+		"style": {
+			"navigationBarTitleText": "已上传家庭作业",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/taskDetail/taskDetail",
+		"style": {
+			"navigationBarTitleText": "作业详情",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/taskUpSubmit/taskUpSubmit",
+		"style": {
+			"navigationBarTitleText": "上传作业",
+			"enablePullDownRefresh": false
+		}
+
+	}, 
+	{
+		"path": "pages/taskUpSubmit/video",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false,
+			"app-plus": {
+				"scrollIndicator": "none"
+			}
+		}
+	
+	},
+	{
+		"path": "pages/upgrade/upgrade",
+		"style": {
+			"navigationBarTitleText": "升班管理",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/upgradeHistory/upgradeHistory",
+		"style": {
+			"navigationBarTitleText": "升班历程",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/upgradeDetail/upgradeDetail",
+		"style": {
+			"navigationBarTitleText": "升班申请",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/promotion/promotion",
+		"style": {
+			"navigationBarTitleText": "推广有礼",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/promotionCode/promotionCode",
+		"style": {
+			"navigationBarTitleText": "我的推广码",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/poster/poster",
+		"style": {
+			"navigationBarTitleText": "推广有礼",
+			"enablePullDownRefresh": false
+		}
+	}, {
+		"path": "pages/about/about",
+		"style": {
+			"navigationBarTitleText": "关于我们",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/none/none",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	},
+	{
+		"path": "pages/webview/webview",
+		"style": {
+			"navigationBarTitleText": "",
+			"enablePullDownRefresh": false
+		}
+	}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "少年强拳击",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff"
+		// "h5": {
+		// 	"titleNView": false
+		// }
+	},
+	"tabBar": {
+		"borderStyle": "white",
+		"backgroundColor": "white",
+		"color": "#333333",
+		"selectedColor": "#FF2020",
+		"fontSize":"28rpx",
+		"height": "65px",
+		"list": [
+			{
+				"pagePath": "pages/home/home",
+				"iconPath": "/static/images/tabbar/home.png",
+				"selectedIconPath": "/static/images/tabbar/home-act.png",
+				"text": "首页"
+			}, {
+				"pagePath": "pages/course/course",
+				"iconPath": "/static/images/tabbar/course.png",
+				"selectedIconPath": "/static/images/tabbar/course-act.png",
+				"text": "课程"
+			}, {
+				"pagePath": "pages/my/my",
+				"iconPath": "/static/images/tabbar/my.png",
+				"selectedIconPath": "/static/images/tabbar/my-act.png",
+				"text": "我的"
+			}
+		]
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	}
+}

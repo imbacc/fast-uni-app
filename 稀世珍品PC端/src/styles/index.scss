@@ -1,0 +1,20 @@
+.bg_white {
+	background: #ffffff;
+}
+
+.h100b {
+	height: 100%;
+}
+
+.w100b {
+	width: 100%;
+}
+
+.hw100b {
+	@extend .h100b;
+	@extend .w100b;
+}
+
+.min_h100vh {
+	min-height: 100vh;
+}
