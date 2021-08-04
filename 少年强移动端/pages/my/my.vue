@@ -4,7 +4,7 @@
 		<view class="my">
 			<view class="my-bg"><image src="@/static/images/my/my-bg.png" /></view>
 			<!-- 用户信息 -->
-			<myInfo @login="login" @bind="bind" />
+			<myInfo @login="login" @bind="bind" @signup="signup" />
 			<!-- 定位 -->
 			<view class="my-location flex align-center justify-between" @click="toSeat">
 				<view class="my-location-l">
@@ -21,32 +21,43 @@
 				<image :src="bg" mode="aspectFill" @click="goto_bg" />
 			</view>
 			<!-- 更多服务 -->
-			<my-serve @bind="bind" />
+			<my-serve @bind="bind" @signup="signup" />
 		</view>
 		<!-- 手机绑定弹框 -->
 		<phone-modal ref="modal" @submit="submitPhone" />
+		
+		<alertMsg v-if="show_msg" upDiy buttonLab="立即更换" @confirm="msg_confirm" @cancel="show_msg = false">
+			<view class="flex_column flex_center_align">
+				<view class="alert_title">未查询到您的报名信息</view>
+				<view class="alert_lab" style="margin-bottom: 14rpx;">请确认您的报名电话</view>
+				<view class="alert_lab" style="color: #555555;">{{ tel }}</view>
+			</view>
+		</alertMsg>
 	</view>
 </template>
 
 <script>
-import phoneModal from '@/components/phone-modal.vue'
 import myInfo from './components/myInfo.vue'
 import myServe from './components/my-serve.vue'
+import phoneModal from '@/components/phone-modal.vue'
+import alertMsg from '@/components/alert-msg/alert-msg.vue'
 
 export default {
 	components: {
 		phoneModal,
 		myInfo,
-		myServe
+		myServe,
+		alertMsg
 	},
 	data() {
 		return {
 			loading: true,
 			bg: '',
 			url: '',
-			show_modal: false,
 			init_bool: false,
-			init_login: false
+			init_login: false,
+			show_msg: false,
+			tel: ''
 		}
 	},
 	computed: {
@@ -78,13 +89,17 @@ export default {
 			this.init_location()
 			this.init_banner()
 			this.init_student()
+			this.init_singup()
 			this.loading = false
 			return
 		}
 		this.login()
 		this.init_location()
 		this.init_banner()
-		if (this.user_info_com) this.init_student()
+		if (this.user_info_com) {
+			this.init_singup()
+			this.init_student()
+		}
 		this.loading = false
 	},
 	methods: {
@@ -118,7 +133,15 @@ export default {
 						this.bg = res.data[0].source[0]
 						this.url = res.data[0].urls.url
 					}
-					
+				}
+			})
+		},
+		async init_singup() {
+			this.is_api('user_api/user_check_signup').then((res) => {
+				if (res) {
+					this.show_msg = !res.signup
+					this.tel = res.phone
+					this.is_vuex.commit('user_vuex/set_vuex', ['signup', res.signup])
 				}
 			})
 		},
@@ -145,6 +168,13 @@ export default {
 		},
 		goto_bg() {
 			this.is_goto(this.url)
+		},
+		msg_confirm() {
+			this.show_msg = false
+			this.bind()
+		},
+		signup() {
+			this.show_msg = true
 		}
 	}
 }
@@ -195,5 +225,20 @@ export default {
 			border-radius: 10rpx;
 		}
 	}
+}
+
+.alert_title {
+	font-size: 32rpx;
+	font-family: PingFangSC-Bold, PingFang SC;
+	font-weight: bold;
+	color: #E62234;
+	margin-bottom: 7rpx;
+}
+
+.alert_lab {
+	font-size: 30rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #333330;
 }
 </style>

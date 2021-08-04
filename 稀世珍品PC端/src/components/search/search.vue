@@ -16,29 +16,31 @@
 				</div>
 
 				<div class="search_table_pack">
-					<tableComp :list="search_list" :type="2" ref="tableRef" @selRow="selRow" />
+					<tableComp :type="2" ref="tableRef" @selRow="selRow" />
 				</div>
 			</div>
 		</div>
+
+		<loadingComp ref="loadingRef" />
 	</div>
 </template>
 
 <script>
-import { reactive, ref, toRefs, defineComponent, getCurrentInstance, onMounted } from 'vue'
+import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
 import { index_data } from '@/common/compose/index_data.js'
 import { state } from '@common/compose/user_store.js'
 import api from '@/common/config/api.js'
 
 import tableComp from '@/components/table/table.vue'
+import loadingComp from '@/components/loading/loading.vue'
 
 export default defineComponent({
 	components: {
-		tableComp
+		tableComp,
+		loadingComp
 	},
 	setup(props, { emit }) {
 		// init
-		const { ctx } = getCurrentInstance()
-
 		onMounted(() => {
 			inputRef.value.focus()
 		})
@@ -51,22 +53,22 @@ export default defineComponent({
 		// ref
 		const tableRef = ref(null)
 		const inputRef = ref(null)
+		const loadingRef = ref(null)
 
 		// function
 		const close = () => emit('close')
 
 		const selRow = (shop) => emit('selRow', shop)
 
-		const clear = () => {
-			data.alert_type = 1
-			data.show_alert = true
-		}
-
 		const search = () => {
-			if (!data.text || data.text === '') return
-			ctx.loading.open()
-			api('goods_search', { limit: 10, r: data.text, shop_id: state.user_info.data.shop_id }).then((res) => {
-				ctx.loading.close()
+			if (data.text === '') return
+			// ctx.loading.open()
+			loadingRef.value.open()
+			console.log('state.user_info=', state.user_info)
+			let shop_id = state.user_info?.shop_id || state.user_info.data.shop_id
+			api('goods_search', { limit: 10, r: data.text, shop_id }).then((res) => {
+				// ctx.loading.close()
+				loadingRef.value.close()
 				if (res) {
 					tableRef.value.set_shop(res)
 				}
@@ -80,6 +82,7 @@ export default defineComponent({
 			// ref
 			tableRef,
 			inputRef,
+			loadingRef,
 			// function
 			close,
 			search,

@@ -87,10 +87,6 @@ http.interceptor.response = (res) => {
 
 	if (data.code === -403 || data.code === -404 || data.code === -444 || data.code === -500) return 'false'
 	if (data.code === 1 || data.code === 2) {
-		// if(data.hasOwnProperty('token')){
-		// 	uni.setStorageSync('token',data.token)
-		// 	console.log('token success')
-		// }
 		console.log('拦截通知:', data.msg)
 		return data.data === null ? true : data.data
 	} else {

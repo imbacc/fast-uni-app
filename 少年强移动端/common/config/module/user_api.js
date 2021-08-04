@@ -15,6 +15,7 @@ export default {
 	my_course_detail: ['/member/my-course-detail', METHOD.GET],	// 我的课程-查看课程
 	
 	up_course_list: ['/member/upcoming', METHOD.GET],	// 查询即将上课
+	user_check_signup: ['/member/signup-check', METHOD.GET],	// 用户是否报名
 	
 	about: ['/member/about-us', METHOD.GET, 1],	// 关于我们
 	expand: ['/member/invite-list', METHOD.GET],	// 推广

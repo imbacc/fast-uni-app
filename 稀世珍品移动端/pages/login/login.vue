@@ -9,7 +9,7 @@
 			<view class="input_div mt40 flex_align">
 				<image class="input_ico" src="/static/img/login/password_ico.png" mode="aspectFill" />
 				<view class="input_title">密码</view>
-				<input v-model="password" maxlength="20" type="password" class="input_text" placeholder-class="input_plc" placeholder="请输入登录密码" />
+				<input v-model="password" maxlength="20" type="password" class="input_text" placeholder-class="input_plc" placeholder="请输入登录密码" @confirm="submit" />
 			</view>
 			
 			<view class="button_div flex_center_align" @click="submit">登录</view>
@@ -21,8 +21,8 @@
 	export default {
 		data() {
 			return {
-				username: 'mrchen',
-				password: '123456'
+				username: '',
+				password: ''
 			}
 		},
 		methods: {
@@ -32,11 +32,13 @@
 					this.is_tools.to_msg('请填写完整!')
 					return
 				}
-				this.is_api('user_login', {}, { _noToken: true, _formData: true, account: username, password }).then((res) => {
+				this.is_api('user_login', {}, { _noToken: true, account: username, password: password }).then((res) => {
 					if (res) {
 						this.is_vuex.commit('user_vuex/set_user_info', res.userinfo)
 						this.is_vuex.commit('user_vuex/set_token', res.userinfo.token)
 						this.is_goto('index', '', 3)
+					} else {
+						this.is_tools.to_msg('登陆失败!')
 					}
 				})
 				
@@ -52,6 +54,7 @@
 	
 	.pack {
 		@extend .hw100b;
+		@extend .min_h100vh;
 		background: url('/static/img/login/bg.png');
 		background-size: 100% 100%;
 		background-repeat: no-repeat;

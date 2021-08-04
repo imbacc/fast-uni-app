@@ -12,7 +12,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "稀食珍品"
+				"navigationBarTitleText": "稀食珍品",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

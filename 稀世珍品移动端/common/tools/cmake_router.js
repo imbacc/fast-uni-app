@@ -65,18 +65,6 @@ const goto_router = (name, query = '', type = 1, acg = 'pop-in') => {
 	
 	let url = `${router}${query || ''}`, token = checkToken()
 	
-	// 检查token
-	if (!token) {
-		// 请求后跳
-		// is_vuex.dispatch('xxx/xxxx').then(() => {
-		// 	goto_router(name, query, type, acg, auth)
-		// })
-		
-		// 没有权限直接跳
-		// reLaunch({ url: is_router.login, animationType: 'slide-in-bottom' })
-		// return
-	}
-	
 	// 检查是否有效路由
 	if (!router) {
 		fail()

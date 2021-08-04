@@ -13,7 +13,8 @@ const state = {
 	refresh_home: false,	// 切换门店后刷新缓存
 	refresh_course: false,	// 切换门店后刷新缓存
 	invite_code: '',	// 推广二维码
-	exit_state: false	// 退出状态
+	exit_state: false,	// 退出状态
+	signup: true	// 检测课程
 }
 
 //同步方法

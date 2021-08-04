@@ -3,21 +3,21 @@
 		<view class="heder">
 			<view class="swiper"><u-swiper :list="activity_imgs" name="img" height="380" @click="swiper_click" /></view>
 			<view v-if="activity_window_list.length > 0" class="heder-banner flex justify-between">
-				<view class="heder-banner-l relative" @click="toDetail(activity_window_list[0].id)">
-					<image :src="activity_window_list[0].images[0]" mode="aspectFill" />
+				<view v-if="activity_window_list[0]" class="heder-banner-l relative" @click="toDetail(activity_window_list[0].id)">
+					<image :src="activity_window_list[0].window_image" mode="aspectFill" />
 					<view class="heder_div flex_center_align">
 						<view class="heder_lab u-line-1">{{ activity_window_list[0].title }}</view>
 					</view>
 				</view>
-				<view class="heder-banner-r flex flex-direction justify-between">
+				<view v-if="activity_window_list[1]" class="heder-banner-r flex flex-direction justify-between">
 					<view class="heder-banner-r-t relative" @click="toDetail(activity_window_list[1].id)">
-						<image :src="activity_window_list[1].images[0]" mode="aspectFill" />
+						<image :src="activity_window_list[1].window_image" mode="aspectFill" />
 						<view class="heder_div blue_bg flex_center_align">
 							<view class="heder_lab u-line-1">{{ activity_window_list[1].title }}</view>
 						</view>
 					</view>
-					<view class="heder-banner-r-b relative" @click="toDetail(activity_window_list[2].id)">
-						<image :src="activity_window_list[2].images[0]" mode="aspectFill" />
+					<view v-if="activity_window_list[2]" class="heder-banner-r-b relative" @click="toDetail(activity_window_list[2].id)">
+						<image :src="activity_window_list[2].window_image" mode="aspectFill" />
 						<view class="heder_div flex_center_align">
 							<view class="heder_lab u-line-1">{{ activity_window_list[2].title }}</view>
 						</view>
@@ -79,8 +79,9 @@ export default {
 			} else {
 				this.is_api('home_api/activity_list', { q, _page: [page, size] }).then((res) => {
 					if (res) {
-						let list = []
-						res.data.forEach(({ images }) => list.push({ img: images[0] }))
+						const list = []
+						const arr = Array.from(res.data, ({ top_images }) => top_images).flat()
+						arr.forEach((img) => list.push({ img }))
 						if (q === 'top') this.activity_imgs = list
 						this[`activity_${q}_list`] = res.data
 						console.log('this.activity_window_list=', this.activity_window_list);

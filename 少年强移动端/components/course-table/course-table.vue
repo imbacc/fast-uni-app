@@ -284,8 +284,8 @@
 .min_course {
 	height: 104rpx;
 	width: 204rpx;
-	background-size: 100% !important;
-	background-position-y: 6px !important;
+	background-size: 100% 100% !important;
+	// background-position-y: 6px !important;
 	background-repeat: no-repeat !important;
 }
 

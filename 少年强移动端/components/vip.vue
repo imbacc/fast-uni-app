@@ -25,9 +25,9 @@
 			<view class="vip_head_lab">请假权益</view>
 		</view>
 		<view class="vip_foot flex_align flex_around">
-			<view class="vip_head_lab">{{ num_com(card.used, card.surplus) }}</view>
+			<view class="vip_head_lab">{{ card.hours }}</view>
 			<view class="vip_head_lab">{{ card.price }}元</view>
-			<view class="vip_head_lab">6个月</view>
+			<view class="vip_head_lab">{{ card.period }}个月</view>
 			<view class="vip_head_lab">{{ card.leave_level > 0 ? `${card.leave_level}个月` : '/' }}</view>
 		</view>
 	</view>

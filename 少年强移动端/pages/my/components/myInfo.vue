@@ -41,6 +41,9 @@ export default {
 	computed: {
 		user_info_com() {
 			return this.is_vuex.state.user_vuex.user_info
+		},
+		signup_com() {
+			return this.is_vuex.state.user_vuex.signup
 		}
 	},
 	methods: {
@@ -48,18 +51,24 @@ export default {
 			this.is_goto('/pages/set/set')
 		},
 		toCourseUpcoming() {
-			if (!this.user_info_com.phone || this.user_info_com.phone === '') {
-				this.$emit('bind')
-				return
-			}
-			this.is_goto('/pages/courseUpcoming/courseUpcoming')
+			this.goto_page('/pages/courseUpcoming/courseUpcoming')
 		},
 		toLeaveList() {
-			if (!this.user_info_com.phone || this.user_info_com.phone === '') {
-				this.$emit('bind')
-				return
+			this.goto_page('/pages/leaveList/leaveList')
+		},
+		goto_page(url) {
+			if (this.user_info_com) {
+				if (!this.user_info_com.phone || this.user_info_com.phone === '') {
+					this.$emit('bind')
+					return
+				}
+				if (!this.signup_com) {
+					this.$emit('signup')
+					return
+				}
 			}
-			this.is_goto('/pages/leaveList/leaveList')
+			
+			this.is_goto(url)
 		},
 		login() {
 			this.$emit('login')

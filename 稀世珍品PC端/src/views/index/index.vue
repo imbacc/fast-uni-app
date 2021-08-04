@@ -2,8 +2,15 @@
 	<div class="index_pack">
 		<div class="head_pack flex_center">
 			<div class="head_div flex_align flex_between">
-				<div class="flex_align">
+				<div class="flex_align" style="width: 100%">
 					<img class="head_logo" src="/src/assets/images/index/logo.png" @click="print" />
+					<div v-if="user_info" class="head_order flex_column">
+						<text class="head_lab">
+							用户：{{ user_info.nickname }}
+							<a style="color: #92a5ff" href="javascript:;" @click="exit">退出</a>
+						</text>
+						<text class="head_lab mt10">店铺：{{ user_info.shop_name }}</text>
+					</div>
 					<div class="head_order flex_column">
 						<text v-if="order_no" class="head_lab">订单编号：{{ order_no }}</text>
 						<text v-if="order_no" class="head_lab mt10">流水号：{{ order_no }}</text>
@@ -13,9 +20,13 @@
 						<text v-if="order_time" class="head_lab mt10">{{ order_time }}</text>
 					</div>
 				</div>
-				<div class="head_print flex_column flex_align" @click="print">
-					<img class="print_ico" src="/src/assets/images/index/print_ico.png" />
-					<text class="head_lab mt10">打印结账小票</text>
+				<div>
+					<a href="/#/order-list" target="_blank" style="border: 0; text-decoration: none">
+						<div class="head_print flex_column flex_align">
+							<img class="print_ico" src="/src/assets/images/index/print_ico.png" />
+							<text class="head_lab mt10">查看订单列表</text>
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -31,7 +42,7 @@
 				</div>
 
 				<div class="table_pack">
-					<tableComp :list="index_list" ref="tableRef" @delRow="delRow" />
+					<tableComp ref="tableRef" @delRow="delRow" />
 				</div>
 
 				<div class="count_div flex_align flex_between">
@@ -41,7 +52,7 @@
 					</div>
 					<div class="compute_div">
 						<text class="compute_lab">数量 : {{ num_com }}件</text>
-						<text class="compute_lab flex_align">
+						<text class="compute_lab flex_align" style="margin-top: 5px">
 							合计 :
 							<text class="compute_sum">￥{{ price_com.toFixed(2) }}</text>
 						</text>
@@ -50,11 +61,23 @@
 			</div>
 
 			<div class="foot_div flex_center_align">
-				<div class="button_div flex_center_align green mr66" @click="other_pay()">
+				<div class="button_div flex_center_align green mr66" @click="other_pay(2)">
 					<div class="flex_align">
-						<img class="other_ico" src="/src/assets/images/index/other_ico.png" />
+						<img class="other_ico" src="/src/assets/images/index/wx_ico.png" />
 						<div class="flex_column">
-							<text class="button_lab">其他收款</text>
+							<text class="button_lab">微信收款</text>
+							<text class="button_lab flex_align">
+								<text class="button_lab_y">￥</text>
+								{{ price_com.toFixed(2) }}
+							</text>
+						</div>
+					</div>
+				</div>
+				<div class="button_div flex_center_align blue mr66" @click="other_pay(3)">
+					<div class="flex_align">
+						<img class="other_ico" src="/src/assets/images/index/ali_ico.png" />
+						<div class="flex_column">
+							<text class="button_lab">支付宝收款</text>
 							<text class="button_lab flex_align">
 								<text class="button_lab_y">￥</text>
 								{{ price_com.toFixed(2) }}
@@ -77,37 +100,62 @@
 			</div>
 		</div>
 
-		<alert v-if="show_alert" :type="alert_type" :msg="alert_msg" @cancel="show_alert = false" @confirm="confirm" @sel_pay="sel_pay" />
+		<alert v-if="show_alert" :type="alert_type" :slot="alert_slot" :msg="alert_msg" @cancel="show_alert = false" @confirm="confirm" @sel_pay="sel_pay">
+			<div class="flex_column" style="border-top: 1px solid #d7d7d7; margin: 10px 0; padding: 10px 30px 40px 30px">
+				<div class="alert_text">订单金额: {{ order_price }}</div>
+				<div class="alert_text">购物券: {{ pay_coupon }}</div>
+				<div class="alert_text">视商{{ view_pay_type === 1 ? '微信' : '支付宝' }}支付: {{ pay_price }}</div>
+				<div class="alert_text flex_align flex_between">
+					<div class="flex_align" style="white-space: nowrap">
+						合计金额:
+						<span class="alert_price">¥{{ parseFloat(order_price) + parseFloat(pay_coupon) }}</span>
+					</div>
+					<div class="alert_text flex_align" style="white-space: nowrap">
+						支付时间:
+						<span style="margin-left: 5px">
+							{{ new Date().toLocaleString('zh', { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' }) }}
+						</span>
+					</div>
+				</div>
+			</div>
+		</alert>
 		<search v-if="show_search" @close="show_search = false" @selRow="add_shop" />
+		<loadingComp ref="loadingRef" />
 	</div>
 </template>
 
 <script>
 import { index_data } from '@/common/compose/index_data.js'
-import { reactive, ref, toRefs, defineAsyncComponent, computed, onMounted, getCurrentInstance } from 'vue'
-import { clone, timeHide, initPrint, outPrint, keyScan } from '@/common/tools/cmake_tools.js'
-import { state } from '@common/compose/user_store.js'
+import { reactive, ref, toRefs, defineAsyncComponent, computed, onMounted } from 'vue'
+import { timeHide, initPrint, outPrint, keyScan } from '@/common/tools/cmake_tools.js'
+import { state, mutations } from '@common/compose/user_store.js'
 import api from '@/common/config/api.js'
-import panel from '@/common/tools/panel.js'
+
 import tableComp from '@/components/table/table.vue'
+import loadingComp from '@/components/loading/loading.vue'
+
+const scale = document.documentElement.clientWidth / 480 / 2
+document.documentElement.style.fontSize = 16 * Math.min(scale, 2) + 'px'
 
 export default {
 	components: {
-		tableComp,
 		alert: defineAsyncComponent(() => import('@/components/alert/alert.vue')),
-		search: defineAsyncComponent(() => import('@/components/search/search.vue'))
+		search: defineAsyncComponent(() => import('@/components/search/search.vue')),
+		tableComp,
+		loadingComp
 	},
 	setup() {
-		const { ctx } = getCurrentInstance()
-
 		// init
 		onMounted(() => {
 			// 扫描枪监听
 			keyScan((code) => {
 				console.log('keyScan code=', code)
-				ctx.loading.open()
-				api('goods_search', { limit: 1, r: code, shop_id: state.user_info.data.shop_id }).then((res) => {
-					ctx.loading.close()
+				// ctx.loading.open()
+				loadingRef.value.open()
+				let shop_id = state.user_info?.shop_id || state.user_info.data.shop_id
+				api('goods_search', { limit: 1, r: code, shop_id }).then((res) => {
+					// ctx.loading.close()
+					loadingRef.value.close()
 					if (res && res.length > 0) {
 						add_shop(res[0])
 					}
@@ -115,15 +163,7 @@ export default {
 			})
 
 			// 初始化打印插件
-			const hiprintTemplate = initPrint()
-
-			hiprintTemplate.on('printSuccess', function (data) {
-				console.log('printSuccess data=', data)
-			})
-
-			hiprintTemplate.on('printError', function (data) {
-				console.log('printSuccess data=', data)
-			})
+			initPrint()
 		})
 
 		// reactive
@@ -131,10 +171,17 @@ export default {
 			table_type: 1,
 			alert_type: 1,
 			alert_msg: '',
+			alert_slot: false,
 			show_alert: false,
 			show_search: false,
 			order_no: '',
-			order_time: ''
+			order_time: '',
+			order_price: 0,
+			pay_coupon: 0,
+			pay_price: 0,
+			pay_type: 1,
+			pay_str: ['', '视商收款', '微信', '支付宝'],
+			view_pay_type: 1
 		})
 
 		// ref
@@ -156,19 +203,29 @@ export default {
 			const idx = index_data.index_list.findIndex((f) => f.id === shop.id)
 			if (idx !== -1) {
 				index_data.index_list[idx].num += newShop.num
+				index_data.index_list[idx].sum = index_data.index_list[idx].num * index_data.index_list[idx].price
 				data.show_search = false
 				return
 			}
 
 			index_data.index_list.push(newShop)
 			tableRef.value.add_shop(newShop)
-			data.show_search = false
-			console.log('index_data.index_list=', index_data.index_list)
+			// data.show_search = false
+			// console.log('index_data.index_list=', index_data.index_list)
 		}
 
 		const clear = () => {
+			data.alert_slot = false
 			data.alert_type = 1
+			data.alert_msg = '是否清空产品?'
 			data.show_alert = true
+			// data.pay_coupon = '0.00'
+			// data.order_price = '0.01'
+			// data.pay_price = '0.01'
+			// data.alert_slot = true
+			// data.alert_type = 3
+			// data.alert_msg = '已成功付款'
+			// data.show_alert = true
 		}
 
 		const confirm = (e) => {
@@ -180,7 +237,12 @@ export default {
 
 			// 确认结算订单
 			if (e === 6) {
-				order_pay(2)
+				order_pay(data.pay_type)
+			}
+
+			// 退出登录
+			if (e === 7) {
+				location = '/#/login'
 			}
 			data.show_alert = false
 		}
@@ -196,7 +258,11 @@ export default {
 		}
 
 		// 其他收款 2:支付宝 微信二维码
-		const other_pay = () => {
+		const other_pay = (type) => {
+			const id_list = goods_id_list()
+			if (id_list.length === 0) return
+			data.alert_slot = false
+			data.pay_type = type
 			data.alert_type = 6
 			data.alert_msg = '是否确认结算订单?'
 			data.show_alert = true
@@ -206,8 +272,10 @@ export default {
 		const order_pay = (type) => {
 			const id_list = goods_id_list()
 			if (id_list.length === 0) return
+			data.alert_slot = false
+			data.pay_type = type
 			data.alert_type = 2
-			data.alert_msg = ''
+			data.alert_msg = '结算中...'
 			data.show_alert = true
 			api('goods_order', {}, { goods: id_list, pay_type: type }).then((res) => {
 				if (res) {
@@ -217,13 +285,18 @@ export default {
 						for_check(3000, 5000, 3)
 						return
 					}
-					if (type === 2) {
+					if (type === 2 || type === 3) {
+						data.alert_slot = false
 						data.alert_type = 3
+						data.alert_msg = '已成功付款'
 						data.show_alert = true
+						print()
+						clear_data()
 						timeHide(1000).then(() => (data.show_alert = false))
 						return
 					}
 				} else {
+					data.alert_slot = false
 					data.alert_type = 5
 					data.alert_msg = '创建订单失败!'
 					data.show_alert = true
@@ -234,16 +307,26 @@ export default {
 
 		const for_check = (time, nextTime, num) => {
 			if (num <= 0) {
+				data.alert_slot = false
 				data.alert_type = 4
+				data.alert_msg = '支付超时'
 				data.show_alert = true
 				return
 			}
 			timeHide(time).then(() => {
 				api('check_pay').then((res) => {
 					console.log('res=', res)
-					if (res) {
+					if (res && res.pay_status === 1) {
+						data.view_pay_type = res.pay_type
+						data.pay_coupon = res.coupon_money
+						data.order_price = res.order_money
+						data.pay_price = res.pay_money
+						data.alert_slot = true
 						data.alert_type = 3
+						data.alert_msg = '已成功付款'
 						data.show_alert = true
+						print()
+						clear_data()
 					} else {
 						for_check(nextTime || time, nextTime, num - 1)
 					}
@@ -254,114 +337,67 @@ export default {
 		const sel_pay = () => {
 			api('check_pay').then((res) => {
 				console.log('res=', res)
-				if (res) {
+				if (res && res.pay_status === 1) {
+					data.view_pay_type = res.pay_type
+					data.pay_coupon = res.coupon_money
+					data.order_price = res.order_money
+					data.pay_price = res.pay_money
+					data.alert_slot = true
 					data.alert_type = 3
+					data.alert_msg = '已成功付款'
 					data.show_alert = true
+					print()
+					clear_data()
 				} else {
+					data.alert_slot = false
 					data.alert_type = 5
 					data.alert_msg = '支付失败!'
 					data.show_alert = true
+					timeHide(1500).then(() => (data.show_alert = false))
 				}
 			})
 		}
 
-		// 打印小票
-		const print = () => {
-			if (index_data.index_list.length === 0 || data.order_no === '' || data.order_time === '') {
-				data.alert_type = 5
-				data.alert_msg = '请先创建订单后打印!'
-				data.show_alert = true
-				timeHide(1000).then(() => (data.show_alert = false))
-				return
-			}
-			const template = create_temp()
-			outPrint(template)
+		const clear_data = () => {
+			data.order_no = ''
+			data.order_time = ''
+			index_data.index_list = []
+			tableRef.value.clear()
 		}
 
-		// 创建打印模板
-		const create_temp = () => {
-			let temp = clone(panel)
-			let ele = temp.panels[0].printElements
-			let shop_name = state.user_info?.shop_name || state.user_info.data.shop_name
-			ele[1].options.title = shop_name
-			ele[2].options.title = `单号：${data.order_no}`
-			ele[3].options.title = `时间：${data.order_time}`
-			const shop_list_top = (idx) => idx * 20
-			const other_top = index_data.index_list.length * 20
-			// 添加商品列表
-			index_data.index_list.forEach((info, idx) => {
-				let list_top = 171 + shop_list_top(idx)
-				ele.push({
-					options: { left: 120, top: list_top, height: 9.75, width: 82.5, title: `${info.num}`, fontSize: 10.5, fontWeight: 'bold', textAlign: 'center' },
-					printElementType: { type: 'text' }
-				})
-				ele.push({
-					options: { left: 13.5, top: list_top, height: 9.75, width: 105, title: `${info.name}`, fontSize: 10.5, fontWeight: 'bold' },
-					printElementType: { type: 'text' }
-				})
-				ele.push({
-					options: { left: 202.5, top: list_top, height: 9.75, width: 103.5, title: `${info.sum}`, textAlign: 'center', fontSize: 10.5, fontWeight: 'bold' },
-					printElementType: { type: 'text' }
-				})
+		// 打印小票
+		const print = () => {
+			loadingRef.value.open()
+			const list = index_data.index_list
+			const sum_price = Array.from(list, ({ sum }) => sum).reduce((t, v) => t + v)
+			const sum_count = [...new Set(Array.from(list, ({ id }) => id))]
+			outPrint({
+				list,
+				shop_name: state.user_info?.shop_name || state.user_info.data.shop_name,
+				order_no: data.order_no,
+				order_time: data.order_time,
+				keys: ['num', 'name', 'sum'],
+				sum_count,
+				sum_price,
+				pay_type: data.pay_type === 1 ? `视商${data.view_pay_type === 1 ? '微信' : '支付宝'}` : data.pay_str[data.pay_type],
+				pay_price: data.pay_type === 3 ? sum_price : data.pay_price,
 			})
-			// 添加虚线
-			ele.push({
-				options: { left: 12, top: 201 + other_top, height: 9, width: 280.5, borderStyle: 'dotted' },
-				printElementType: { type: 'hline' }
-			})
-			// 添加总数统计
-			const sum_count = [...new Set(Array.from(index_data.index_list, ({ id }) => id))]
-			ele.push({
-				options: { left: 171, top: 334.5 + other_top, height: 15, width: 135, title: `总数：${sum_count.length}`, fontWeight: 'bold', fontSize: 13.5 },
-				printElementType: { type: 'text' }
-			})
-			const sum_price = Array.from(index_data.index_list, ({ sum }) => sum).reduce((t, v) => t + v)
-			ele.push({
-				options: {
-					left: 171,
-					top: 357 + other_top,
-					height: 19.5,
-					width: 135,
-					title: `总计：${new Number(sum_price).toFixed(2)}`,
-					fontWeight: 'bold',
-					fontSize: 13.5
-				},
-				printElementType: { type: 'text' }
-			})
-			ele.push({
-				options: {
-					left: 171,
-					top: 381 + other_top,
-					height: 18,
-					width: 133.5,
-					title: `实付：${new Number(sum_price).toFixed(2)}`,
-					fontWeight: 'bold',
-					fontSize: 13.5
-				},
-				printElementType: { type: 'text' }
-			})
-			// 添加底部文字
-			ele.push({
-				options: {
-					left: 24,
-					top: 463.5 + (index_data.index_list.length > 1 ? other_top : 0),
-					height: 16.5,
-					width: 250.5,
-					title: '谢谢惠顾，欢迎下次光临',
-					textAlign: 'center',
-					fontSize: 13.5,
-					fontWeight: 'bold'
-				},
-				printElementType: { type: 'text' }
-			})
-			temp.panels[0].printElements = ele
-			return temp
+			loadingRef.value.close()
+		}
+
+		const exit = () => {
+			data.alert_slot = false
+			data.alert_type = 7
+			data.alert_msg = '是否退出登录?'
+			data.show_alert = true
+			mutations.set_logout()
 		}
 
 		return {
 			// reactive
 			...toRefs(data),
 			index_list: index_data.index_list,
+			user_info: state.user_info,
 			// computed
 			num_com,
 			price_com,
@@ -376,7 +412,8 @@ export default {
 			other_pay,
 			order_pay,
 			sel_pay,
-			print
+			print,
+			exit
 		}
 	}
 }
@@ -395,7 +432,8 @@ export default {
 	background-repeat: no-repeat;
 }
 .head_div {
-	width: calc(100% - (262px * 2));
+	// width: calc(100% - (262px * 2));
+	width: 75%;
 	height: 100%;
 }
 
@@ -413,6 +451,7 @@ export default {
 	font-size: 18px;
 	font-family: PingFang SC;
 	font-weight: 500;
+	white-space: nowrap;
 	color: #ffffff;
 }
 
@@ -526,20 +565,25 @@ export default {
 }
 
 .foot_div {
-	height: 106px;
+	// height: 106px;
 	margin-bottom: 49px;
+	margin-top: 68px;
 }
 
 .button_div {
 	width: 418px;
-	height: 106px;
+	height: 112px;
 	border-radius: 16px;
 	user-select: none;
 	cursor: pointer;
 }
 
 .green {
-	background: #0d7142;
+	background: #00a30b;
+}
+
+.blue {
+	background: #3077fe;
 }
 
 .mr66 {
@@ -567,5 +611,19 @@ export default {
 .button_lab_y {
 	@extend .button_lab;
 	margin-left: -3px;
+}
+
+.alert_text {
+	font-size: 20px;
+	font-family: PingFang SC;
+	font-weight: 600;
+	color: #555555;
+	margin-bottom: 3px;
+}
+
+.alert_price {
+	color: #e77200;
+	font-size: 24px;
+	margin-left: 5px;
 }
 </style>

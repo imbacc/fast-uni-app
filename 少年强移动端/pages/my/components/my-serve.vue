@@ -21,6 +21,9 @@
 		computed: {
 			user_info_com() {
 				return this.is_vuex.state.user_vuex.user_info
+			},
+			signup_com() {
+				return this.is_vuex.state.user_vuex.signup
 			}
 		},
 		data() {
@@ -54,9 +57,15 @@
 		},
 		methods: {
 			to(e) {
-				if (!this.user_info_com.phone || this.user_info_com.phone === '') {
-					this.$emit('bind')
-					return
+				if (this.user_info_com) {
+					if (!this.user_info_com.phone || this.user_info_com.phone === '') {
+						this.$emit('bind')
+						return
+					}
+					if (!this.signup_com) {
+						this.$emit('signup')
+						return
+					}
 				}
 				if (e === '课程管理') this.is_goto('/pages/selectStudent/selectStudent', `?jump=false`)
 				if (e === '课程顾问') this.is_goto('/pages/counselorDetail/counselorDetail')

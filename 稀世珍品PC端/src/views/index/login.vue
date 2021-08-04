@@ -1,29 +1,29 @@
 <template>
 	<div class="pack min_h100vh flex_center_align">
 		<div class="body_div flex_align">
-			<img class="left_img" src="src/assets/images/login/bg.png" />
+			<img class="left_img" src="/src/assets/images/login/left_bg.png" />
 			<div class="right_div flex_column flex_align">
-				<img class="logo_img" src="src/assets/images/login/logo_ico.png" />
+				<img class="logo_img" src="/src/assets/images/login/logo_ico.png" />
 				<div class="input_div flex_align">
-					<img class="input_ico" src="src/assets/images/login/user_ico.png" />
+					<img class="input_ico" src="/src/assets/images/login/user_ico.png" />
 					<input class="input_model" v-model="account" :readonly="loading" :maxlength="20" type="text" placeholder="用户名" />
 				</div>
 				<div class="input_div flex_align">
-					<img class="input_ico" src="src/assets/images/login/pass_ico.png" />
+					<img class="input_ico" src="/src/assets/images/login/pass_ico.png" />
 					<input class="input_model" v-model="password" :readonly="loading" :maxlength="20" type="password" placeholder="密码" />
 				</div>
 				<div class="input_div flex_align">
-					<img class="input_ico" src="src/assets/images/login/code_ico.png" />
+					<img class="input_ico" src="/src/assets/images/login/code_ico.png" />
 					<input class="input_model" v-model="code" :readonly="loading" :maxlength="4" type="text" placeholder="验证码" @keydown.enter="submit_login" />
 					<img class="input_code" :src="code_img" @click="reload_code" />
 				</div>
 				<div class="check_div flex_align">
-					<img v-if="check" class="check_ico" src="src/assets/images/login/check_ico.png" @click="check_switch" />
+					<img v-if="check" class="check_ico" src="/src/assets/images/login/check_ico.png" @click="check_switch" />
 					<div v-else class="check_box" @click="check_switch"></div>
-					<text class="check_lab">记住我的用户名</text>
+					<text class="check_lab" @click="check_switch">记住我的用户名</text>
 				</div>
 				<div class="button_div flex_center_align" :class="loading ? 'button_loading' : ''" @click="submit_login">
-					<img v-if="loading" class="loading_ico" src="src/assets/images/login/loading_ico.png" />
+					<img v-if="loading" class="loading_ico" src="/src/assets/images/login/loading_ico.png" />
 					登录
 				</div>
 			</div>
@@ -59,8 +59,8 @@ export default {
 
 		// reactive
 		const data = reactive({
-			account: 'mrchen',
-			password: '123456',
+			account: '',
+			password: '',
 			code: '',
 			loading: false,
 			check: true,
@@ -142,15 +142,16 @@ export default {
 }
 
 .body_div {
-	// width: calc(100% - (262px * 2));
+	width: calc(100% - 262px);
 	// height: 627px;
-	width: 1400px;
+	// width: 1400px;
 	height: 627px;
 	background: #ffffff;
 	border-radius: 8px;
 }
 .left_img {
 	// width: 45%;
+	// width: clac(100% - 677px);
 	height: 100%;
 	width: 677px;
 	border-radius: 8px 0 0 8px;
@@ -158,8 +159,9 @@ export default {
 
 .right_div {
 	height: 100%;
-	// width: 55%;
-	width: 723px;
+	width: calc(100% - 723px);
+	// width: 723px;
+	padding: 0 10%;
 }
 
 .logo_img {
@@ -192,7 +194,7 @@ export default {
 }
 
 .input_model {
-	height: 96%;
+	// height: 96%;
 	width: 200px;
 	outline: none;
 	border: 0;
@@ -235,6 +237,7 @@ export default {
 	font-size: 14px;
 	color: #999999;
 	user-select: none;
+	cursor: pointer;
 }
 
 .button_div {

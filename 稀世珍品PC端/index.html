@@ -4,29 +4,13 @@
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vite App</title>
-  <!-- hiprint -->
-  <link defer="defer" href="/src/common/libs/hiprint/css/hiprint.css" rel="stylesheet">
-  <link defer="defer" href="/src/common/libs/hiprint/css/print-lock.css" media="print" rel="stylesheet">
+  <title>稀食珍品收银台</title>
+  <!-- <link defer="defer" href="assets/hiprint/css/hiprint.css" rel="stylesheet">
+  <link defer="defer" href="assets/hiprint/css/print-lock.css" media="print" rel="stylesheet"> -->
 </head>
 <body>
   <div id="app"></div>
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/socket.io.js"></script>
-  <!-- jQuery (hiprint 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/jq-3.31.js"></script>
-  <!-- 加载 hiprint 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-  <!-- polyfill.min.js解决浏览器兼容性问题v6.26.0-->
-  <script defer="defer" src="/src/common/libs/hiprint/polyfill.min.js"></script>
-  <!-- hiprint 核心js-->
-  <script defer="defer" src="/src/common/libs/hiprint/hiprint.bundle.js"></script>
-  <!-- 条形码生成组件-->
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/JsBarcode.all.min.js"></script>
-  <!-- 二维码生成组件-->
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/qrcode.js"></script>
-  <!-- 调用浏览器打印窗口helper类，可自行替换-->
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/jquery.hiwprint.js"></script>
-  <!-- jquery minicolors -->
-  <script defer="defer" src="/src/common/libs/hiprint/plugins/jquery.minicolors.min.js"></script>
+  <%- injectScript %>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

@@ -3,11 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
 	{
 		path: '/',
-		component: () => import('@/views/index/index.vue'),
-		meta: {
-			// auth: ['user']
-			// router: ['init_module', 'action_module', 'test_module']
-		}
+		component: () => import('@/views/index/index.vue')
 	},
 	{
 		path: '/login',
@@ -15,14 +11,9 @@ const routes = [
 		component: () => import('@views/index/login.vue')
 	},
 	{
-		path: '/401',
-		name: '401',
-		component: () => import('@views/error-page/401.vue')
-	},
-	{
-		path: '/404',
-		name: '404',
-		component: () => import('@views/error-page/404.vue')
+		path: '/order-list',
+		name: 'order-list',
+		component: () => import('@/views/index/order-list.vue')
 	}
 ]
 

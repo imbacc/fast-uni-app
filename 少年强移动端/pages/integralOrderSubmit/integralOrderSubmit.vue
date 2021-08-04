@@ -1,11 +1,11 @@
 <template>
 	<view class="main">
-		<view class="venue flex justify-between align-center" @click="toSeat">
+		<!-- <view class="venue flex justify-between align-center" @click="toSeat">
 			<text>兑换场馆：{{ cur_shop_com.name || '' }}</text>
 			<text>
 				<u-icon name="arrow-right" color="#B6B6B6" />
 			</text>
-		</view>
+		</view> -->
 		<view class="box flex">
 			<view class="box-img">
 				<image :src="score_info_com.cover_image" mode="aspectFill" />

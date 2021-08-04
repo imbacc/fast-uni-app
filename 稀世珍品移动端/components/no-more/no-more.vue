@@ -18,7 +18,8 @@
 
 <style lang="scss" scoped>
 .nomore_div {
-	height: 493rpx;
+	// height: 493rpx;
+	min-height: 100vh;
 	width: 100%;
 }
 

@@ -47,7 +47,6 @@ http.interceptors.request.use(
 http.interceptors.response.use(
 	(response) => {
 		// console.log("【response】 " + response)
-		// ctx.loading.close()
 
 		if (response.status === 401) {
 			// removeToken

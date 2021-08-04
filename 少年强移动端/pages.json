@@ -371,6 +371,12 @@
 			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false
 		}
+	},{
+		"path": "pages/changeCourse/changeCourse",
+		"style": {
+			"navigationBarTitleText": "调课申请",
+			"enablePullDownRefresh": false
+		}
 	}
 	],
 	"globalStyle": {

@@ -28,22 +28,33 @@
 		<view class="time_list flex_column">
 			<view v-for="(info, idx) of time_com" :key="idx" class="time_div flex_align flex_between">
 				<view class="time_lab">{{ info.start }}-{{ info.end }}</view>
-				<view v-if="!info.reserve" class="time_button flex_center_align" @click="of_submit(idx)">预约</view>
-				<view v-if="info.reserve" class="time_button flex_center_align cancel" @click="submit(idx, true)">取消预约</view>
+				<view v-if="info.full" class="time_lab disabled flex_center_align">已满</view>
+				<view v-else-if="!info.reserve && !info.full" class="time_button flex_center_align" @click="of_submit(idx)">预约</view>
+				<view v-else-if="info.reserve" class="time_button flex_center_align cancel" @click="submit(idx, true)">取消预约</view>
 			</view>
 		</view>
+		
+		<alertMsg v-if="alert_show" upClass @confirm="alert_confirm" @cancel="alert_cancel" />
 	</view>
 </template>
 
 <script>
+	import alertMsg from '@/components/alert-msg/alert-msg.vue'
+	
 	export default {
+		components: {
+			alertMsg
+		},
 		data() {
 			return {
 				cur: 0,
 				cid: 0,
 				week_list: [],
 				week_bak: [],
-				week_str: []
+				week_str: [],
+				last_time: '3小时20分',
+				alert_show: false,
+				mark_idx: 0
 			}
 		},
 		computed: {
@@ -100,7 +111,9 @@
 				this.cur = idx
 			},
 			of_submit(idx) {
-				this.is_tools.to_showModal('是否预约课程?', '系统提示', () => this.submit(idx))
+				this.mark_idx = idx
+				this.alert_show = true
+				// this.is_tools.to_showModal('是否预约课程?', '系统提示', () => this.submit(idx))
 			},
 			submit(idx, cancel = false) {
 				let date, time = ''
@@ -110,13 +123,22 @@
 				let str = cancel ? '取消' : ''
 				let body = { stu_id: this.sel_student_com.id, cid: this.make_course_com.id, date, time }
 				if (cancel) body.cancel = 1
+				uni.showLoading()
 				this.is_api('course_api/submit_reserve', {}, body).then((res) => {
+					uni.hideLoading()
 					this.is_tools.to_msg(res ? `${str}预约成功!` : `${str}预约失败!`)
 					if (res) {
 						this.init()
 					}
 				})
 			},
+			alert_confirm() {
+				this.submit(this.mark_idx)
+				this.alert_cancel()
+			},
+			alert_cancel() {
+				this.alert_show = false
+			}
 		}
 	}
 </script>

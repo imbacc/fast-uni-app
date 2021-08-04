@@ -80,12 +80,13 @@
 				
 			</view>
 			<view v-if="plan_type === 'other'" class="but flex align-center justify-between">
-				<view style="background-color: #023A98;width: 100%;" @click="toLeave(true)">请假</view>
+				<view class="button_bule" style="width: 100%;" @click="toLeave(true)">请假</view>
 			</view>
 			<view v-else class="but flex align-center justify-between">
-				<view style="background-color: #023A98;" @click="toLeave(false)">请假</view>
-				<view v-if="plan_type === 'private'" style="background-color: #E62234;" @click="makeCourse">预约上课</view>
-				<view v-else style="background-color: #E62234;" @click="toCowrseRepair">补课</view>
+				<view class="button_orange mr20" @click="gotoChange">申请调课</view>
+				<view class="button_bule mr20" @click="toLeave(false)">请假</view>
+				<view v-if="plan_type === 'private'" class="button_red " @click="makeCourse">预约上课</view>
+				<view v-else class="button_red" @click="toCowrseRepair">补课</view>
 			</view>
 		</view>
 	</view>
@@ -194,6 +195,9 @@ export default {
 		},
 		goto_coach() {
 			this.is_goto('/pages/coachDetail/coachDetail', `?id=${this.coach.id}`)
+		},
+		gotoChange() {
+			this.is_goto('/pages/changeCourse/changeCourse', `?id=${this.course.id}`)
 		}
 	}
 }
@@ -290,5 +294,21 @@ export default {
 	height: 39rpx;
 	width: 41rpx;
 	margin-right: 24rpx;
+}
+
+.button_orange {
+	background: #FF8F20;
+}
+
+.button_bule {
+	background: #023A98;
+}
+
+.button_red {
+	background: #E62234;
+}
+
+.mr20 {
+	margin-right: 20rpx;
 }
 </style>

@@ -14,10 +14,10 @@ const page_key = 'page'
 const size_key = 'limit'
 
 // wx appid
-const WX_APPID = ''
+// const WX_APPID = ''
 
 // cdn
-const is_cdn = `http://oss.xxxx.com/`
+// const is_cdn = `http://oss.xxxx.com/`
 
 // 线上环境配置 和 开发环境配置
 const env = process.env.NODE_ENV // env
@@ -30,16 +30,16 @@ if (is_dev) {
 	baseUrl = `${host}${version}`
 } else {
 	console.log('生产环境')
-	host = 'http://xxx.com/'
-	version = ''
+	host = 'http://rarefood.sslmen.com/api.php'
+	version = '/v1/'
 	baseUrl = `${host}${version}`
 }
 
 export {
 	checkLogin,
 	METHOD,
-	WX_APPID,
-	is_cdn,
+	// WX_APPID,
+	// is_cdn,
 	env,
 	is_dev,
 	host,

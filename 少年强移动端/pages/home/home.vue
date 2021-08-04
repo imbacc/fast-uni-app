@@ -211,6 +211,7 @@ export default {
 				this[`${name}_id`] = `${name}_${this[`${name}_idx`]}`
 				this[`${name}_idx`] += 1
 				if (this[`${name}_idx`] >= (len > 3 ? len - 2 : len)) {
+					if (len <= 3) return
 					this[vsName].push(...list)
 				}
 				if (len === list.length * 3) this[vsName].splice(0, list.length)

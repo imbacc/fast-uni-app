@@ -13,7 +13,7 @@ Vue.prototype.is_tools = tools	//工具集合
 Vue.prototype.is_api = api 	//请求封装
 Vue.prototype.is_goto = goto_router		//跳转对于配置的路由
 Vue.prototype.is_gopage = goto_pages		//直接跳转页面路径
-Vue.prototype.is_cdn = 'https://www.baidu.com/static/img/'
+// Vue.prototype.is_cdn = 'https://www.baidu.com/static/img/'
 
 //导入组件 全局化
 import skeleton from '@/components/skeleton/skeleton.vue'

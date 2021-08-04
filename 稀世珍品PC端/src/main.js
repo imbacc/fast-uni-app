@@ -2,10 +2,10 @@ import { createApp, ref } from 'vue'
 import App from './App.vue'
 
 import router from '@/common/tools/cmake_router.js'
-import loading from '@/common/tools/loading.js'
+// import loading from '@/common/tools/loading.js'
 
 // js
-import { env, is_dev, is_cdn } from '@/common/config/cfg.js'
+import { env, is_dev } from '@/common/config/cfg.js'
 
 // 全局样式
 import 'nprogress/nprogress.css'
@@ -13,13 +13,13 @@ import '@styles/global.scss'
 
 const app = createApp(App)
 app.use(router)
-app.use(loading)
+// app.use(loading)
 app.mount('#app')
 
 console.log('import.meta.env', env)
 
 // 全局 property
-app.config.globalProperties.is_cdn = is_cdn
+// app.config.globalProperties.is_cdn = is_cdn
 
 // dev工具
 app.config.devtools = is_dev
@@ -29,7 +29,8 @@ const baseSize = 18
 // 设置 rem 函数
 const setRem = () => {
 	// 设置页面根节点字体大小，适配vant
-	const scale = document.documentElement.clientWidth / 375
+	// / 375
+	const scale = document.documentElement.clientWidth / 415 / 2
 	document.documentElement.style.fontSize = baseSize * Math.min(scale, 2) + 'px'
 }
 // 初始化

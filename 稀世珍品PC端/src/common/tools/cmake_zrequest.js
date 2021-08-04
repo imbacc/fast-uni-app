@@ -6,7 +6,7 @@ const get_args = (json = {}, cur = [1, 10]) => {
 	cur[0] <= 0 ? (cur[0] = 1) : false
 	cur[1] <= 0 ? (cur[1] = 1) : false
 	json.page = cur[0]
-	json.size = cur[1]
+	json.limit = cur[1]
 	return json
 }
 

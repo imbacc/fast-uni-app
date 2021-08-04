@@ -7,9 +7,11 @@ import gzipPlugin from 'rollup-plugin-gzip' //Gzip
 import { viteMockServe } from 'vite-plugin-mock' // mock
 import componentsPlugin from './vite-plugin/vite-plugin-components.js' // Vite 的按需组件自动导入
 import ViteIcons from 'vite-plugin-icons' // icon 按需引入
-import RemoteAssets from 'vite-plugin-remote-assets' // 远程图片地址转换成本地地址 http://example.com/image.jpg -> /node_modules/.remote-assets/f83j2f.jpg
+// import RemoteAssets from 'vite-plugin-remote-assets' // 远程图片地址转换成本地地址 http://example.com/image.jpg -> /node_modules/.remote-assets/f83j2f.jpg
 import windicssPlugin from 'vite-plugin-windicss' // wind css
 // import routerPages from 'vite-plugin-pages'	// 自动导入路由 需要可以用
+import vitePluginHtmljs from './vite-plugin/vite-plugin-htmljs.js'
+import vitePluginCopy from './vite-plugin/vite-plugin-copy.js'
 
 /**
  * @type {import('vite').UserConfig}
@@ -25,21 +27,33 @@ const config = {
 		hmr: { overlay: false }
 	},
 
+	base: './',
+
 	// 输出路径
 	outDir: 'dist',
 
 	//编译
 	build: {
+		target: 'modules',
 		outDir: 'dist',
+		assetsDir: 'assets',
+		assetsInlineLimit: 4096,
+		cssCodeSplit: true,
+		sourcemap: false,
+		chunkSizeWarningLimit: 1200,
+
 		// 打包引入 输出
 		rollupOptions: {
-			format: 'commonjs'
-			// external: ['vue']
-			// output: {
-			// 	globals: {
-			// 		vue: 'Vue'
+			external: ['assets/hiprint/css/hiprint.css', 'assets/hiprint/css/print-lock.css']
+			// 	format: 'commonjs',
+			// 	external: ['vue'],
+			// 	output: {
+			// 		// Provide global variables to use in the UMD build
+			// 		// for externalized deps
+			// 		globals: {
+			// 			vue: 'Vue'
+			// 		}
 			// 	}
-			// }
 		},
 		// 生成生产map
 		sourcemap: false,
@@ -50,8 +64,8 @@ const config = {
 
 	//部门优化选项
 	optimizeDeps: {
-		include: ['nprogress', 'qs-stringify', 'axios', 'socket.io'],
-		exclude: ['screenfull', 'nprogress']
+		include: ['nprogress', 'qs-stringify', 'axios'],
+		exclude: ['nprogress']
 	},
 
 	// 别名包 踏马的npm和yarn不一样
@@ -68,7 +82,7 @@ const config = {
 	},
 
 	// 资源路径
-	assetsDir: 'assets',
+	// assetsDir: 'assets',
 
 	// 小于此数字（以字节为单位）的静态资产文件将内联为 base64字符串。默认限制为“4096”（4kb）。设置为“0”以禁用。
 	assetsInlineLimit: 4096,
@@ -94,12 +108,15 @@ export default ({ command, mode }) => {
 	if (command === 'build' && mode === 'production') {
 		// 编译环境配置
 		// Gzip
-		if (VITE_REMOTE_ASSETS) config.plugins.push(RemoteAssets())
+		// if (VITE_REMOTE_ASSETS) config.plugins.push(RemoteAssets())
 		if (VITE_BUILD_GZIP) config.plugins.push(gzipPlugin())
+		config.plugins.push(vitePluginHtmljs())
+		// config.plugins.push(vitePluginCopy())
 	} else {
 		// 开发环境配置
 		// vite-plugin-mock
 		if (VITE_USE_MOCK) config.plugins.push(viteMockServe({ supportTs: false }))
+		config.plugins.push(vitePluginHtmljs())
 	}
 	return config
 }

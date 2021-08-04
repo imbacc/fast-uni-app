@@ -44,9 +44,19 @@ export default {
 		},
 	},
 	onReady() {
-		this.$nextTick(() => this.$refs.shoplist.search_shop())
+		this.init()
+	},
+	onPullDownRefresh() {
+		this.init()
 	},
 	methods: {
+		init() {
+			this.$nextTick(() => {
+				this.$refs.shoplist.search_shop()
+				this.$refs.shoplist.set_val('confirm_type', 1)
+				uni.stopPullDownRefresh()
+			})
+		},
 		goto_info() {
 			this.is_goto('info')
 		},

@@ -1,14 +1,22 @@
 <template>
 	<div class="alert_pack flex_center_align fade">
-		<div class="alert_box" :class="type === 2 ? 'flex_center_align' : ''">
+		<div class="alert_box" :class="type === 2 ? 'flex_center_align' : ''" :style="slot ? `height:auto;` : ''">
 			<div v-if="type !== 2" class="close_div" @click="cancel">X</div>
 			<div class="flex_column flex_center_align">
-				<img class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="`/src/assets/images/index/${ico[type - 1]}`" />
-				<text v-if="showMsg" class="alert_text" :class="type === 2 ? 'text_anm' : ''">{{ text[type - 1] || msg }}</text>
+				<img v-if="type === 1 || type === 7" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="big_del_ico" />
+				<img v-if="type === 2" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="wait_ico" />
+				<img v-if="type === 3" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="ok_ico" />
+				<img v-if="type === 4" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="overtime_ico" />
+				<img v-if="type === 5" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="error_ico" />
+				<img v-if="type === 6" class="alert_ico" :class="type === 2 ? 'no_top' : ''" :src="confirm_ico" />
+				<text v-if="showMsg" class="alert_text" :class="type === 2 ? 'text_anm' : ''">{{ msg }}</text>
+				<div v-if="slot" style="width: 100%">
+					<slot></slot>
+				</div>
 			</div>
-			<div v-if="type === 1 || type === 3 || type === 6" class="alert_foot flex_align">
-				<div v-if="type === 1 || type === 6" class="alert_cancel flex_center_align" @click="cancel">取消</div>
-				<div v-if="type === 1 || type === 3 || type === 6" class="alert_confirm flex_center_align" @click="confirm">确定</div>
+			<div v-if="type === 1 || type === 3 || type === 6 || type == 7" class="alert_foot flex_align">
+				<div v-if="type === 1 || type === 6 || type == 7" class="alert_cancel flex_center_align" @click="cancel">取消</div>
+				<div v-if="type === 1 || type === 3 || type === 6 || type == 7" class="alert_confirm flex_center_align" @click="confirm">确定</div>
 			</div>
 			<div v-if="type === 4" class="flex_center_align" @click="sel_pay">
 				<div class="reload flex_center_align">查询支付结果</div>
@@ -18,7 +26,13 @@
 </template>
 
 <script>
-import { reactive, toRefs, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
+import big_del_ico from '../../assets/images/index/big_del_ico.png'
+import wait_ico from '../../assets/images/index/wait_ico.png'
+import ok_ico from '../../assets/images/index/ok_ico.png'
+import overtime_ico from '../../assets/images/index/overtime_ico.png'
+import error_ico from '../../assets/images/index/error_ico.png'
+import confirm_ico from '../../assets/images/index/confirm_ico.png'
 
 export default defineComponent({
 	props: {
@@ -33,17 +47,14 @@ export default defineComponent({
 		showMsg: {
 			type: Boolean,
 			default: true
+		},
+		slot: {
+			type: Boolean,
+			default: false
 		}
 	},
 	setup(props, { emit }) {
 		console.log('props', props)
-		// reactive
-		const data = reactive({
-			ddd: 'ddd',
-			ico: ['big_del_ico.png', 'wait_ico.png', 'ok_ico.png', 'overtime_ico.png', 'error_ico.png', 'confirm_ico.png'],
-			text: ['是否清空产品?', '结算中...', '已成功付款', '支付超时']
-		})
-
 		// function
 		const cancel = () => emit('cancel', props.type)
 		const confirm = () => emit('confirm', props.type)
@@ -51,13 +62,18 @@ export default defineComponent({
 		const sel_pay = () => emit('sel_pay')
 
 		return {
-			// reactive
-			...toRefs(data),
 			// function
 			cancel,
 			confirm,
 			set_val,
-			sel_pay
+			sel_pay,
+			// images
+			big_del_ico,
+			wait_ico,
+			ok_ico,
+			overtime_ico,
+			error_ico,
+			confirm_ico
 		}
 	}
 })

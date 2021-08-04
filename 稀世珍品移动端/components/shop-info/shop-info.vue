@@ -24,7 +24,7 @@
 							@touchcancel="num_end"
 						/>
 						<view class="comput_lab shop_lab">
-							<input :style="`width: ${`${put_num}`.length * 20}rpx;`" :maxlength="6" type="number" v-model="put_num" />
+							<input :style="`width: ${(`${put_num}`.length + 1) * 20}rpx;`" :maxlength="6" type="number" v-model="put_num" />
 						</view>
 						<image
 							class="add_ico"
@@ -43,7 +43,7 @@
 						<view class="comput_lab shop_lab flex_align">
 							￥
 							<input
-								:style="`width: ${`${put_price}`.length * 20}rpx;`"
+								:style="`width: ${(`${put_price}`.length + 1) * 20}rpx;`"
 								:maxlength="6"
 								type="number"
 								v-model="put_price"
@@ -62,9 +62,8 @@
 				</view>
 			</view>
 		</view>
-
+		
 		<view v-if="type === 2" class="put_button flex_center_align" @click="put_shop">确认录入</view>
-
 		<alert v-if="alert_show" :type="2" :title="alert_title" :bool="alert_bool" @cancel="alert_show = false" />
 	</view>
 </template>
@@ -92,37 +91,35 @@ export default {
 			alert_title: '',
 			alert_bool: false,
 			num_time: null,
-			num_bool: false
+			num_bool: false,
 		}
 	},
 	computed: {
 		date_com() {
-			return (date) =>
-				date &&
-				new Date(parseInt(`${date}000`))
-					.toLocaleString('zh', {
-						hour12: false,
-						month: '2-digit',
-						day: '2-digit',
-						year: 'numeric',
-						hour: 'numeric',
-						minute: 'numeric',
-						second: 'numeric'
-					})
-					.replace(/\\/g, '-')
+			return (date) => date && this.dateFormat('YYYY-mm-dd HH:MM', date)
 		}
 	},
-	watch: {
-		put_num(newValue, oldValue) {
-			if (newValue === '') this.put_num = 1
-			if (oldValue === 1 && newValue === '') this.put_num = '1'
-		},
-		// put_price(newValue, oldValue) {
-		// 	if (newValue === '') this.put_price = 1
-		// 	if (oldValue === 1 && newValue === '') this.put_price = '1'
-		// }
-	},
 	methods: {
+		dateFormat(fmt, date) {
+			date = new Date(parseInt(`${date}000`))
+		    let ret
+		    const opt = {
+		        "Y+": date.getFullYear().toString(),        // 年
+		        "m+": (date.getMonth() + 1).toString(),     // 月
+		        "d+": date.getDate().toString(),            // 日
+		        "H+": date.getHours().toString(),           // 时
+		        "M+": date.getMinutes().toString(),         // 分
+		        "S+": date.getSeconds().toString()          // 秒
+		        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+		    }
+		    for (let k in opt) {
+		        ret = new RegExp("(" + k + ")").exec(fmt);
+		        if (ret) {
+		            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+		        }
+		    }
+		    return fmt
+		},
 		confirm(type, info) {
 			this.$emit('confirm', { type, info })
 		},
@@ -156,7 +153,8 @@ export default {
 			}
 			const { id } = this.list[0]
 			const { put_num, put_price } = this
-			this.is_api('put_stock', {}, { id, row: { stock: put_num, price: put_price } }).then((res) => {
+			const body = { id: id, stock: parseInt(put_num), price: parseFloat(put_price) }
+			this.is_api('put_stock', {}, body).then((res) => {
 				this.alert_show = true
 				this.alert_title = res ? '产品录入成功' : '产品录入失败'
 				this.alert_bool = res ? true : false
@@ -173,6 +171,7 @@ export default {
 
 <style lang="scss" scoped>
 .shop_list_div {
+	min-height: 80vh;
 	width: 690rpx;
 	padding-bottom: 24rpx;
 }

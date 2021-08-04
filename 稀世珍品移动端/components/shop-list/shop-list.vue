@@ -14,6 +14,9 @@
 					@blur="input_focus = false"
 					@confirm="search_shop(1, false, 'search')"
 				/>
+				<view v-if="input_text.length > 0" class="close_div flex_center_align" @click="clear">
+					<image class="close_ico" src="/static/img/index/close_ico.png" mode="aspectFill" />
+				</view>
 			</view>
 			<view v-if="input_css_com" class="input_button flex_center_align" @click="search_shop(1, false, 'search')">搜索</view>
 		</view>
@@ -101,30 +104,34 @@
 	        		_page.key = 'rows'
 	        		this.shop_page = _page
 	        	}
-	        	this.shop_page.param = { name: this.input_text }
+				if (!isNaN(parseInt(this.input_text.slice(0, 3))) ) {
+					this.shop_page.param = { bar_code: this.input_text }
+				} else {
+					this.shop_page.param = { name: this.input_text }
+				}
 	        	this.shop_page.fun(page, append).then(() => fun && fun())
 	        },
 			reach_shop() {
 				if (this.shop_page) this.shop_page.next_fun(this, '没有更多商品了...')
 			},
-			async mock_add() {
-				this.is_tools.to_msg('模拟添加商品!')
-				let shop = {
-					id: this.shop_page.list.length,
-					name: '和成天下槟榔100元装',
-					spec: '1',
-					code: 'JKK00125314',
-					num: 0,
-					price: 111,
-					createTime: '2020-06-01 18:00:00'
-				}
-				this.shop_page.list.push(shop)
-				this.next_add(shop)
-				let time = setTimeout(() => {
-					clearTimeout(time)
-					this.mock_add()
-				}, 500)
-			},
+			// async mock_add() {
+			// 	this.is_tools.to_msg('模拟添加商品!')
+			// 	let shop = {
+			// 		id: this.shop_page.list.length,
+			// 		name: '和成天下槟榔100元装',
+			// 		spec: '1',
+			// 		code: 'JKK00125314',
+			// 		num: 0,
+			// 		price: 111,
+			// 		createTime: '2020-06-01 18:00:00'
+			// 	}
+			// 	this.shop_page.list.push(shop)
+			// 	this.next_add(shop)
+			// 	let time = setTimeout(() => {
+			// 		clearTimeout(time)
+			// 		this.mock_add()
+			// 	}, 500)
+			// },
 			async next_add(shop) {
 				clearTimeout(this.add_time)
 				this.add_time = setTimeout(() => {
@@ -140,15 +147,28 @@
 				this.confirm_type = type
 				if (info) this.confirm_list = [info]
 			},
+			clear() {
+				console.log('this.confirm_type=', this.confirm_type)
+				if (this.confirm_type === 1) {
+					this.input_text = ''
+					this.confirm_type = 1
+					this.search_shop()
+				}
+				
+				if (this.confirm_type === 3) {
+					this.input_text = ''
+					this.confirm_type = 3
+				}
+			}
 	    },
 	}
 </script>
 
 <style lang="scss" scoped>
 	.body_div {
-		// height: 80vh;
-		// height: calc(100% - 232rpx);
 		@extend .hw100b;
+		height: calc(100% - 232rpx);
+		// height: 90vh;
 		overflow: hidden;
 		background: #ebebeb;
 		padding: 30rpx 30rpx 0 30rpx;
@@ -160,6 +180,7 @@
 		@extend .bg_white;
 		border-radius: 37rpx;
 		transition: 0.1s;
+		position: relative;
 	}
 	
 	.search_ico {
@@ -183,7 +204,7 @@
 		@extend .font;
 		@extend .f500;
 		color: #ffffff;
-		font-size: 16rpx;
+		font-size: 18rpx;
 		margin-left: 15rpx;
 	}
 	
@@ -196,5 +217,19 @@
 		font-weight: 400;
 		@extend .font;
 		@extend .c999999;
+	}
+	
+	.close_div {
+		height: 30rpx;
+		width: 30rpx;
+		background: white;
+		border-radius: 50%;
+		position: absolute;
+		right: 20rpx;
+	}
+	
+	.close_ico {
+		height: 20rpx;
+		width: 20rpx;
 	}
 </style>

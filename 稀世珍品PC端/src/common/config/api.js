@@ -17,7 +17,9 @@ const api = {
 	user_login: ['/v1/user/pclogin', METHOD.POST],
 	goods_search: ['/v1/goods/search', METHOD.GET],
 	goods_order: ['/v1/goods/order', METHOD.POST],
-	check_pay: ['/v1/goods/checkorder', METHOD.GET]
+	check_pay: ['/v1/goods/checkorder', METHOD.GET],
+	order_list: ['/v1/order/lists', METHOD.GET],
+	order_cancel: ['/v1/order/cancel', METHOD.POST]
 }
 
 // vite 自动化导入模块
