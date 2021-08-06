@@ -200,20 +200,20 @@ export const outPrint = ({ list, shop_name, order_no, order_time, keys, sum_coun
 		}
 	})
 
-	panel.addPrintText({
-		options: {
-			left: 37,
-			top: 339 + other_top + append_top_sum,
-			height: 15,
-			width: 235,
-			title: `找零：${new Number(pay_price - sum_price).toFixed(2)}`,
-			fontSize: 16,
-			fontWeight: 'bold'
-		},
-		printElementType: {
-			type: 'text'
-		}
-	})
+	// panel.addPrintText({
+	// 	options: {
+	// 		left: 37,
+	// 		top: 339 + other_top + append_top_sum,
+	// 		height: 15,
+	// 		width: 235,
+	// 		title: `找零：${new Number(pay_price - sum_price < 0 ? 0 : pay_price - sum_price).toFixed(2)}`,
+	// 		fontSize: 16,
+	// 		fontWeight: 'bold'
+	// 	},
+	// 	printElementType: {
+	// 		type: 'text'
+	// 	}
+	// })
 
 	// 添加底部文字
 	panel.addPrintText({
@@ -235,6 +235,6 @@ export const outPrint = ({ list, shop_name, order_no, order_time, keys, sum_coun
 	const compute_height = (max_panel_top - (list.length * 10 - list.length)) / 2
 	panel.height = compute_height < 167 ? 167 : compute_height
 	panel.paperFooter = max_panel_top + 30
-	// console.log(JSON.stringify(hiprintTemplate.getJson()))
+	console.log(JSON.stringify(hiprintTemplate.getJson()))
 	hiprintTemplate.print2({}, { title: '稀世珍品' })
 }

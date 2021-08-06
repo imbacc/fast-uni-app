@@ -380,7 +380,7 @@ export default {
 				sum_count,
 				sum_price,
 				pay_type: data.pay_type === 1 ? `视商${data.view_pay_type === 1 ? '微信' : '支付宝'}` : data.pay_str[data.pay_type],
-				pay_price: data.pay_type === 3 ? sum_price : data.pay_price,
+				pay_price: data.pay_type === 1 ? data.pay_price : sum_price
 			})
 			loadingRef.value.close()
 		}

@@ -9,5 +9,5 @@ export default {
 	search_course: ['/course/search', METHOD.GET, 1], //  搜索课程 缓存
 	course_record: ['/course/record', METHOD.GET, 1], //  课程明细 缓存
 	course_reserve: ['/student/reserve', METHOD.GET], // 私教预约
-	submit_reserve: ['/student/reserve-submit', METHOD.POST] // 私教预约提交
+	submit_reserve: ['/student/reserve-submit', METHOD.POST], // 私教预约提交
 }

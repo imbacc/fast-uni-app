@@ -54,7 +54,18 @@ const fun = {
 	date_match: (date) => {
 		if (!date) return false
 		return new Date(date).getTime() - new Date().getTime() > 0
+	},
+	
+	// 到时间隐藏
+	time_call: (time = 300) => {
+		return new Promise((resovle) => {
+			let t = setTimeout(() => {
+				clearTimeout(t)
+				resovle()
+			}, time)
+		})
 	}
+
 	
 }
 

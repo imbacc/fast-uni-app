@@ -1,7 +1,11 @@
 <template>
 	<view class="form">
 		<template v-if="type === 1">
-			<view class="form-leaveTime ">
+			<view v-if="week_list.length === 0" class="form-leaveTime flex_column flex_center_align">
+				<image class="nomore_bg" src="/static/images/my/leave/no_leave.png" mode="aspectFill" />
+				<view class="nomore_lab">当前暂无可请假时间</view>
+			</view>
+			<view v-else class="form-leaveTime">
 				<view class="flex justify-between flex-wrap">
 					<view
 						class="form-leaveTime-box mt20"
@@ -362,5 +366,17 @@ export default {
 	.gray_lab {
 		color: white;
 	}
+}
+
+.nomore_bg {
+	height: 246rpx;
+	width: 288rpx;
+}
+
+.nomore_lab {
+	font-size: 30rpx;
+	font-family: PingFangSC-Medium, PingFang SC;
+	font-weight: 500;
+	color: #555555;
 }
 </style>

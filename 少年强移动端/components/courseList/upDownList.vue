@@ -4,19 +4,19 @@
 			<u-image height="100%" :src="image_com(bottomTitle.extra_image || bottomTitle.cover_image)" mode="scaleToFill" />
 		</view>
 		<view class="main-box-title flex flex-direction justify-around">
-			<view class="text-cut" style=" width: 400rpx;">
+			<view class="text-cut" style="width: 400rpx;">
 				<text class="main-box-title-type" :style="topTitleStyle">{{bottomTitle.type_name || bottomTitle.type && bottomTitle.type.name}}</text>
 				<text class="main-box-title-h1" :style="topTextStyle">{{bottomTitle.name}}</text>
 			</view>
-			<view v-if="centreTitle" style=" width: 400rpx;">
+			<view v-if="centreTitle" style="width: 400rpx;">
 				<text style="color: #999999; font-size: 28rpx;" :style="centreTitleStyle">{{centreTitle.title}}</text>
 				<text style="color: #999999; font-size: 28rpx;" :style="centreTextStyle">{{bottomTitle.name}}</text>
 			</view>
-			<view v-else-if="select" style=" width: 400rpx;" class="flex_column">
+			<view v-else-if="select" style="width: 400rpx;" class="flex_column">
 				<text class="main-box-title-time" :style="bottomTitleStyle">{{bottomTitle.period_explain}}</text>
 				<text class="main-box-title-time" style="margin-top: 10rpx;" :style="bottomTitleStyle">{{bottomTitle.begin_time.substring(5, 11)}} 开始</text>
 			</view>
-			<view v-else style=" width: 400rpx;">
+			<view v-else style="width: 400rpx;">
 				<text class="main-box-title-time" :style="bottomTitleStyle">{{bottomTitle.period_explain}}</text>
 				<text class="main-box-title-price" :style="bottomTextStyle">￥{{ price_com(bottomTitle.price) }} 起</text>
 			</view>

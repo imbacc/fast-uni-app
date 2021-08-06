@@ -1,5 +1,5 @@
 <template>
-	<view class="alert_pack flex_center_align">
+	<view class="alert_pack flex_center_align" @touchmove.stop.prevent="stop">
 		<view class="alert_div flex_column flex_center_align">
 			<view v-if="upClass" class="alert_title">您确定要预约该课程吗？</view>
 			<view v-if="upClass" class="alert_lab flex_align">
@@ -42,7 +42,16 @@
 	            
 	        };
 	    },
+		created() {
+			uni.pageScrollTo({
+				duration: 0,
+				scrollTop: 0
+			})
+		},
 	    methods: {
+			stop() {
+				return false
+			},
 	        alert_confirm() {
 	            this.$emit('confirm')
 	        },

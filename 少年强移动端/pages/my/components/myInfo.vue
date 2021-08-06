@@ -23,14 +23,22 @@
 			<view v-if="user_info_com" class="my-info-heder-set" @click="toSet"><u-icon name="setting-fill" size="34"></u-icon></view>
 		</view>
 		<view class="my-info-operation flex justify-around align-center">
+			<view class="my-info-operation-school" @click="toCourseNotice">
+				<image src="/static/images/my/scheduling_ico.png"></image>
+				<view>排课通知</view>
+				<u-badge v-if="schedule" type="error" :offset="[-5, 30]" is-dot />
+			</view>
+			<view style="width: 1px; height: 80rpx; background-color: #E6E6E6;"></view>
 			<view class="my-info-operation-school" @click="toCourseUpcoming">
 				<image src="@/static/images/my/my-school.png"></image>
 				<view>即将上课</view>
+				<u-badge v-if="upcoming" type="error" :offset="[-5, 30]" is-dot />
 			</view>
 			<view style="width: 1px; height: 80rpx; background-color: #E6E6E6;"></view>
-			<view class="my-info-operation-school-leave" @click="toLeaveList">
+			<view class="my-info-operation-school" @click="toLeaveList">
 				<image src="@/static/images/my/my-leave.png"></image>
 				<view>请假记录</view>
+				<u-badge v-if="leave" type="error" :offset="[-5, 35]" is-dot />
 			</view>
 		</view>
 	</view>
@@ -38,6 +46,13 @@
 
 <script>
 export default {
+	data() {
+		return {
+			leave: false,
+			schedule: false,
+			upcoming: false
+		}
+	},
 	computed: {
 		user_info_com() {
 			return this.is_vuex.state.user_vuex.user_info
@@ -46,9 +61,24 @@ export default {
 			return this.is_vuex.state.user_vuex.signup
 		}
 	},
+	created() {
+		this.init()
+	},
 	methods: {
+		init() {
+			this.is_api('user_api/schedule_point').then((res) => {
+				if (res) {
+					for (let key in res) {
+						this[key] = res[key]
+					}
+				}
+			})
+		},
 		toSet() {
 			this.is_goto('/pages/set/set')
+		},
+		toCourseNotice() {
+			this.is_goto('/pages/scheduling/scheduling')
 		},
 		toCourseUpcoming() {
 			this.goto_page('/pages/courseUpcoming/courseUpcoming')
@@ -141,9 +171,7 @@ export default {
 		}
 
 		&-school {
-		}
-
-		&-leave {
+			position: relative;
 		}
 	}
 }

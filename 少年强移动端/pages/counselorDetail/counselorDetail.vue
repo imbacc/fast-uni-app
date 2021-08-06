@@ -40,7 +40,7 @@ export default {
 	methods: {
 		init() {
 			this.loading = true
-			this.is_api('adviser_api/sales_info').then((res) => {
+			this.is_api('user_api/sales_info').then((res) => {
 				if (res) {
 					this.sales_info = res
 				} else {

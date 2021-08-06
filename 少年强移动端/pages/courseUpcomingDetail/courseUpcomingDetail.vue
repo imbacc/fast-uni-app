@@ -115,7 +115,8 @@ export default {
 			plan_type: '',
 			loading: true,
 			rid: 0,
-			need_reserve: false
+			need_reserve: false,
+			adjustment_allowed: false
 		}
 	},
 	computed: {
@@ -197,7 +198,11 @@ export default {
 			this.is_goto('/pages/coachDetail/coachDetail', `?id=${this.coach.id}`)
 		},
 		gotoChange() {
-			this.is_goto('/pages/changeCourse/changeCourse', `?id=${this.course.id}`)
+			if (!this.adjustment_allowed) {
+				this.is_tools.to_msg('不支持调课或未选课!')
+				return
+			}
+			this.is_goto('/pages/changeCourse/changeCourse', `?rid=${this.rid}`)
 		}
 	}
 }

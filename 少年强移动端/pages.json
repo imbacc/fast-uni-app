@@ -377,6 +377,25 @@
 			"navigationBarTitleText": "调课申请",
 			"enablePullDownRefresh": false
 		}
+	},
+	{
+		"path": "pages/scheduling/scheduling",
+		"style": {
+			"navigationBarTitleText": "排课通知",
+			"enablePullDownRefresh": true
+		}
+	},{
+		"path": "pages/scheduling/schedulingInfo",
+		"style": {
+			"navigationBarTitleText": "排课通知详情",
+			"enablePullDownRefresh": true
+		}
+	},{
+		"path": "pages/feedback/feedback",
+		"style": {
+			"navigationBarTitleText": "意见反馈",
+			"enablePullDownRefresh": false
+		}
 	}
 	],
 	"globalStyle": {

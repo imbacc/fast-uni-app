@@ -33,6 +33,10 @@
 				<view class="alert_lab" style="color: #555555;">{{ tel }}</view>
 			</view>
 		</alertMsg>
+		
+		<view v-if="user_info_com && show_feedback" class="feedback_div" @click="goto_feedback">
+			<image class="feedback_close" src="/static/images/my/feed_close_ico.png" mode="aspectFill" @click="show_feedback = false" />
+		</view>
 	</view>
 </template>
 
@@ -57,7 +61,8 @@ export default {
 			init_bool: false,
 			init_login: false,
 			show_msg: false,
-			tel: ''
+			tel: '',
+			show_feedback: true,
 		}
 	},
 	computed: {
@@ -175,6 +180,10 @@ export default {
 		},
 		signup() {
 			this.show_msg = true
+		},
+		goto_feedback() {
+			if (!this.show_feedback) return
+			this.is_goto('/pages/feedback/feedback')
 		}
 	}
 }
@@ -240,5 +249,26 @@ export default {
 	font-family: PingFangSC-Medium, PingFang SC;
 	font-weight: 500;
 	color: #333330;
+}
+
+.feedback_div {
+	height: 198rpx;
+	width: 124rpx;
+	position: absolute;
+	right: 30rpx;
+	bottom: 30rpx;
+	background: url('/static/images/my/feed_bg.png');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.feedback_close {
+	height: 32rpx;
+	width: 32rpx;
+	position: absolute;
+	right: -8rpx;
+	top: 40rpx;
 }
 </style>

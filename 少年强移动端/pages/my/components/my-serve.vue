@@ -75,7 +75,7 @@
 				if (e === '升班管理') this.is_goto('/pages/upgrade/upgrade')
 				if (e === '推广中心') this.is_goto('/pages/promotion/promotion')
 				if (e === '关于我们') this.is_goto('/pages/about/about')
-			}
+			},
 		}
 	}
 </script>
@@ -83,6 +83,7 @@
 <style lang="scss" scoped>
 	// 更多服务
 	.my-serve {
+		position: relative;
 		width: 690rpx;
 		height: 345rpx;
 		margin: 0 auto 200rpx;

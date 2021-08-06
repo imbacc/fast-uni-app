@@ -1,17 +1,16 @@
 <template>
 	<view class="form">
 		<view class="form_title">选择调课后您想上课的时间</view>
-			<scroll-view style="height: 382rpx;width: 100%;" scroll-x>
+			<scroll-view style="height: 440rpx;width: 100%;" scroll-x>
 				<view class="form-leaveTime">
 					<view class="form_view flex_column flex_warp">
 						<view
 							class="form-leaveTime-box mt20"
-							@click="cur_time = idx"
-							:class="cur_time === idx ? 'active' : ''"
 							v-for="(info, idx) in week_list"
 							:key="idx"
+							:class="cur_time_com(idx)"
+							@click="push_time(idx, info)"
 						>
-							<!-- <view style="font-size: 22rpx;">{{ info.date }}</view> -->
 							<view style="font-size: 30rpx;">{{ info.week }}</view>
 							<view style="font-size: 18rpx;">（{{ info.time }}）</view>
 							<view class="u-line-2" style="font-size: 28rpx;">{{ info.name }}</view>
@@ -20,10 +19,10 @@
 				</view>
 			</scroll-view>
 		<view class="flex_column flex_center">
-			当前选择
-			<view class="course_div flex_align mt20">
-				<view class="course_lab" style="margin: 0 150rpx 0 31rpx;">周一</view>
-				<view class="course_lab" style="font-size: 26rpx;">公共团队课</view>
+			<view class="mb20">当前选择</view>
+			<view v-for="(item, index) in cur_info" :key="index" class="course_div flex_align">
+				<view class="course_lab" style="margin: 0 150rpx 0 31rpx;">{{ item.week }}</view>
+				<view class="course_lab" style="font-size: 26rpx;">{{ item.name }}</view>
 			</view>
 		</view>
 		<view class="form-cause">
@@ -68,145 +67,67 @@ export default {
 	},
 	data() {
 		return {
-			cur_time: 0,
+			cur_time: [],
+			cur_info: [],
 			explain: '',
-			week_list: [
-				{
-					week: '周一',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周二',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周三',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周四',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周五',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周一',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周二',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周三',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周四',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				},
-				{
-					week: '周五',
-					time: '（09:00~10:00）',
-					name: '公共团队课'
-				}
-			],
+			week_list: [],
+			rid: 0
 		}
 	},
-	created() {
-		// if (this.type === 1) {
-		// 	const { sid, cid } = this.is_vuex.state.leave_vuex.course_student
-		// 	this.is_api('leave_api/student_leave_data', { stu_id: sid, cid: cid }).then((res) => {
-		// 		if (res) {
-		// 			let a_week = []
-		// 			res.class_of_a_week.forEach(({ date, course }) => {
-		// 				course.forEach((min) => a_week.push({ date, ...min }))
-		// 			})
-		// 			this.week_list = a_week
-		// 			this.append_list = res.class_allowed_supplement
-		// 			this.await_count = res.await_supplement_count
-		// 		}
-		// 	})
-		// }
-		// if (this.update) this.init()
+	computed: {
+		cur_time_com() {
+			return (idx) => this.cur_time.some((s) => s === idx) ? 'active' : ''
+		}
+	},
+	onLoad({ rid }) {
+		this.init(rid)
 	},
 	methods: {
-		init() {
-			const leave_info = Object.assign({}, this.is_vuex.state.leave_vuex.leave_info)
-			this.explain = leave_info.reason
-			if (leave_info.leave_type === 1) this.initTime = [leave_info.leave_starttime, leave_info.leave_endtime]
-			if (leave_info.prove_images && leave_info.prove_images.length > 0 && leave_info.prove_images[0] !== '') {
-				this.$nextTick(() => {
-					this.$refs.upload.set_list(leave_info.prove_images)
-				})
-			}
+		init(rid) {
+			this.rid = rid
+			this.is_api('user_api/schedule_options', { rid }).then((res) => {
+				if (res) {
+					this.week_list = res
+				}
+			})
 		},
 		submit() {
-			if (this.planType === 'common' && this.week_list.length === 0) {
-				this.is_tools.to_msg('没有可选课程!')
+			const { rid, explain, cur_info, cur_time } = this
+			if (cur_time.length === 0) {
+				this.is_tools.to_msg('没有选择课程!')
 				return
 			}
 			
-			if (this.explain === '') {
-				this.is_tools.to_msg('请填写请假事由!')
+			if (explain === '') {
+				this.is_tools.to_msg('没有填写事由内容!')
 				return
 			}
 			
 			let file_list = this.$refs.upload.get_list()
-			let leave, recovery, prove_images;
+			
 			let body = {
-				week_day: '',
-				leave_time: '',
-				leave_starttime: 0,
-				leave_endtime: 0,
-				reason: this.explain,
-				prove_images: file_list,
-				make_up_day: '',
-				make_up_time: ''
+				rid,
+				schedule: JSON.stringify(cur_info),
+				reason: explain,
+				proves: file_list.length > 0 ? file_list.join(',') : ''
 			}
 			
-			if (this.type === 1) {
-				leave = this.week_list[this.cur_time]
-				recovery = this.append_list[this.repairTime]
-				body.week_day =  leave.date.replace(/\s*/g, '') || ''
-				body.leave_time = leave.time.replace(/\s*/g, '') || ''
-				body.make_up_day = ''
-				body.make_up_time = ''
-			}
-			
-			if (this.type === 2) {
-				this.submit2(body)
-				return
-			}
-			
-			if (this.checked === 2) {
-				body.make_up_day = recovery.date.replace(/\s*/g, '') || ''
-				body.make_up_time = recovery.time.replace(/\s*/g, '') || ''
-				if (body.week_day === body.make_up_day && body.leave_time === body.make_up_time) {
-					this.is_tools.to_msg('请假时间和补课时间冲突!')
-					return
+			this.is_api('user_api/schedule_submit', {}, body).then((res) => {
+				this.is_tools.to_msg(res ? '提交成功!' : '提交失败!')
+				if (res) {
+					this.is_tools.time_call(400).then(() => uni.navigateBack())
 				}
-			}
-			
-			this.$emit('submit', body)
+			})
 		},
-		submit2(body) {
-			const [start, end] = this.pick_time
-			body.leave_time = '00:00 - 24:00'
-			body.leave_starttime = Number(`${new Date(start).getTime()}000`)
-			body.leave_endtime = Number(`${new Date(end).getTime()}000`)
-			this.$emit('submit', body)
+		push_time(idx, info) {
+			let f_idx = this.cur_time.findIndex((f) => f === idx)
+			if (f_idx !== -1) {
+				this.cur_time.splice(f_idx, 1)
+				this.cur_info.splice(f_idx, 1)
+			} else {
+				this.cur_time.push(idx)
+				this.cur_info.push(info)
+			}
 		}
 	}
 }
@@ -225,12 +146,13 @@ export default {
 	padding: 30rpx;
 
 	&-leaveTime {
-		height: 382rpx;
+		height: 100%;
+		// height: 382rpx;
 		// background-color: #fff;
 		padding: 15rpx;
 
 		&-box {
-			width: 200rpx;
+			width: 240rpx;
 			// height: 181rpx;
 			background: #FFFFFF;
 			border-radius: 8rpx;
