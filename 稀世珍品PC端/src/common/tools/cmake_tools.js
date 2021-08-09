@@ -94,12 +94,13 @@ export const outPrint = ({ list, shop_name, order_no, order_time, keys, sum_coun
 		let name = `${info[name_key]}`,
 			num = `${info[num_key]}`,
 			sum = `${info[sum_key]}`,
-			append_top = name.length > 10 ? 20 : 0
-		append_top_sum += append_top
+			top = list_top + 5
+
+		// append_top_sum += top
 		panel.addPrintText({
 			options: {
 				left: 156,
-				top: list_top + append_top,
+				top: top,
 				height: 9.75,
 				width: 83,
 				title: num,
@@ -112,7 +113,7 @@ export const outPrint = ({ list, shop_name, order_no, order_time, keys, sum_coun
 		panel.addPrintText({
 			options: {
 				left: 36,
-				top: list_top + append_top,
+				top: top,
 				height: 31.5,
 				width: 162,
 				title: name,
@@ -125,7 +126,7 @@ export const outPrint = ({ list, shop_name, order_no, order_time, keys, sum_coun
 		panel.addPrintText({
 			options: {
 				left: 202.5,
-				top: list_top + append_top,
+				top: top,
 				height: 9.75,
 				width: 103.5,
 				title: sum,

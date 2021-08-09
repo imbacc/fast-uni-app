@@ -28,13 +28,13 @@
 		<view class="time_list flex_column">
 			<view v-for="(info, idx) of time_com" :key="idx" class="time_div flex_align flex_between">
 				<view class="time_lab">{{ info.start }}-{{ info.end }}</view>
-				<view v-if="info.full" class="time_lab disabled flex_center_align">已满</view>
-				<view v-else-if="!info.reserve && !info.full" class="time_button flex_center_align" @click="of_submit(idx)">预约</view>
+				<view v-if="!info.reserve && info.full" class="time_lab disabled flex_center_align">已满</view>
+				<view v-else-if="!info.reserve && !info.full" class="time_button flex_center_align" @click="of_submit(idx, info.time_diff)">预约</view>
 				<view v-else-if="info.reserve" class="time_button flex_center_align cancel" @click="submit(idx, true)">取消预约</view>
 			</view>
 		</view>
 		
-		<alertMsg v-if="alert_show" upClass @confirm="alert_confirm" @cancel="alert_cancel" />
+		<alertMsg v-if="alert_show" upClass :lastTime="last_time" @confirm="alert_confirm" @cancel="alert_cancel" />
 	</view>
 </template>
 
@@ -52,7 +52,7 @@
 				week_list: [],
 				week_bak: [],
 				week_str: [],
-				last_time: '3小时20分',
+				last_time: '',
 				alert_show: false,
 				mark_idx: 0
 			}
@@ -110,8 +110,9 @@
 			sel_cur(idx) {
 				this.cur = idx
 			},
-			of_submit(idx) {
+			of_submit(idx, time_diff) {
 				this.mark_idx = idx
+				this.last_time = time_diff
 				this.alert_show = true
 				// this.is_tools.to_showModal('是否预约课程?', '系统提示', () => this.submit(idx))
 			},

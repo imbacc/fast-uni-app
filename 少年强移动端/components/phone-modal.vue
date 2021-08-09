@@ -83,8 +83,8 @@
 						user.phone = phone
 						user.is_reg = 1
 						this.is_vuex.commit('user_vuex/set_user_info', user)
+						this.is_tools.to_msg('绑定成功!')
 					}
-					this.is_tools.to_msg(res ? '绑定成功!' : '绑定失败!')
 					this.phoneModal = false
 				})
 			},

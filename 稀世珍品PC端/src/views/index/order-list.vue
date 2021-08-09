@@ -179,7 +179,7 @@ export default {
 		}
 
 		const goto_return = () => {
-			location = '/#/'
+			window.location.href = '/#/'
 		}
 
 		return {

@@ -87,7 +87,8 @@ export default {
 			}
 		}
 	},
-	onLoad({ token }) {
+	onLoad({ token, uuid }) {
+		if (uuid) this.login()
 		if (token) {
 			this.is_vuex.commit('user_vuex/set_token', token)
 			this.is_vuex.dispatch('user_vuex/get_userInfo')
@@ -98,7 +99,6 @@ export default {
 			this.loading = false
 			return
 		}
-		this.login()
 		this.init_location()
 		this.init_banner()
 		if (this.user_info_com) {

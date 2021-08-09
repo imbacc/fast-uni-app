@@ -50,7 +50,7 @@ http.interceptors.response.use(
 
 		if (response.status === 401) {
 			// removeToken
-			window.location = '/login'
+			window.location.href = '/login'
 			return
 		}
 
@@ -87,6 +87,8 @@ http.interceptors.response.use(
 
 		if (err.indexOf('code 401') !== -1) {
 			error_msg('401 error')
+			localStorage.clear()
+			window.location.href = '/#/login'
 			return Boolean(false)
 		}
 

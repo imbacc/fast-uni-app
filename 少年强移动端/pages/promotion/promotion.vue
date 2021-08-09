@@ -76,7 +76,8 @@
 		},
 		onLoad() {
 			this.is_wechat = wx.isWechat()
-			this.href = window.location.href
+			this.href = `${window.location.origin}/#/pages/poster/poster?userid=${this.user_com.id}`
+			// this.href = window.location.href
 			this.init()
 		},
 		methods:{

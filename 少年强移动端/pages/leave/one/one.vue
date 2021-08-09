@@ -188,6 +188,7 @@ export default {
 			if (this.type === 1) {
 				leave = this.week_list[this.leaveTime]
 				recovery = this.append_list[this.repairTime]
+				body.leave_type = 0
 				body.week_day =  leave.date.replace(/\s*/g, '') || ''
 				body.leave_time = leave.time.replace(/\s*/g, '') || ''
 				body.make_up_day = ''
@@ -215,6 +216,7 @@ export default {
 			body.leave_time = '00:00 - 24:00'
 			body.leave_starttime = Number(`${new Date(start).getTime()}000`)
 			body.leave_endtime = Number(`${new Date(end).getTime()}000`)
+			body.leave_type = 1
 			this.$emit('submit', body)
 		}
 	}

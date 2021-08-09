@@ -63,7 +63,7 @@ export default {
 			body.leave_starttime = parseInt(`${body.leave_starttime}`.substring(0, 10))
 			body.leave_endtime = parseInt(`${body.leave_endtime}`.substring(0, 10))
 			body.week_day = new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')
-			body.leave_type = this.current
+			// body.leave_type = this.current
 			body.student_id = this.sel_student_com.id
 			body.course_id = this.cid
 			

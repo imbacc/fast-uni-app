@@ -20,7 +20,12 @@
 		},
 		methods: {
 			hide(name, callback) {
-				const classList = document.querySelector('uni-page').classList
+				const doc = document.querySelector('uni-page')
+				if (!doc) {
+					callback && callback()
+					return
+				}
+				const classList = doc.classList
 				classList.add(name ? name : 'animation-before', 'animation-leave')
 				classList.remove('animation-show')
 				let time = setTimeout(() => {
@@ -30,7 +35,13 @@
 				}, 150)
 			},
 			show(name, callback) {
-				const classList = document.querySelector('uni-page').classList
+				const doc = document.querySelector('uni-page')
+				if (!doc) {
+					callback && callback()
+					return
+				}
+				const classList = doc.classList
+				// const classList = document.querySelector('uni-page').classList
 				classList.add(name ? 'animation-before-index' : 'animation-before')
 				let time = setTimeout(() => {
 					clearTimeout(time)

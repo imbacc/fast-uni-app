@@ -242,7 +242,7 @@ export default {
 
 			// 退出登录
 			if (e === 7) {
-				location = '/#/login'
+				window.location.href = '/#/login'
 			}
 			data.show_alert = false
 		}

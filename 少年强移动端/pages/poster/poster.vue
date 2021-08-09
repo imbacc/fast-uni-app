@@ -115,25 +115,25 @@
 	}
 	
 	.code_ico {
-		height: 26rpx;
-		width: 26rpx;
+		height: 28rpx;
+		width: 24rpx;
 		margin: 0 9rpx 0 17rpx;
 	}
 	
 	.input_text {
-		
+		padding-left: 5rpx;
 	}
 	
 	.input_plc {
-		font-size: 28rpx;
+		font-size: 24rpx;
 		font-family: PingFangSC-Bold, PingFang SC;
-		font-weight: bold;
+		font-weight: 600;
 		color: #999999;
 	}
 	
 	.phone_ico {
-		height: 26rpx;
-		width: 17rpx;
+		height: 28rpx;
+		width: 19rpx;
 		margin: 0 9rpx 0 19rpx;
 	}
 	

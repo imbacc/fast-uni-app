@@ -83,7 +83,7 @@
 				<view class="button_bule" style="width: 100%;" @click="toLeave(true)">请假</view>
 			</view>
 			<view v-else class="but flex align-center justify-between">
-				<view class="button_orange mr20" @click="gotoChange">申请调课</view>
+				<view v-if="plan_type === 'common'" class="button_orange mr20" @click="gotoChange">申请调课</view>
 				<view class="button_bule mr20" @click="toLeave(false)">请假</view>
 				<view v-if="plan_type === 'private'" class="button_red " @click="makeCourse">预约上课</view>
 				<view v-else class="button_red" @click="toCowrseRepair">补课</view>
