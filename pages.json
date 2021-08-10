@@ -1,0 +1,65 @@
+{
+	"pages": [ // pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "index",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#f5612A",
+		"backgroundColor": "white"
+	},
+	"tabBar": {
+		"borderStyle": "white",
+		"backgroundColor": "white",
+		"color": "#CCCCCC",
+		"selectedColor": "#F5612A",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/img/index/home.png",
+				"selectedIconPath": "static/img/index/home.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/index/test",
+				"text": "xx"
+			}
+		]
+	},
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [
+			{
+				"path": "dd/dd",
+				"style": {
+					"navigationBarBackgroundColor": "#F5612A",
+					"navigationBarTextStyle": "white",
+					"navigationBarTitleText": "dd"
+				}
+			}
+		]
+	}]
+	// "preloadRule": {
+	// 	//跟55对应 分包
+	// 	"pages/index/55": {
+	// 		"network": "all",
+	// 		"packages": ["pagesA"]
+	// 	}
+	// }
+}
