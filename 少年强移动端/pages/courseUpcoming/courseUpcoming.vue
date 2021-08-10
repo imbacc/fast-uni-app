@@ -1,7 +1,7 @@
 <template>
 	<view style="padding: 30rpx;">
 		<view v-for="(info, index) in up_course_list" :key="index" class="up_div flex_align" @click="goto_detail(info.id)">
-			<image class="up_img" :src="info.cover_image" mode="scaleToFill" />
+			<image class="up_img" :src="info.extra_image" mode="scaleToFill" />
 			<view class="up_info">
 				<view class="mt16 flex_align">
 					<view class="up_tag flex_center_align">{{ info.type_name }}</view>

@@ -88,7 +88,7 @@ export default {
 		}
 	},
 	onLoad({ token, uuid }) {
-		if (uuid) this.login()
+		if (uuid) this.login(uuid)
 		if (token) {
 			this.is_vuex.commit('user_vuex/set_token', token)
 			this.is_vuex.dispatch('user_vuex/get_userInfo')
@@ -159,12 +159,20 @@ export default {
 			this.is_goto('/pages/seat/seat')
 		},
 		//登录
-		async login() {
+		async login(uuid) {
 			if (this.init_login) return
 			this.init_login = true
 			if (!this.user_info_com) {
-				this.is_api('auth_login').then((res) => {
-					if (res) window.location.href = res
+				this.is_api('auth_login', { uuid }).then((res) => {
+					if (res) {
+						window.location.href = res
+					} else {
+						this.is_tools.to_showModal('是否重新授权登录?', '系统提示', () => {
+							this.is_vuex.commit('user_vuex/set_logout')
+							this.is_vuex.commit('user_vuex/set_refresh')
+							window.location.href = '/#/pages/my/my'
+						})
+					}
 				})
 			}
 		},

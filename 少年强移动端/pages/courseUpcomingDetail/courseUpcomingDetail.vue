@@ -7,7 +7,7 @@
 			</view>
 			<view class="downDeteil">
 				<up-down-list style="padding: 20rpx 0 0 20rpx;" :topTitle="{ title: course.name }" :topTitleStyle="{ 'padding': ' 0 18rpx', 'margin-right': '6rpx' }" :bottomTitle="course" @to="goto_course_info" />
-				<vip :card="card" @to="toCourseParticulars" />
+				<vip scheduling :card="card" @to="toCourseParticulars" />
 			</view>
 			<!--教练团队 -->
 			<view class="box">
