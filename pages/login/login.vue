@@ -2,7 +2,7 @@
 	<view class="login_index">
 		<view class="is_lab">我是登陆界面</view>
 
-		<view class="is_lab" @tap="is_init">点我关闭检测</view>
+		<view class="is_lab" @tap="is_init">back</view>
 	</view>
 </template>
 
@@ -19,8 +19,7 @@ export default {
 	},
 	methods: {
 		is_init() {
-			this.is_tools.to_showModal('关闭检测登陆?并且返回到主页!', '系统提示', () => {
-				this.is_vuex.commit('set_vuex', ['is_check_login', false])
+			this.is_tools.to_showModal('back?', '系统提示', () => {
 				this.is_gopage(this.is_router.index, 3)
 			})
 		}

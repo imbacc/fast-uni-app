@@ -62,7 +62,7 @@ const goto_router = (name, query = '', type = 1, acg = 'pop-in', fun, last = tru
 	
 	let url = router + (query || ''), token = checkToken()
 	console.log('goto_router=', name, url, auth, token)
-	if (!token) {
+	// if (!token) {
 		// 请求后跳
 		// is_vuex.dispatch('xxx/xxxx').then(() => {
 		// 	goto_router(name, query, type, acg, fun)
@@ -70,8 +70,8 @@ const goto_router = (name, query = '', type = 1, acg = 'pop-in', fun, last = tru
 		
 		// 没有权限直接跳
 		// reLaunch({ url: is_router.login, animationType: 'slide-in-bottom' })
-		return
-	}
+	// 	return
+	// }
 	
 	router ? goto_fun(url, type, acg, auth, fun) : fail()
 }

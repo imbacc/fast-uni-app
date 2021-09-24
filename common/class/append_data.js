@@ -16,12 +16,23 @@ class appendData {
 
 	_append(list, res, append) {
 		if (append) {
-			list = list.concat(res.list)
+			list = list.concat(res[`${this.key}`])
 		} else {
 			list = []
 			if (res[`${this.key}`]) list = res[`${this.key}`]
 		}
 		return list
+	}
+	
+	next_fun(vm, msg = '没有更多内容了...') {
+		return new Promise((resovle) => {
+			if(this.page !== this.next && this.next <= this.total){
+				this.fun(this.next, true).then((res) => resovle(res))
+			} else {
+				if (msg && msg !== '') vm.is_tools.to_msg(msg)
+				resovle()
+			}
+		})
 	}
 
 	fun(page = 1, is_append = false) {
@@ -31,8 +42,8 @@ class appendData {
 			api(name, param, body, method).then((res) => {
 				if (res) {
 					this.page = page
-					this.total = res.total
-					this.next = res.last_page !== page ? page+1 : res.last_page
+					this.total = res.last_page
+					this.next = res.last_page > page ? page+1 : res.last_page
 					this.list = this._append(list, res, is_append)
 				}
 				resolve(res)

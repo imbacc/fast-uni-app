@@ -1,12 +1,12 @@
+// 检测
+const checkLogin = true
+
 // 请求体方式
 const METHOD = {
 	POST: 'POST',
 	GET: 'GET',
 	DELETE: 'DELETE'
 }
-
-// 检测
-const checkLogin = true
 
 // 线上环境配置 和 开发环境配置
 var host, version, baseUrl = ''

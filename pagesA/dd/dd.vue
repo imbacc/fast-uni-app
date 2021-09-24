@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		dd
+		子页面
 	</view>
 </template>
 

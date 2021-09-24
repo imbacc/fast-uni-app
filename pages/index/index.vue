@@ -1,34 +1,25 @@
 <template>
 	<view class="index_content">
-		<view v-if="show_loading">
-			加载中...
-			<skeleton />
+		<view v-if="show_loading">加载中...</view>
+		<view v-else class="index_body">
+			加载完毕
+
+			<!-- 路由配置 => common/router/index -->
+			<view @tap="is_goto('login')">点我登录</view>
 		</view>
-		<view v-else>
-			<view class="index_body">
-				加载完毕
 
-				<!-- 路由配置 => common/router/index -->
-				<view @tap="is_goto('login')">点我登录</view>
-			</view>
+		<view @tap="test">测试方法</view>
 
-			<view @tap="test">测试方法</view>
-
-			<button @tap="vue2_action">我是vue2 通过this Action api</button>
-			<hr />
-			<button @tap="vue3_action">我是模仿vue3 引入调用 Action api</button>
-		</view>
+		<button @tap="v2_action">我是this Action api</button>
+		<hr />
+		<button @tap="v3_action">我是引入调用 Action api</button>
 	</view>
 </template>
 
 <script>
 import api from '@/common/config/api.js'
 
-//导入Minix
-import append_data from '@/common/minix/append_data.js'
-
 export default {
-	mixins: [append_data],
 	data() {
 		return {
 			show_loading: true
@@ -39,14 +30,9 @@ export default {
 			clearTimeout(time)
 			this.show_loading = false
 		}, 800)
-		// console.log('minix=',minix.append_data)
-		// console.log(this.get_append_class())
-		// console.log(this.is_vuex.state.user_vuex)
-
-		// this.action()
 	},
 	methods: {
-		vue3_action() {
+		v3_action() {
 			// console.log('11111111', 11111111)
 			const test_api_get_test = () => api('test_api/get_test') // 请求test_api.js 里的 get_test
 			const test_api_get_test222 = () => api('test_api/get_test222', { _id: 222 }) // 请求test_api.js 里的 get_test222
@@ -79,13 +65,13 @@ export default {
 
 			all_request()
 		},
-		vue2_action() {
-			this.is_action('app_111', {}, { _roolback: true }) // 中断请求 放在body里面
-			this.is_action('app_222', { _id: 222 }) // api/:id/fff
-			this.is_action('app_333', { _id: 222 })
-			this.is_action('app_444')
-			this.is_action('app_555')
-			this.is_action('app_666', { _id: 666 })
+		v2_action() {
+			this.is_api('app_111', {}, { _roolback: true }) // 中断请求 放在body里面
+			this.is_api('app_222', { _id: 222 }) // api/:id/fff
+			this.is_api('app_333', { _id: 222 })
+			this.is_api('app_444')
+			this.is_api('app_555')
+			this.is_api('app_666', { _id: 666 })
 		},
 		//测试proxy
 		test() {
@@ -147,10 +133,10 @@ export default {
 		vuex_fun() {
 			this.is_vuex.commit('set_vuex', ['名称', '值']) //set_vuex 是主模块 mutations
 			this.is_vuex.commit('user_vuex/set_vuex', ['名称', '值']) //set_vuex_user 是子模块user_module mutations
-			this.is_vuex.dispatch('action名称') //全局名称
+			this.is_vuex.dispatch('user_vuex/dispatch')
 
-			this.is_vuex.app_version //主模块state
-			this.is_vuex.user_vuex.userInfo //user_module模块state
+			this.is_vuex.state.app_version //主模块state
+			this.is_vuex.state.user_vuex.userInfo //user_module模块state
 		}
 	}
 }

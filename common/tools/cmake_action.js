@@ -22,6 +22,11 @@ const get_args = (json = {}, cur = [1, 10]) => {
  */
 const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 	let cache_time = 0
+	
+	if (!api) {
+		console.error(`找不到API`)
+		return false
+	}
 
 	if (api && !param['_onec']) {
 		if (api.constructor === Array && api.length > 0) {
@@ -41,7 +46,7 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 		delete param['_page']
 	}
 
-	if (param['_cache'] || param['_cache'] === 0) {
+	if (param['_cache'] !== undefined && param['_cache'] >= 0) {
 		cache_time = param['_cache']
 		delete param['_cache']
 	}

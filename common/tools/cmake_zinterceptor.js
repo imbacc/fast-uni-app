@@ -25,10 +25,20 @@ http.interceptor.request = (config) => {
 		delete config.header['x-access-token']
 	}
 	
+	if (config.data._formData) {
+		config.header['content-Type'] = 'application/x-www-form-urlencoded'
+		delete config.data['_formData']
+	}
+	
 	if (config.data._header) {
 		config.header = { ...config.header, ...config.data._header }
 		delete config.data['_header']
 	}
+	
+	//添加通用参数
+	// config.header = {
+	// 	'authorization':`Bearer ${token}`,
+	// }
 	
 	// console.log('【config】 '+JSON.stringify(config))
 }

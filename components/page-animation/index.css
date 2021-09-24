@@ -1,0 +1,36 @@
+/* #ifdef H5 */
+uni-page {
+	opacity: 0;
+}
+
+uni-page.animation-before {
+	/* 在页面上使用 transform 会导致页面内的 fixed 定位渲染为 absolute，需要在动画完成后移除 */
+	transform: translateX(20px);
+}
+
+uni-page.animation-before-index {
+	/* 在页面上使用 transform 会导致页面内的 fixed 定位渲染为 absolute，需要在动画完成后移除 */
+	/* transform: translateY(0px); */
+}
+
+
+uni-page.animation-leave {
+	transition: all 0.15s ease;
+}
+
+uni-page.animation-enter {
+	transition: all 0.15s ease;
+}
+
+uni-page.animation-show {
+	opacity: 1;
+}
+
+uni-page.animation-after {
+	transform: translateX(0);
+}
+
+uni-page.animation-after-index {
+	/* transform: translateY(0); */
+}
+/* #endif */

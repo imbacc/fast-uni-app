@@ -6,6 +6,7 @@ class sendCode {
 		this.is_refushing = false
 		this.but_lab = '获取验证码'
 		this._is_tools = vm.is_tools
+		this._is_action = vm.is_action
 	}
 
 	refush_code() {
@@ -22,23 +23,25 @@ class sendCode {
 		}, 1000)
 	}
 
-	get_code(tel) {
+	get_code(phone) {
+		const { _is_tools } = this
 		if (this.is_refushing) return
-		if (!this._is_tools.test_tel(tel)) {
-			this._is_tools.to_msg('不是有效的手机号码!', 'warning')
+		if (!_is_tools.test_tel(phone)) {
+			_is_tools.to_msg('不是有效的手机号码!', 'warning')
 			return
 		}
-		this.but_lab = '正在发送...'
+		let _this = this
+		this.but_lab = '正在发送...',
 		this.is_refushing = true
-		api('send_sms', { tel }).then((res) => {
-			this._is_tools.to_msg(res ? '发送成功!' : '发送失败!')
+		api('send_sms', {}, { phone }).then((res) => {
+			_is_tools.to_msg(res ? '发送成功!' : '发送失败!')
 			if (res) {
-				this.refush_time = 120
-				this.is_refushing = true
+				_this.refush_time = 120
+				_this.is_refushing = true
 				this.refush_code()
 			} else {
-				this.is_refushing = false
-				this.but_lab = '重新发送'
+				_this.is_refushing = false
+				_this.but_lab = '重新发送'
 			}
 		})
 	}

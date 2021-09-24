@@ -1,5 +1,13 @@
-
 const { setStorageSync, getStorageSync, removeStorageSync } = uni
+
+const list = getStorageSync('_cache_name_list') || []
+
+const _cache = async (key, data, now) => {
+	if (list.includes(key)) list.push(key)
+	setStorageSync(key, data)
+	setStorageSync(key + '_time', now)
+	setStorageSync('_cache_name_list', list)
+}
 
 /**
  * @param {Object} key	存放名称
@@ -16,9 +24,7 @@ const set_cache = (key,data,time = 5) => {
 
 	try{
 		let now = new Date().getTime() + time * 60 * 1000
-		
-		setStorageSync(key,data)
-		setStorageSync(key+'_time',now)
+		_cache(key, data, now)
 	}catch(e){
 		return false
 	}
