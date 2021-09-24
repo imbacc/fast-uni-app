@@ -1,11 +1,4 @@
-import {
-	set_cache
-} from '@/common/tools/cache_time.js' //导入缓存时间控制
-
-const {
-	getStorageSync,
-	removeStorageSync
-} = uni
+const { getStorageSync, removeStorageSync } = uni
 
 const UUID = getStorageSync('uuid') || false //获取UUID缓存
 const OPENID = getStorageSync('openid') || false //获取OPENID缓存
@@ -29,8 +22,8 @@ const mutations = {
 	 * 0是状态属性名称
 	 * 1是赋予状态属性的值
 	 */
-	set_vuex(state, info) {
-		state[info[0]] = info[1]
+	set_vuex(state, [key, val]) {
+		state[key] = val
 	},
 	set_token(state, info) {
 		state.token = info
@@ -42,11 +35,11 @@ const mutations = {
 	},
 	set_user_info(state, info) {
 		state.user_info = info
-		set_cache('user_info', info, (60 * 24 * 7))
+		uni.setStorageSync('user_info', info)
 	},
 	set_user_role(state, info) {
 		state.user_role = info
-		set_cache('user_role', info, (60 * 24 * 7))
+		uni.setStorageSync('user_role', info)
 	},
 	set_logout(state) {
 		state.uuid = false
@@ -65,19 +58,12 @@ const mutations = {
 //get方法
 const getters = {
 	// 用户是否登录
-	hasLogin: (state) => state.token || false
+	hasLogin: (state) => state.token || state.user_info || false
 }
 
 //异步方法
 const actions = {
-	//检查是否登陆状态
-	check_login({ commit, state, getters }) {
-		if (!getters.hasLogin || !state.user_info) {
-			commit('set_logout')
-			return Promise.resolve(false)
-		}
-		return Promise.resolve(true)
-	},
+	
 }
 
 export default {

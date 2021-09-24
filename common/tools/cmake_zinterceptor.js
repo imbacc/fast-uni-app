@@ -62,11 +62,11 @@ http.interceptor.response = (res) => {
 	
 	const { data } = res
 	
-	if(data.code === -403 || data.code === -404 || data.code === -444 || data.code === -500) return false
+	// if(data.code === -403 || data.code === -404 || data.code === -444 || data.code === -500) return false
 	
-	if(data.code === 1){
+	if(data.code === 0){
 		console.log('拦截通知:', data.msg)
-		return data.data === null ? true : data.data
+		return data.data
 	}else{
 		if (data.msg) error_msg(data.msg ? data.msg : '服务器打瞌睡了')
 		console.error('服务报错:', data.msg)

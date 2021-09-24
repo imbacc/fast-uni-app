@@ -47,7 +47,7 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 	}
 
 	if (api.indexOf(':id') !== -1) {
-		if (param['_id'] === undefined) {
+		if (!param['_id']) {
 			console.error(`${api} 没有传参数ID 格式 param -> { _id: 10086 }`)
 			return false
 		}

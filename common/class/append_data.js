@@ -19,7 +19,7 @@ class appendData {
 			list = list.concat(res.list)
 		} else {
 			list = []
-			if (res.hasOwnProperty(`${this.key}`)) list = res[`${this.key}`]
+			if (res[`${this.key}`]) list = res[`${this.key}`]
 		}
 		return list
 	}
