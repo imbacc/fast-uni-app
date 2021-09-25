@@ -34,7 +34,7 @@ export default (name, ...args) => {
 				let moduleApi = Files(modulePath).default
 				let actionApi = moduleApi[apiName]
 				moduleFiles[modulePath] = moduleApi
-				return actionApi && resolve(action(actionApi, ...args))
+				return resolve(action(actionApi, ...args))
 			}
 		}
 
