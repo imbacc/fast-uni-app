@@ -14,8 +14,6 @@ const state = {
 	token: TOKEN, 			// 用户token
 	user_info: USER_INFO, 	// 用户信息
 	user_role: USER_ROLE, 	// 用户角色权限
-	nojmp_login: false, 	// true为不验证用户TOKEN 不跳转登陆,false为正常判断用户TOKEN
-	is_login_page: false, 	// 当前是否是登陆页面
 	
 }
 
@@ -62,7 +60,8 @@ const mutations = {
 //get方法
 const getters = {
 	// 用户是否登录
-	hasLogin: (state) => state.token || state.user_info || false
+	hasLogin: (state) => state.token || state.user_info || false,
+	getRole: (state) => state.user_role
 }
 
 //异步方法

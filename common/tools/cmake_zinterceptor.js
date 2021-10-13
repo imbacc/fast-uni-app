@@ -54,7 +54,7 @@ http.interceptor.response = (res) => {
 		console.log('401错误', errMsg)
 		error_msg('登录信息已失效')
 		uni.clearStorage()
-		uni.reLaunch({ url:'/pages/login/login', animationType:'slide-in-bottom' })
+		uni.reLaunch({ url: '/pages/login/login', animationType: 'slide-in-bottom' })
 		return 'false'
 	}
 	

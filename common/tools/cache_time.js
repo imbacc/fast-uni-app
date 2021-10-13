@@ -3,7 +3,7 @@ const { setStorageSync, getStorageSync, removeStorageSync } = uni
 const list = getStorageSync('_cache_name_list') || []
 
 const _cache = async (key, data, now) => {
-	if (list.includes(key)) list.push(key)
+	if (!list.includes(key)) list.push(key)
 	setStorageSync(key, data)
 	setStorageSync(key + '_time', now)
 	setStorageSync('_cache_name_list', list)

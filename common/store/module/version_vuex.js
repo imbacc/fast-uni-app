@@ -1,4 +1,4 @@
-import api from '@/common/config/api.js';
+import api from '@/common/config/api.js'
 import { set_cache } from '@/common/tools/cache_time.js' //导入缓存时间控制
 import { is_dev } from '@/common/config/cfg.js'
 
@@ -14,14 +14,8 @@ const state = {
 
 //同步方法
 const mutations = {
-	/**
-	 * @param {Object} info
-	 * 0是状态属性名称
-	 * 1是赋予状态属性的值
-	 */
-	set_vuex(state, info) {
-		console.log(state)
-		state[info[0]] = info[1]
+	set_vuex(state, [key, val]) {
+		state[key] = val
 	},
 }
 
@@ -45,17 +39,7 @@ const actions = {
 				if (is_dev) {
 					console.log('开发环境')
 				} else {
-					let sys_version = res.version.replace('.', '')
-					sys_version = sys_version.indexOf('.') !== -1 ? sys_version.replace('.', '') : parseInt(sys_version)
-
-					console.log("系统sys_version" + sys_version)
-					console.log("app version" + r.version)
-					console.log("手机系统版本" + res.system)
-
-					if (sys_version != res.version) {
-						set_cache('capp_update', res, 30)
-						// uni.navigateTo({ url: router.version })
-					}
+					// xxx
 				}
 			}
 		})

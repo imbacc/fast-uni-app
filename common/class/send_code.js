@@ -31,7 +31,7 @@ class sendCode {
 			return
 		}
 		let _this = this
-		this.but_lab = '正在发送...',
+		this.but_lab = '正在发送...'
 		this.is_refushing = true
 		api('send_sms', {}, { phone }).then((res) => {
 			_is_tools.to_msg(res ? '发送成功!' : '发送失败!')

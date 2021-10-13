@@ -1,6 +1,6 @@
 import http_intercept from './cmake_zinterceptor.js' //拦截请求
 import { set_cache, get_cache, del_cache } from './cache_time.js' //缓存
-import { page_key, size_key } from '@/common/config/cfg.js'
+import { page_key, size_key, is_dev } from '@/common/config/cfg.js'
 import stringify from 'qs-stringify'
 import md5 from '@/common/lib/js_md5.js'
 
@@ -21,13 +21,12 @@ const get_args = (json = {}, cur = [1, 10]) => {
  * @param {type}	默认请求类型type为是POST请求
  */
 const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
-	let cache_time = 0
-	
 	if (!api) {
 		console.error(`找不到API`)
 		return false
 	}
 
+	let cache_time = 0
 	if (api && !param['_onec']) {
 		if (api.constructor === Array && api.length > 0) {
 			const [name, type, time] = api
@@ -63,6 +62,7 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 	let key_api = `${api}?${stringify(param)}`, key_api_len = key_api.length
 	let cache_name = `cache_${key_api}md5=${md5(stringify(body))}`
 
+	if (!is_dev) cache_name = md5(cache_name)
 	if (key_api_len === key_api.lastIndexOf('?') + 1) key_api = key_api.substring(0, key_api_len - 1)
 
 	if (cache_time > 0) {

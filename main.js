@@ -3,9 +3,9 @@ import App from './App'
 
 import store from '@/common/store/index.js'		//导入vuex
 import router from '@/common/router/index.js'	//导入router
-import { goto_fun, goto_router } from '@/common/tools/cmake_router.js';	//封装跳转
-import api from '@/common/config/api.js';	//封装请求
-import cmake_tools from '@/common/tools/cmake_tools.js';	//自定义函数
+import { goto_fun, goto_router } from '@/common/tools/cmake_router.js'	//封装跳转
+import api from '@/common/config/api.js'	//封装请求
+import cmake_tools from '@/common/tools/cmake_tools.js'	//自定义函数
 import { is_cdn } from '@/common/config/cfg.js'
 
 Vue.prototype.is_vuex = store			//全局变量 事务
