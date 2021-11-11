@@ -18,10 +18,10 @@ export default {
 	},
 
 	//预览图片
-	look_img(cur = 0, imgs = [], indicator = 'default', loop = true, button = false) {
-		let json = {
-			current: cur,
-			urls: imgs,
+	look_img(current = 0, urls = [], indicator = 'default', loop = true, button = false) {
+		const json = {
+			current,
+			urls,
 			indicator,
 			loop
 		}
@@ -45,7 +45,7 @@ export default {
 
 		uni.previewImage(json)
 	},
-	
+
 	loca_get(key) {
 		let val = uni.getStorageSync(key)
 		try {
@@ -54,5 +54,22 @@ export default {
 			console.log('error', error)
 		}
 		return val
+	},
+
+	uni_emit(key, val) {
+		uni.$emit(key, val)
+	},
+
+	uni_on(key, fun) {
+		uni.$off(key, fun)
+		uni.$on(key, fun)
+	},
+
+	uni_off(key, fun) {
+		uni.$off(key, fun)
+	},
+
+	uni_once(key, fun) {
+		uni.$once('key', fun)
 	}
 }

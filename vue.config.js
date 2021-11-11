@@ -1,22 +1,21 @@
 const webpack = require('webpack')
+const { join } = require('path')
+const { existsSync, readFileSync } = require('fs')
 
-const env = process.env
-console.log('env=', env);
+const env = process.env.NODE_ENV
 
 // pages.json 修改了需要重启项目
 const readPagesJSON = () => {
-	const path = require('path')
-	const fs = require('fs')
-	const jsonFilePath = path.join(__dirname, './pages.json')
-	if (!fs.existsSync(jsonFilePath)) return new Error(jsonFilePath + ' 不存在')
-	const json = fs.readFileSync(jsonFilePath, 'utf8')
+	const jsonFilePath = join(__dirname, './pages.json')
+	if (!existsSync(jsonFilePath)) return new Error(jsonFilePath + ' 不存在')
+	const json = readFileSync(jsonFilePath, 'utf8')
 	// 去除注释
 	const reg = /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n|$))|(\/\*(\n|.)*?\*\/)/g;
 	return json.replace(reg, (word) => /^\/{2,}/.test(word) || /^\/\*/.test(word) ? "" : word)
 }
 
 module.exports = {
-	productionSourceMap: false, // 生产打包时不输出map文件，增加打包速度  
+	productionSourceMap: env === 'development', // 生产打包时不输出map文件，增加打包速度  
 	chainWebpack: (config) => {
 		// 发行或运行时启用了压缩时会生效
 		config.optimization.minimizer('terser').tap((args) => {

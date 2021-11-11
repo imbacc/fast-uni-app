@@ -22,6 +22,6 @@
   "homepage": "https://github.com/imbacc/fast-uni-app#readme",
   "devDependencies": {
     "@types/uni-app": "^1.4.4",
-    "webpack": "4.0.0"
+    "webpack": "4.5.0"
   }
 }
