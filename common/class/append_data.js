@@ -1,4 +1,5 @@
 import api from '@/common/config/api.js'
+import fun from '@/common/tools/cmake_tools.js'
 
 class appendData {
 	constructor() {
@@ -12,38 +13,36 @@ class appendData {
 		this.size = 10
 		this.method = 'post'
 		this.key = 'data'
+		this.last_key = 'last_page'
 	}
 
 	_append(list, res, append) {
-		if (append) {
-			list = list.concat(res[`${this.key}`])
-		} else {
-			list = []
-			if (res[`${this.key}`]) list = res[`${this.key}`]
-		}
-		return list
+		const more = res[`${this.key}`]
+		if (append) return list.concat(more)
+		return more
 	}
 	
-	next_fun(vm, msg = '没有更多内容了...') {
+	next_fun(msg = '没有更多内容了...') {
 		return new Promise((resovle) => {
-			if(this.page !== this.next && this.next <= this.total){
-				this.fun(this.next, true).then((res) => resovle(res))
+			const { page, next, total } = this
+			if(page !== next && next <= total){
+				this.fun(next, true).then((res) => resovle(res))
 			} else {
-				if (msg && msg !== '') vm.is_tools.to_msg(msg)
+				if (msg && msg !== '') fun.to_msg(msg)
 				resovle()
 			}
 		})
 	}
 
 	fun(page = 1, is_append = false) {
-		const { name, param, body, list, total, next, size, method, key, _append } = this
+		const { name, param, body, list, total, next, size, method, key, last_key, _append } = this
 		return new Promise((resolve) => {
 			param['_page'] = [page, size]
 			api(name, param, body, method).then((res) => {
 				if (res) {
 					this.page = page
-					this.total = res.last_page
-					this.next = res.last_page > page ? page+1 : res.last_page
+					this.total = res[last_key]
+					this.next = this.total > page ? page + 1 : this.total
 					this.list = this._append(list, res, is_append)
 				}
 				resolve(res)

@@ -9,9 +9,8 @@
 		// #endif
 		onLaunch: function() {
 			console.log('App Launch')
-			// #ifdef APP-PLUS
-				// this.is_vuex.dispatch('get_app_version') //获取更新信息
-				// this.is_vuex.dispatch('open_push')		//开始推送
+			// #ifdef MP-WEIXIN
+				this.is_vuex.dispatch('version_vuex/update_version')
 			// #endif
 		},
 		onShow: function() {
@@ -22,3 +21,7 @@
 		}
 	}
 </script>
+
+<style lang="scss">
+	@import "uview-ui/index.scss";
+</style>

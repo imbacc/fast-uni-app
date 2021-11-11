@@ -1,12 +1,11 @@
 import api from '@/common/config/api.js'
+import fun from '@/common/tools/cmake_tools.js'
 
 class sendCode {
 	constructor(vm) {
 		this.refush_time = 0
 		this.is_refushing = false
 		this.but_lab = '获取验证码'
-		this._is_tools = vm.is_tools
-		this._is_action = vm.is_action
 	}
 
 	refush_code() {
@@ -24,17 +23,16 @@ class sendCode {
 	}
 
 	get_code(phone) {
-		const { _is_tools } = this
 		if (this.is_refushing) return
-		if (!_is_tools.test_tel(phone)) {
-			_is_tools.to_msg('不是有效的手机号码!', 'warning')
+		if (!fun.test_tel(phone)) {
+			fun.to_msg('不是有效的手机号码!', 'warning')
 			return
 		}
-		let _this = this
+		const _this = this
 		this.but_lab = '正在发送...'
 		this.is_refushing = true
 		api('send_sms', {}, { phone }).then((res) => {
-			_is_tools.to_msg(res ? '发送成功!' : '发送失败!')
+			fun.to_msg(res ? '发送成功!' : '发送失败!')
 			if (res) {
 				_this.refush_time = 120
 				_this.is_refushing = true

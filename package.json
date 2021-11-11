@@ -11,18 +11,17 @@
     "url": "git+https://github.com/imbacc/fast-uni-app.git"
   },
   "dependencies": {
-    "qs-stringify": "^1.2.1"
-  },
-  "devDependencies": {
-    "@dcloudio/uni-helper-json": "^1.0.7",
-    "@types/html5plus": "^1.0.1",
-    "@types/uni-app": "^1.4.3",
-    "compression-webpack-plugin": "^7.1.2"
+    "qs-stringify": "^1.2.1",
+    "uview-ui": "^1.8.4"
   },
   "author": "imbacc",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/imbacc/fast-uni-app/issues"
   },
-  "homepage": "https://github.com/imbacc/fast-uni-app#readme"
+  "homepage": "https://github.com/imbacc/fast-uni-app#readme",
+  "devDependencies": {
+    "@types/uni-app": "^1.4.4",
+    "webpack": "4.0.0"
+  }
 }

@@ -16,7 +16,7 @@ class Flow {
       }
     }
 
-    cb && cb()
+    cb?.()
   }
 }
 

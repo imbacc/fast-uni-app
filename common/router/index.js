@@ -1,17 +1,40 @@
-//路由路径封装
+const router = {}
+const shallow = []
 
-// 获取module文件下子模块内容
-const modulesFiles = require.context('./module', true, /\.js$/)
-const modules = modulesFiles.keys().reduce((module, modulePath) => {
-  module = {...module, ...modulesFiles(modulePath).default} 
-  return module
-}, {})
+// webpack str json
+const pageJson = JSON.parse(PAGES_JSON)
+const tabBarJson = pageJson.tabBar.list
 
-console.log('router modules=', modules)
-
-export default {
-	...modules,
-	
-	index:'/pages/index/index',
-	login:'/pages/login/login',
+for (let tabbar of tabBarJson) {
+	tabbar.iconPath = `/${tabbar.iconPath}`
+	tabbar.pagePath = `/${tabbar.pagePath}`
+	tabbar.selectedIconPath = `/${tabbar.selectedIconPath}`
 }
+
+// 转换为router键值格式
+const forRouter = (list, space) => {
+	let main = {}
+	list.forEach((page) => {
+		let info = page, path = info.path, spl = path.split('/')
+		info.path = `${space !== 'pages' ? `/${space}` : ''}/${path}`
+		const name = spl[spl.length - 1]
+		main[name] = info
+		info.name = name
+		info.space = space
+		shallow.push(info)
+	})
+	return main
+}
+
+// 主包
+router['pages'] = forRouter(pageJson.pages, 'pages')
+// 子包
+pageJson.subPackages.forEach(({ root, pages }) => router[root] = forRouter(pages, root))	
+// 广度列表
+router['_shallow'] = shallow
+// tabbar
+router['_tablist'] = tabBarJson
+
+console.log('router chunks=', router);
+
+export default router

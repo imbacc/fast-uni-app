@@ -1,4 +1,5 @@
 <script>
+	// https://ext.dcloud.net.cn/plugin?id=1265
 	import './index.css'
 	export default {
 		// #ifdef H5

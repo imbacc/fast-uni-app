@@ -1,18 +1,37 @@
 <template>
 	<view class="index_content">
-		<view v-if="show_loading">加载中...</view>
+		<skeleton v-if="show_loading" />
 		<view v-else class="index_body">
-			加载完毕
+			<u-swiper :list="list" effect3d effect3d-previous-margin="0" mode="rect" @click="swiper_click" />
 
 			<!-- 路由配置 => common/router/index -->
-			<view @tap="is_goto('login')">点我登录</view>
+			修改了pages.json一定要重启!!!
+			修改了pages.json一定要重启!!!
+			修改了pages.json一定要重启!!!
+			<view class="mt20">
+				<u-button type="primary" @click="goto_aa">跳转pagesA aa</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="goto_hook_error">试错 hook pagesA aa</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="goto_aa22">跳转pagesA aa22 [需要授权] before after</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="goto_bb">跳转pagesB bb [需要授权] before</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="goto_bb22">跳转pagesB bb22 [需要授权]</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="v2_action">我是this Action api</u-button>
+			</view>
+			<view class="mt20">
+				<u-button type="primary" @click="v3_action">我是引入调用 Action api</u-button>
+			</view>
+			
+			<button class="mt20" @click="test_action">test api</button>
 		</view>
-
-		<view @tap="test">测试方法</view>
-
-		<button @tap="v2_action">我是this Action api</button>
-		<hr />
-		<button @tap="v3_action">我是引入调用 Action api</button>
 	</view>
 </template>
 
@@ -22,12 +41,27 @@ import api from '@/common/config/api.js'
 export default {
 	data() {
 		return {
-			show_loading: true
+			show_loading: true,
+			list: [
+				{
+					image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+					title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+				},
+				{
+					image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+					title: '身无彩凤双飞翼，心有灵犀一点通'
+				},
+				{
+					image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+					title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+				}
+			]
 		}
 	},
 	onLoad() {
 		let time = setTimeout(() => {
 			clearTimeout(time)
+			this.is_vuex.commit('user_vuex/set_token', '1111')
 			this.show_loading = false
 		}, 800)
 	},
@@ -66,7 +100,7 @@ export default {
 			all_request()
 		},
 		v2_action() {
-			this.is_api('app_111', {}, { _roolback: true }) // 中断请求 放在body里面
+			this.is_api('app_111', {}) // 中断请求 放在body里面
 			this.is_api('app_222', { _id: 222 }) // api/:id/fff
 			this.is_api('app_333', { _id: 222 })
 			this.is_api('app_444')
@@ -107,22 +141,6 @@ export default {
 			let b = uni.setStorageSync('key', 'val')
 			console.log(b)
 		},
-		//跳转路由
-		goto_router() {
-			// common/router/index.js 配置路由
-			//1 uni.navigateTo	保留当前页面，跳转到应用内的某个页面
-			//2 uni.redirectTo	关闭当前页面，跳转到应用内的某个页面。
-			//3 uni.reLaunch		关闭所有页面，打开到应用内的某个页面。
-			//4 uni.switchTab		跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。
-			//5 uni.navigateBack	关闭当前页面，返回上一页面或多级页面。
-			//pop-in 为动画效果 具体参考uni文档
-			// (name,query = '',type = 1,acg = 'pop-in',fun,last = true)
-			this.is_goto('名字', '?id=参数', 1, 'pop-in', () => {
-				//跳转后执行方法,可以在 goto_router 设置全局拦截 设置跳转前 或自定设置 跳转后
-			})
-			//参数同上
-			this.is_gopage('路径跳转')
-		},
 		//工具集合
 		tools_fun() {
 			this.is_tools.to_msg('dddd')
@@ -133,10 +151,56 @@ export default {
 		vuex_fun() {
 			this.is_vuex.commit('set_vuex', ['名称', '值']) //set_vuex 是主模块 mutations
 			this.is_vuex.commit('user_vuex/set_vuex', ['名称', '值']) //set_vuex_user 是子模块user_module mutations
-			this.is_vuex.dispatch('user_vuex/dispatch')
+			this.is_vuex.dispatch('user_vuex/clear_api_cache')
 
-			this.is_vuex.state.app_version //主模块state
+			this.is_vuex.state.version_vuex.app_version //主模块state
 			this.is_vuex.state.user_vuex.userInfo //user_module模块state
+		},
+		goto_aa() {
+			this.is_goto
+			.hook(() => console.log('11111111111'))
+			.gotoPage('/pagesA/aa/aa', { aa: 'key', bb: 111 })
+			.hook(() => console.log('2222222222222222'))
+		},
+		goto_hook_error() {
+			this.is_goto
+			.hook(() => false)
+			.gotoPage('/pagesA/aa/aa', { aa: 'fff' })
+			.hook(() => console.log('2222222222222222'))
+		},
+		goto_bb() {
+			this.is_goto.hook(() => {
+				if (this.is_vuex.state.user_vuex.user_role.length === 0) console.error('不登录点我肯定报错!')
+			}).gotoRouter('pagesB/bb', { bb: 'www' }).hook(() => {
+				console.log('登陆了，就执行到这里嘛!');
+			})
+		},
+		goto_aa22() {
+			const router = this.is_goto.gotoRouter('pagesB/bb', { bb: 'gggg' })
+			console.log(router.result)
+		},
+		goto_bb22() {
+			const router = this.is_goto.gotoRouter('pagesB/bb', { bb: 'qwer' })
+			if (!router.result) {
+				this.is_goto.gotoRouter('login')
+			}
+		},
+		swiper_click(e) {
+			this.is_tools.look_img(e, Array.from(this.list, ({ image }) => image))
+		},
+		test_action() {
+			this.is_api('app_111', {}) // 中断请求 放在body里面
+			this.is_api('app_222', { _id: 222 }) // api/:id/fff
+			this.is_api('app_333', { _id: 222 })
+			this.is_api('app_444')
+			this.is_api('app_555')
+			this.is_api('app_666', { _id: 666 })
+			this.is_api('app_111', {}) // 中断请求 放在body里面
+			this.is_api('app_222', { _id: 222 }) // api/:id/fff
+			this.is_api('app_333', { _id: 222 })
+			this.is_api('app_444')
+			this.is_api('app_555')
+			this.is_api('app_666', { _id: 666 })
 		}
 	}
 }

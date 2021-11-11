@@ -50,7 +50,7 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 		delete param['_cache']
 	}
 
-	if (api.indexOf(':id') !== -1) {
+	if (~api.indexOf(':id')) {
 		if (!param['_id']) {
 			console.error(`${api} 没有传参数ID 格式 param -> { _id: 10086 }`)
 			return false
@@ -67,17 +67,17 @@ const http_action = async (api, param = {}, body = {}, req_type = 'POST') => {
 
 	if (cache_time > 0) {
 		const cache = get_cache(cache_name)
-		cache && console.log('cache service:' + api, cache)
+		cache && console.log('cache service:' + key_api, cache)
 		if (cache && cache !== false) return await cache
 	}
 
-	const is_http = http_intercept[req_type.toLocaleLowerCase()](key_api, body)
+	const is_http = http_intercept.request(key_api, body, req_type)
 
 	return await is_http.then((res) => {
-			if (res == 'false' || res === 'false' || res === false) return false
+			console.log('service:' + key_api, res)
+			if (res === 'false' || res === false) return false
 			if (cache_time > 0 && res) set_cache(cache_name, res, cache_time)
 			if (cache_time === 0 && res) del_cache(cache_name)
-			console.log('service:' + key_api, res)
 			return res || false
 		})
 		.catch((err) => {

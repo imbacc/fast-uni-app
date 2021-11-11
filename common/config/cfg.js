@@ -16,15 +16,13 @@ const is_dev = Boolean(env === 'development')	// 是否是开发环境
 if(is_dev){
     console.log('开发环境')
 	host = 'http://192.168.0.195:81'
-	version = '/v1'
+	version = '/v1/'
 	baseUrl = `${host}${version}`
 }else{
     console.log('生产环境')
 	host = 'http://192.168.0.195:81/'
-	version = '/v1'
+	version = '/v1/'
 	baseUrl = `${host}${version}`
-	// 去除console
-	console.log = async () => {}
 }
 
 // oss, cdn
