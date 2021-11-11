@@ -5,7 +5,21 @@ import zRequest from './cmake_zrequest.js'
 import store from '../store/index.js'
 import { baseUrl } from '../config/cfg.js'
 
-const http = new zRequest(baseUrl, 5678)
+const invoke = (args) => {
+	// args.url = 'https://www.baidu.com/'
+	console.log('invoke args=', args)
+}
+const success = (args) => {
+	// args.data.code = 1
+	console.log('success args=', args)
+}
+const fail = (args) => console.log('fail args=', args)
+const complete = (args) => console.log('complete args=', args)
+
+// const http = new zRequest(baseUrl, 5678)
+// or
+// invoke 里的拦截优先于 http.interceptor.request / http.interceptor.response
+const http = new zRequest(baseUrl, 5678).invoke(invoke, success, fail, complete)
 
 var error_time = null
 const error_msg = (title) => {
@@ -16,10 +30,9 @@ const error_msg = (title) => {
 	}, 100)
 }
 
-
 const go_logion = () => {
-	localStorage.removeItem('token')
-	window.location = '/login'
+	uni.removeStorage({ key: 'token' })
+	uni.reLaunch({ url: '/pages/login/login', animationType: 'slide-in-bottom' })
 }
 
 //设置请求拦截
@@ -60,8 +73,7 @@ http.interceptor.response = (res) => {
 	if(statusCode === 401){
 		console.error('401错误', errMsg)
 		error_msg('登录信息已失效')
-		uni.clearStorage()
-		uni.reLaunch({ url: '/pages/login/login', animationType: 'slide-in-bottom' })
+		go_logion()
 		return 'false'
 	}
 	
@@ -91,9 +103,4 @@ http.interceptor.response = (res) => {
     return data
 }
 
-const invoke = (args) => console.log('invoke args=', args)
-const success = (args) => console.log('success args=', args)
-const fail = (args) => console.log('fail args=', args)
-const complete = (args) => console.log('complete args=', args)
-
-export default http.create(invoke, success, fail, complete)
+export default http

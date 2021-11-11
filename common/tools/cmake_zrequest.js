@@ -11,7 +11,7 @@ class zRequest {
 		this.record = {}
 	}
 	
-	create(invoke, success, fail, complete) {
+	invoke(invoke, success, fail, complete) {
 		uni.removeInterceptor('request')
 		// 添加拦截器
 		uni.addInterceptor('request', {
@@ -50,7 +50,7 @@ class zRequest {
 		return new Promise((resolve, reject) => {
 			const task = this.record[url]
 			if (task) {
-				reject(`${url} 请求重复!`)
+				reject(`${url} 还在请求莫着急!`)
 				return
 			}
 			if (this.interceptor.request) {

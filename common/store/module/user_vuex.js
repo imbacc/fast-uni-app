@@ -1,4 +1,4 @@
-import { del_cache } from '@/common/tools/cache_time.js' 	//导入缓存时间控制
+import { clear_cache } from '@/common/tools/cache_time.js' 	//导入缓存时间控制
 
 const { getStorageSync, removeStorageSync } = uni
 const UUID = getStorageSync('uuid') || false					//获取UUID缓存
@@ -68,11 +68,7 @@ const getters = {
 const actions = {
 	// 清除接口缓存
 	clear_api_cache() {
-		return new Promise((resovle) => {
-			const cache_name_list = uni.getStorageSync('_cache_name_list') || []
-			cache_name_list.forEach((name) => del_cache(name))
-			resovle()
-		})
+		return clear_cache()
 	}
 }
 

@@ -68,8 +68,16 @@ const del_cache = async (key) => {
   removeStorageSync(key + '_time')
 }
 
+const clear_cache = () => {
+	return new Promise((resovle) => {
+		list.forEach((name) => del_cache(name))
+		resovle()
+	})
+}
+
 export {
 	set_cache,
 	get_cache,
-	del_cache
+	del_cache,
+	clear_cache
 }

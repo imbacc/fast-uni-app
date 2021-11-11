@@ -1,5 +1,8 @@
 const webpack = require('webpack')
 
+const env = process.env
+console.log('env=', env);
+
 // pages.json 修改了需要重启项目
 const readPagesJSON = () => {
 	const path = require('path')
