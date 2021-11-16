@@ -1,5 +1,24 @@
 # fast-uni-app
 
+### 命令安装
+
+```
+# npm
+npm i -g imba-uni
+# yarn
+yarn global add imba-uni
+# pnpm
+pnpm i -g imba-uni
+```
+
+### 使用
+
+```
+imba create <name> [-f|--force]
+cd <name>
+npm install or yarn install or pnpm install
+```
+
 # 对象
 ### -> class/*
 ### 用于对象模式复用/继承或集成
