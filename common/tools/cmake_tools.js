@@ -55,7 +55,7 @@ export default {
 		}
 		return val
 	},
-
+	
 	uni_emit(key, val) {
 		uni.$emit(key, val)
 	},

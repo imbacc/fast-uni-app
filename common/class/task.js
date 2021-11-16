@@ -3,6 +3,10 @@ class Flow {
   constructor(effects) {
     this.effects = effects
   }
+  
+  push(fun) {
+	  this.effects.push(fun)
+  }
 
   async run(cb) {
     const tasklist = this.effects.flat()

@@ -20,11 +20,10 @@ export default {
 	methods: {
 		is_init() {
 			this.is_tools.to_showModal('back?', '系统提示', () => {
-				this.is_goto.hook(() => {
-					console.log('test hook1')
-				}).gotoRouter('index', { test: 'test index' }).hook(() => {
-					console.log('test hook2')
-				})
+				this.is_router
+				.hook(() => console.log('test hook1'))
+				.gotoRouter('index', { test: 'test index' })
+				.hook(() => console.log('test hook2'))
 			})
 		},
 		login_submit() {

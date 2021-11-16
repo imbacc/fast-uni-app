@@ -5,7 +5,7 @@
 			 option: {{ option }}
 		 </view>
 		 <view class="mt20">
-			  pages.json 定义信息嵌入当前路由-> {{ is_goto.curRouter }}
+			  pages.json 定义信息嵌入当前路由-> {{ is_router.curRouter }}
 		 </view>
 	</view>
 </template>
@@ -21,7 +21,7 @@
 			console.log('aa option=', option)
 			this.option = JSON.stringify(option)
 			console.log(this.is_tools.loca_get(this.option));
-			console.log(this.is_goto.curRouter)
+			console.log(this.is_router.curRouter)
 		}
 	}
 </script>

@@ -59,11 +59,11 @@ export default {
 		}
 	},
 	onLoad() {
-		let time = setTimeout(() => {
-			clearTimeout(time)
+		// let time = setTimeout(() => {
+			// clearTimeout(time)
 			this.is_vuex.commit('user_vuex/set_token', '1111')
 			this.show_loading = false
-		}, 800)
+		// }, 800)
 	},
 	methods: {
 		v3_action() {
@@ -157,33 +157,31 @@ export default {
 			this.is_vuex.state.user_vuex.userInfo //user_module模块state
 		},
 		goto_aa() {
-			this.is_goto
-			.hook(() => console.log('11111111111'))
+			this.is_router
+			.hook(() => console.log('我是goto_aa hook 头号选手'))
 			.gotoPage('/pagesA/aa/aa', { aa: 'key', bb: 111 })
-			.hook(() => console.log('2222222222222222'))
+			.hook(() => console.log('我是goto_aa hook 车尾选手'))
 		},
 		goto_hook_error() {
-			this.is_goto
+			const router = this.is_router
 			.hook(() => false)
 			.gotoPage('/pagesA/aa/aa', { aa: 'fff' })
 			.hook(() => console.log('2222222222222222'))
+			console.log('goto_aa router.result=', router.result)
 		},
 		goto_bb() {
-			this.is_goto.hook(() => {
+			this.is_router.hook(() => {
 				if (this.is_vuex.state.user_vuex.user_role.length === 0) console.error('不登录点我肯定报错!')
 			}).gotoRouter('pagesB/bb', { bb: 'www' }).hook(() => {
 				console.log('登陆了，就执行到这里嘛!');
 			})
 		},
 		goto_aa22() {
-			const router = this.is_goto.gotoRouter('pagesB/bb', { bb: 'gggg' })
-			console.log(router.result)
+			const router = this.is_router.gotoRouter('pagesA/aa22', { bb: 'gggg' })
+			console.log('goto_aa22 router.result=', router.result)
 		},
 		goto_bb22() {
-			const router = this.is_goto.gotoRouter('pagesB/bb', { bb: 'qwer' })
-			if (!router.result) {
-				this.is_goto.gotoRouter('login')
-			}
+			this.is_router.gotoRouter('pagesB/bb22', { bb: 'qwer' })
 		},
 		swiper_click(e) {
 			this.is_tools.look_img(e, Array.from(this.list, ({ image }) => image))

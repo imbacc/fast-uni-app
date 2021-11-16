@@ -13,7 +13,7 @@ class appendData {
 		this.size = 10
 		this.method = 'post'
 		this.key = 'data'
-		this.last_key = 'last_page'
+		this.lastKey = 'lastPage'
 	}
 
 	_append(list, res, append) {
@@ -35,13 +35,13 @@ class appendData {
 	}
 
 	fun(page = 1, is_append = false) {
-		const { name, param, body, list, total, next, size, method, key, last_key, _append } = this
+		const { name, param, body, list, total, next, size, method, key, lastKey, _append } = this
 		return new Promise((resolve) => {
 			param['_page'] = [page, size]
 			api(name, param, body, method).then((res) => {
 				if (res) {
 					this.page = page
-					this.total = res[last_key]
+					this.total = res[lastKey]
 					this.next = this.total > page ? page + 1 : this.total
 					this.list = this._append(list, res, is_append)
 				}

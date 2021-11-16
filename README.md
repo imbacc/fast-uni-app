@@ -1,4 +1,34 @@
 # fast-uni-app
+
+# 对象
+### -> class/*
+### 用于对象模式复用/继承或集成
+
+# 接口配置
+### -> config/module
+### 配置格式定义API [地址, 请求类型, 缓存时间] 缓存时间默认0
+
+# js包
+### -> lib/*
+### js引入包
+
+# minix
+### -> minix/*
+### 用于混入函数写法 少用
+
+# 路由
+### -> router/index
+### 借鉴uni-simple-router的webpack获取pages.json文件内容。
+### 从pages.json生成 主包/分包/广度列表/tabbar 组成router模块内容。
+### pages.json里可直接配置权限字段，参数字段，自定义字段(uni-app文档没有的关键字)
+
+# 状态管理
+### -> store/module
+### 多个store模块自动导入。
+
+# 框架内容和工具
+### -> tools/*
+
 ```
  ├── node_modules                依赖包
  ├── common                      源码

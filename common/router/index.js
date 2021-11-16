@@ -31,9 +31,9 @@ router['pages'] = forRouter(pageJson.pages, 'pages')
 // 子包
 pageJson.subPackages.forEach(({ root, pages }) => router[root] = forRouter(pages, root))	
 // 广度列表
-router['_shallow'] = shallow
+router['shallow'] = shallow
 // tabbar
-router['_tablist'] = tabBarJson
+router['tablist'] = tabBarJson
 
 console.log('router chunks=', router);
 
