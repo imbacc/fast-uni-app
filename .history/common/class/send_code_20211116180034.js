@@ -23,14 +23,9 @@ class sendCode {
 		}, 1000)
 	}
 
-	test_tel(phone) {
-		// 正则
-		return phone
-	}
-
 	get_code(phone) {
 		if (this.is_refushing) return
-		if (!this.test_tel(phone)) {
+		if (!fun.test_tel(phone)) {
 			fun.to_msg('不是有效的手机号码!', 'warning')
 			return
 		}

@@ -6,7 +6,6 @@ class sendCode {
 		this.refush_time = 0
 		this.is_refushing = false
 		this.but_lab = '获取验证码'
-		this.name = ''
 	}
 
 	refush_code() {
@@ -23,26 +22,21 @@ class sendCode {
 		}, 1000)
 	}
 
-	test_tel(phone) {
-		// 正则
-		return phone
-	}
-
 	get_code(phone) {
 		if (this.is_refushing) return
-		if (!this.test_tel(phone)) {
+		if (!fun.test_tel(phone)) {
 			fun.to_msg('不是有效的手机号码!', 'warning')
 			return
 		}
 		const _this = this
 		this.but_lab = '正在发送...'
 		this.is_refushing = true
-		api(this.name, {}, { phone }).then((res) => {
+		api('send_sms', {}, { phone }).then((res) => {
 			fun.to_msg(res ? '发送成功!' : '发送失败!')
 			if (res) {
 				_this.refush_time = 120
 				_this.is_refushing = true
-				_this.refush_code()
+				this.refush_code()
 			} else {
 				_this.is_refushing = false
 				_this.but_lab = '重新发送'
