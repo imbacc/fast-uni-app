@@ -3,6 +3,7 @@ node_modules
 dist
 unpackage
 .hbuilderx
+.history
 
 package-lock.json
 
