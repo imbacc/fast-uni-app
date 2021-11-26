@@ -162,7 +162,6 @@ export default {
  │   │      ├── module           store模块配置
  │   │      ├── index.js         store入口管理
  │   ├── tools                   路由页面地址配置
- │   │      ├── cache_time.js    缓存数据时间设定
  │   │      ├── cmake_action.js  请求封装
  │   │      ├── cmake_router.js  路由跳转封装和路由验证拦截
  │   │      ├── cmake_tools.js   自定义工具

@@ -1,4 +1,4 @@
-import { clear_cache } from '@/common/tools/cache_time.js' 	//导入缓存时间控制
+import { clearCache } from 'imba-cache'
 
 const { getStorageSync, removeStorageSync } = uni
 const UUID = getStorageSync('uuid') || false					//获取UUID缓存
@@ -68,7 +68,7 @@ const getters = {
 const actions = {
 	// 清除接口缓存
 	clear_api_cache() {
-		return clear_cache()
+		return clearCache()
 	}
 }
 

@@ -1,9 +1,9 @@
-/**
- * 拦截请求
- */
-import zRequest from './cmake_zrequest.js'
+// 拦截请求
 import store from '../store/index.js'
-import { baseUrl } from '../config/cfg.js'
+import zRequest from './cmake_zrequest.js'
+
+import { baseUrl, page_key, size_key, is_dev } from '../config/cfg.js'
+import { setRequestInit, requestAction } from 'imba-request' // 请求封装
 
 const invoke = (args) => {
 	// args.url = 'https://www.baidu.com/'
@@ -20,6 +20,14 @@ const complete = (args) => console.log('complete args=', args)
 // or
 // invoke 里的拦截优先于 http.interceptor.request / http.interceptor.response
 const http = new zRequest(baseUrl, 5678).invoke(invoke, success, fail, complete)
+
+// 初始化封装请求包
+setRequestInit({
+	page: page_key,
+	size: size_key,
+	dev: is_dev,
+	http: http
+})
 
 var error_time = null
 const error_msg = (title) => {
@@ -103,4 +111,4 @@ http.interceptor.response = (res) => {
     return data
 }
 
-export default http
+export default requestAction

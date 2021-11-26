@@ -68,6 +68,23 @@ class zRequest {
 		})
 	}
 	
+	get(url, data) {
+		return this.request(url, data, 'GET')
+	}
+	
+	post(url, data) {
+		return this.request(url, data, 'POST')
+	}
+	
+	put(url, data) {
+		return this.request(url, data, 'PUT')
+	}
+	
+	delete(url, data) {
+		return this.request(url, data, 'DELETE')
+	}
+	
+	
 	setObjectVal(obj) {
 		Object.entries(obj).forEach(([key, val]) => this[key] = val)
 		return this

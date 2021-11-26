@@ -1,4 +1,4 @@
-import action from '@/common/tools/cmake_action.js'
+import action from '@/common/tools/cmake_zinterceptor.js'
 
 // 获取module文件下子模块内容
 const Files = require.context('./module', true, /\.js$/)
