@@ -3,10 +3,6 @@
 ### 命令安装
 
 ```
-# npm
-npm i -g imba-uni
-# yarn
-yarn global add imba-uni
 # pnpm
 pnpm i -g imba-uni
 ```
@@ -16,7 +12,7 @@ pnpm i -g imba-uni
 ```
 imba create <name> [-f|--force]
 cd <name>
-npm install or yarn install or pnpm install
+pnpm install
 ```
 
 # 对象
