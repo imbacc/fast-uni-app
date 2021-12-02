@@ -2,34 +2,18 @@ import Vue from 'vue'
 import App from './App'
 
 import store from '@/common/store/index.js'		//导入vuex
-import routerChunks from '@/common/router/index.js'	//导入router
-import makeRouter from '@/common/tools/cmake_router.js'	//封装跳转
+import router from '@/common/tools/cmake_router.js'	//封装跳转
 import api from '@/common/config/api.js'	//封装请求
 import tools from '@/common/tools/cmake_tools.js'	//自定义函数
+import routerChunks from '@/common/router/index.js'	//导入router
 import { is_cdn } from '@/common/config/cfg.js'
 
-const router = new makeRouter()
-router.beforeEach((to, from, next) => {
-	console.log('------------------------')
-	// console.log('低配版 beforeEach curRouter=', router.curRouter)
-	console.log('低配版 beforeEach to=', to)
-	console.log('低配版 beforeEach from=', from)
-	next()
-})
-
-router.afterEach((to, from) => {
-	console.log('------------------------')
-	// console.log('低配版 afterEach curRouter=', router.curRouter)
-	console.log('低配版 afterEach to=', to)
-	console.log('低配版 afterEach from=', from)
-})
-
-Vue.prototype.is_vuex = store					// 全局变量 事务
-Vue.prototype.is_routerChunks = routerChunks	// 路由配置
-Vue.prototype.is_tools = tools					// 工具集合
+Vue.prototype.is_vuex = store					// store
+Vue.prototype.is_router = router				// router
 Vue.prototype.is_api = api 						// 请求封装
-Vue.prototype.is_router = router				// 跳转对于配置的路由
+Vue.prototype.is_tools = tools					// 工具集合
 Vue.prototype.is_cdn = is_cdn					// cdn
+Vue.prototype.is_routerChunks = routerChunks	// 路由配置
 
 import uView from 'uview-ui'
 Vue.use(uView)

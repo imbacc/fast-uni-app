@@ -280,4 +280,20 @@ class routerPages {
 
 }
 
-export default routerPages
+const router = new makeRouter()
+router.beforeEach((to, from, next) => {
+	console.log('------------------------')
+	// console.log('低配版 beforeEach curRouter=', router.curRouter)
+	console.log('低配版 beforeEach to=', to)
+	console.log('低配版 beforeEach from=', from)
+	next()
+})
+
+router.afterEach((to, from) => {
+	console.log('------------------------')
+	// console.log('低配版 afterEach curRouter=', router.curRouter)
+	console.log('低配版 afterEach to=', to)
+	console.log('低配版 afterEach from=', from)
+})
+
+export default router
