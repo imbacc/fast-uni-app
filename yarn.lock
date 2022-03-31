@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/uni-app@^1.4.4":
-  version "1.4.4"
-  resolved "https://registry.nlark.com/@types/uni-app/download/@types/uni-app-1.4.4.tgz?cache=0&sync_timestamp=1629709952020&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Funi-app%2Fdownload%2F%40types%2Funi-app-1.4.4.tgz#fe73d0e7c89d5e750605e088ff6695846e019c36"
-  integrity sha1-/nPQ58idXnUGBeCI/2aVhG4BnDY=
-  dependencies:
-    vue "^2.6.8"
-
 acorn-dynamic-import@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/acorn-dynamic-import/download/acorn-dynamic-import-3.0.0.tgz#901ceee4c7faaef7e07ad2a47e890675da50a278"
@@ -910,6 +903,19 @@ iferr@^0.1.5:
   resolved "https://registry.nlark.com/iferr/download/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
+imba-cache@^1.0.22, imba-cache@latest:
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/imba-cache/-/imba-cache-1.0.22.tgz#29ccd7fc2eb78b031f7fa9aea274e204c0bbcd39"
+  integrity sha512-gByW5tFHxOLcIkdrDx6RuNUIEUnSaLpRZLg6YehlcsAY532zuPQdXHBjkzLWoAxK7fKXflmOHN4Rnqu0NdNLtA==
+
+imba-request@latest:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/imba-request/-/imba-request-1.0.14.tgz#9fbc8aae5521e93842ee5802152931f237dc6b3b"
+  integrity sha512-SMi2KSKsY95MEaMUd7wPF9Vlnu1Gp5EaLp78dmd4hNHykF3+lNM7Jvf+aQ6G6ViP0f+hS/lhPBWadLbSKegcMQ==
+  dependencies:
+    imba-cache "^1.0.22"
+    qs-stringify "^1.2.1"
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.nlark.com/imurmurhash/download/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -1230,9 +1236,9 @@ minimatch@^3.0.4:
     brace-expansion "^1.1.7"
 
 minimist@^1.2.0, minimist@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.nlark.com/minimist/download/minimist-1.2.5.tgz?cache=0&sync_timestamp=1618847017774&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
-  integrity sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI=
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
+  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 mississippi@^2.0.0:
   version "2.0.0"
@@ -2050,11 +2056,6 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.nlark.com/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
-
-vue@^2.6.8:
-  version "2.6.14"
-  resolved "https://registry.npmmirror.com/vue/download/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
-  integrity sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
