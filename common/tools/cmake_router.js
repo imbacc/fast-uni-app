@@ -280,7 +280,7 @@ class routerPages {
 
 }
 
-const router = new makeRouter()
+const router = new routerPages()
 router.beforeEach((to, from, next) => {
 	console.log('------------------------')
 	// console.log('低配版 beforeEach curRouter=', router.curRouter)

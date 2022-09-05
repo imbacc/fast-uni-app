@@ -2,6 +2,7 @@ import action from '@/common/tools/cmake_zinterceptor.js'
 
 // 获取module文件下子模块内容
 const Files = require.context('./module', true, /\.js$/)
+console.log('%c [ Files ]-5', 'font-size:14px; background:#41b883; color:#ffffff;', Files)
 const moduleFiles = {}
 
 // 公共API
