@@ -34,7 +34,7 @@ class makeRequest {
 	private method: METHOD = 'GET'
 	private data: Object = {}
 	private header: header_DTYPE = { 'content-type': 'application/json;charset=UTF-8' }
-	private interceptor: interceptor_DTYPE = { request: null, response: null }
+	public interceptor: interceptor_DTYPE = { request: null, response: null }
 	private responseType: string = 'text'
 	private record: record_DTYPE = {}
 

@@ -46,6 +46,7 @@
 		"@dcloudio/uni-mp-weixin": "3.0.0-alpha-3050320220729001",
 		"@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3050320220729001",
 		"imba-cache": "^1.1.0",
+		"imba-request": "^1.0.14",
 		"pinia": "^2.0.21",
 		"qs-stringify": "^1.2.1",
 		"vue": "3.2.37",

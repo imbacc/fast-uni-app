@@ -1,15 +1,4 @@
-import type { pagesJson_DTYPE, pages_DTYPE, tabBarList_DTYPE, subPackages_DTYPE } from '#/router/index'
-import type { App } from 'vue'
-
-export type shallowInfo_DTYPE = pages_DTYPE & { name?: string; space?: string; auth?: Array<string>; param?: Object; body?: Object }
-export type shallow_DTYPE = Array<shallowInfo_DTYPE>
-export type tablist_DTYPE = Array<tabBarList_DTYPE>
-export type pagesKV_DTYPE = { [key in string]: shallowInfo_DTYPE }
-export type newPagesJson_DTYPE = {
-	shallow?: shallow_DTYPE
-	tablist?: tablist_DTYPE
-	pages?: pagesKV_DTYPE
-}
+import type { pagesJson_DTYPE, shallowInfo_DTYPE, shallow_DTYPE, tablist_DTYPE, pagesKV_DTYPE, newPagesJson_DTYPE } from '#/router/index'
 
 import pages_JSON from '@/pages.json'
 import cmakeRouter from '@/tools/cmakeRouter'
@@ -28,7 +17,7 @@ for (let tabbar of tabBarJson) {
 
 // 转换为router键值格式
 
-const forRouter = (list: Array<shallowInfo_DTYPE>, space: string): pages_DTYPE | subPackages_DTYPE | any => {
+const forRouter = (list: Array<shallowInfo_DTYPE>, space: string): pagesKV_DTYPE => {
 	let main: pagesKV_DTYPE = {}
 	list.forEach((page: shallowInfo_DTYPE) => {
 		let info = page,
@@ -53,10 +42,14 @@ router['shallow'] = shallow
 // tabbar
 router['tablist'] = tabBarJson
 
-console.log('router chunks=', router)
-
-var makeRouter: any = null
+let makeRouter: any = null
 export const useRouter = () => {
 	if (!makeRouter) makeRouter = cmakeRouter(router)
 	return makeRouter
+}
+
+export default {
+	install: () => {
+		return useRouter()
+	}
 }

@@ -515,3 +515,14 @@ export type uniIdRouter_DTYPE = {
 	needLogin: Array<string>
 	resToLogin: boolean
 }
+
+// 应用type
+export type shallowInfo_DTYPE = pages_DTYPE & { name?: string; space?: string; auth?: Array<string>; param?: Object; body?: Object }
+export type shallow_DTYPE = Array<shallowInfo_DTYPE>
+export type tablist_DTYPE = Array<tabBarList_DTYPE>
+export type pagesKV_DTYPE = { [key in string]: shallowInfo_DTYPE }
+export type newPagesJson_DTYPE = {
+	shallow?: shallow_DTYPE
+	tablist?: tablist_DTYPE
+	pages?: pagesKV_DTYPE
+} & { [key in string]: pagesKV_DTYPE }

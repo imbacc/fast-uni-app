@@ -7,25 +7,25 @@
 			<!-- 路由配置 => common/router/index -->
 			修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!!
 			<view class="mt20">
-				<button type="primary" @click="goto_aa">跳转pagesA aa</button>
+				<button type="button" @click="goto_aa">跳转pagesA aa</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="goto_hook_error">试错 hook pagesA aa</button>
+				<button type="button" @click="goto_hook_error">试错 hook pagesA aa</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="goto_aa22">跳转pagesA aa22 [需要授权] before after</button>
+				<button type="button" @click="goto_aa22">跳转pagesA aa22 [需要授权] before after</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="goto_bb">跳转pagesB bb [需要授权] before</button>
+				<button type="button" @click="goto_bb">跳转pagesB bb [需要授权] before</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="goto_bb22">跳转pagesB bb22 [需要授权]</button>
+				<button type="button" @click="goto_bb22">跳转pagesB bb22 [需要授权]</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="v2_action">我是this Action api</button>
+				<button type="button" @click="v2_action">我是this Action api</button>
 			</view>
 			<view class="mt20">
-				<button type="primary" @click="v3_action">我是引入调用 Action api</button>
+				<button type="button" @click="v3_action">我是引入调用 Action api</button>
 			</view>
 
 			<button class="mt20" @click="test_action">test api</button>
@@ -65,45 +65,43 @@
 
 	const v3_action = () => {
 		// console.log('11111111', 11111111)
-		const test_api_get_test = () => api('test_api/get_test') // 请求test_api.js 里的 get_test
-		const test_api_get_test222 = () => api('test_api/get_test222', { _id: 222 }) // 请求test_api.js 里的 get_test222
-		const test_api_get_test333 = () => api('test_api/get_test333', { is: 'param' }, { body: '我是body' }, 'POST') // 请求test_api.js 里的 get_test222
-		const app_111 = () => api('app_111')
-		const app_222 = () => api('app_222', { _id: 222 })
-		const app_333 = () => api('app_333', { _id: 333 })
-		const app_444 = () => api('app_444')
-		const app_555 = () => api('app_555')
-		const app_666 = () => api('app_666', { _id: 666 }, { body: '这是POST请求,我是body' })
-		const user_get_user = () => api('user/get_user')
-
-		const all_request = () => {
-			const all = [
-				test_api_get_test,
-				test_api_get_test222,
-				test_api_get_test333,
-				app_111,
-				app_222,
-				app_333,
-				app_444,
-				app_555,
-				app_666,
-				user_get_user
-			]
-			const pro = []
-			all.forEach((request) => pro.push(request()))
-			Promise.allSettled(pro).then((res) => setTimeout(() => console.log('Promise.allSettled=', res), 10))
-		}
-
-		all_request()
+		// const test_api_get_test = () => getTest() // 请求test_api.js 里的 get_test
+		// const test_api_get_test222 = () => getTest222({ _id: 222 }) // 请求test_api.js 里的 get_test222
+		// const test_api_get_test333 = () => getTest333({ is: 'param' }, { body: '我是body' }, 'POST') // 请求test_api.js 里的 get_test222
+		// const app_111 = () => getTest()
+		// const app_222 = () => getTest({ _id: 222 })
+		// const app_333 = () => getTest({ _id: 333 })
+		// const app_444 = () => getTest()
+		// const app_555 = () => getTest()
+		// const app_666 = () => getTest({ _id: 666 }, { body: '这是POST请求,我是body' })
+		// const user_get_user = () => getTest()
+		// const all_request = () => {
+		// 	const all = [
+		// 		test_api_get_test,
+		// 		test_api_get_test222,
+		// 		test_api_get_test333,
+		// 		app_111,
+		// 		app_222,
+		// 		app_333,
+		// 		app_444,
+		// 		app_555,
+		// 		app_666,
+		// 		user_get_user
+		// 	]
+		// 	const pro = []
+		// 	all.forEach((request) => pro.push(request()))
+		// 	Promise.allSettled(pro).then((res) => setTimeout(() => console.log('Promise.allSettled=', res), 10))
+		// }
+		// all_request()
 	}
 
 	const v2_action = () => {
-		this.is_api('app_111', {}) // 中断请求 放在body里面
-		this.is_api('app_222', { _id: 222 }) // api/:id/fff
-		this.is_api('app_333', { _id: 222 })
-		this.is_api('app_444')
-		this.is_api('app_555')
-		this.is_api('app_666', { _id: 666 })
+		// this.is_api('app_111', {}) // 中断请求 放在body里面
+		// this.is_api('app_222', { _id: 222 }) // api/:id/fff
+		// this.is_api('app_333', { _id: 222 })
+		// this.is_api('app_444')
+		// this.is_api('app_555')
+		// this.is_api('app_666', { _id: 666 })
 	}
 
 	//测试proxy
@@ -124,9 +122,9 @@
 					if (val === '{}') return false
 					if (val instanceof Object) val = JSON.stringify(val)
 					let now = new Date().getTime() + time * 60 * 1000
-					setStorageSync(key, val, -1)
-					setStorageSync(key + '_time', now, -1)
-					Reflect.apply(...arguments)
+					// setStorageSync(key, val, -1)
+					// setStorageSync(key + '_time', now, -1)
+					// Reflect.apply(...arguments)
 					return true
 				}
 				return false
@@ -135,17 +133,10 @@
 
 		uni.setStorageSync = is_cache
 
-		let a = is_cache('aa', 'i am val', 60)
-		console.log(a)
+		// let a = is_cache('aa', 'i am val', 60)
+		// console.log(a)
 		let b = uni.setStorageSync('key', 'val')
 		console.log(b)
-	}
-
-	//工具集合
-	const tools_fun = () => {
-		this.is_tools.to_msg('dddd')
-		this.is_cdn
-		//... 同上
 	}
 
 	//store用法
@@ -189,26 +180,26 @@
 		router.gotoRouter('pagesB/bb22', { bb: 'qwer' })
 	}
 
-	const swiper_click = (e) => {
-		this.is_tools.look_img(
-			e,
-			Array.from(this.list, ({ image }) => image)
-		)
+	const swiper_click = (e: any) => {
+		// this.is_tools.look_img(
+		// 	e,
+		// 	Array.from(this.list, ({ image }) => image)
+		// )
 	}
 
 	const test_action = () => {
-		this.is_api('app_111', {}) // 中断请求 放在body里面
-		this.is_api('app_222', { _id: 222 }) // api/:id/fff
-		this.is_api('app_333', { _id: 222 })
-		this.is_api('app_444')
-		this.is_api('app_555')
-		this.is_api('app_666', { _id: 666 })
-		this.is_api('app_111', {}) // 中断请求 放在body里面
-		this.is_api('app_222', { _id: 222 }) // api/:id/fff
-		this.is_api('app_333', { _id: 222 })
-		this.is_api('app_444')
-		this.is_api('app_555')
-		this.is_api('app_666', { _id: 666 })
+		// this.is_api('app_111', {}) // 中断请求 放在body里面
+		// this.is_api('app_222', { _id: 222 }) // api/:id/fff
+		// this.is_api('app_333', { _id: 222 })
+		// this.is_api('app_444')
+		// this.is_api('app_555')
+		// this.is_api('app_666', { _id: 666 })
+		// this.is_api('app_111', {}) // 中断请求 放在body里面
+		// this.is_api('app_222', { _id: 222 }) // api/:id/fff
+		// this.is_api('app_333', { _id: 222 })
+		// this.is_api('app_444')
+		// this.is_api('app_555')
+		// this.is_api('app_666', { _id: 666 })
 	}
 </script>
 

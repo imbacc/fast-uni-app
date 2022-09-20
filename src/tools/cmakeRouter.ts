@@ -1,30 +1,18 @@
+import type { shallow_DTYPE, tablist_DTYPE, shallowInfo_DTYPE, newPagesJson_DTYPE } from '#/router/index'
+import type { before_DTYPE, after_DTYPE, result_DTYPE } from '#/tools/cmakeRouter'
+
 import stringify from 'qs-stringify'
 import { useUserStore } from '@/store/user'
 
-import type { shallow_DTYPE, tablist_DTYPE, shallowInfo_DTYPE, newPagesJson_DTYPE } from '@/router/index'
-type before_DTYPE = (to: {}, from: {}, next: Function) => any
-type after_DTYPE = (to: {}, from?: {}) => any
-type result_DTYPE = {
-	tips: string
-	key: string
-	result: boolean
-	hook: () => any
-	beforeEach: () => any
-	afterEach: () => any
-	gotoPage: () => any
-	gotoRouter: () => any
-}
-
 export default (routerChunks: newPagesJson_DTYPE) => {
 	console.log('%c [ routerChunks ]-19', 'font-size:14px; background:#41b883; color:#ffffff;', routerChunks)
-	type routerPagesKeys = keyof routerPages
 
 	const { navigateTo, redirectTo, reLaunch, switchTab, navigateBack } = uni
 	const userStore = useUserStore()
 
 	// login
 	const LOGIN = routerChunks.pages?.login.path as string
-	const GOTO_LOGIN = () => reLaunch({ url: LOGIN })
+	const gotoLogin = () => reLaunch({ url: LOGIN })
 	// check
 	const checkToken = () => userStore.hasLogin
 	const getUserRole = () => userStore.getRole
@@ -32,18 +20,20 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 	const toast = async (title = '跳转页面不存在') => uni.showToast({ title, icon: 'none' })
 	const modal = (content = '跳转页面不存在', success?: Function) => uni.showModal({ content, showCancel: false, success: success?.() })
 
+	type type_TYPE = 1 | 2 | 3 | 4
+	type routerPagesKey_DTYPE = keyof routerPages
 	class routerPages {
 		private uniRouterTo: Array<(...args: any) => void> = [
 			// 返回
 			() => navigateBack({ delta: 1 }),
-			// 保留当前页面。/\[[]]
-			(obj) => navigateTo(obj),
+			// 保留当前页面。
+			(obj: UniNamespace.NavigateToOptions) => navigateTo(obj),
 			// 关闭当前页面。
-			(obj) => redirectTo(obj),
+			(obj: UniNamespace.RedirectToOptions) => redirectTo(obj),
 			// 关闭所有页面，打开到应用内的某个页面。
-			(obj) => reLaunch(obj),
+			(obj: UniNamespace.ReLaunchOptions) => reLaunch(obj),
 			// 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。
-			(obj) => switchTab(obj)
+			(obj: UniNamespace.SwitchTabOptions) => switchTab(obj)
 		]
 		// cache
 		private shallowCache: { [key in string]: shallowInfo_DTYPE } = {}
@@ -72,27 +62,27 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 			hook: () => {
 				const { tips, key } = this.result
 				console.error(`${tips} hook()`, this)
-				return this[key as routerPagesKeys]
+				return this[key as routerPagesKey_DTYPE]
 			},
 			beforeEach: () => {
 				const { tips, key } = this.result
 				console.error(`${tips} beforeEach()`, this)
-				return this[key as routerPagesKeys]
+				return this[key as routerPagesKey_DTYPE]
 			},
 			afterEach: () => {
 				const { tips, key } = this.result
 				console.error(`${tips} afterEach()`, this)
-				return this[key as routerPagesKeys]
+				return this[key as routerPagesKey_DTYPE]
 			},
 			gotoPage: () => {
 				const { tips, key } = this.result
 				console.error(`${tips} gotoPage()`, this)
-				return this[key as routerPagesKeys]
+				return this[key as routerPagesKey_DTYPE]
 			},
 			gotoRouter: () => {
 				const { tips, key } = this.result
 				console.error(`${tips} gotoRouter()`, this)
-				return this[key as routerPagesKeys]
+				return this[key as routerPagesKey_DTYPE]
 			}
 		}
 		private errorResult: result_DTYPE = Object.assign(this.result, { tips: 'error', key: 'error' })
@@ -120,7 +110,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		invoke() {
 			uni.removeInterceptor('navigateBack')
 			uni.addInterceptor('navigateBack', {
-				invoke: (args) => {
+				invoke: () => {
 					this.curRouter = Object.assign({}, this.reRouter || this.lastRouter)
 					this.lastRouter = Object.assign({}, this.curRouter)
 					this.reRouter = null
@@ -136,7 +126,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		invokeRePage(apiName: string) {
 			uni.removeInterceptor(apiName)
 			uni.addInterceptor(apiName, {
-				invoke: (args) => {
+				invoke: () => {
 					const cur = getCurrentPages()
 					const url = `/${cur[0].route}`
 					this.reRouter = this.shallowFind(url)
@@ -188,7 +178,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		 * set key val
 		 */
 		setKeyVal(key: string, val: any) {
-			this[key as routerPagesKeys] = val
+			this[key as routerPagesKey_DTYPE] = val
 			return this
 		}
 
@@ -196,7 +186,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		 * set obj -> key val
 		 */
 		setObjectVal(obj: Object) {
-			Object.entries(obj).forEach(([key, val]) => (this[key as routerPagesKeys] = val))
+			Object.entries(obj).forEach(([key, val]) => (this[key as routerPagesKey_DTYPE] = val))
 			return this
 		}
 
@@ -220,13 +210,11 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		/**
 		 * 按路径跳路由 命名用不惯自行修改 -> push(arg) -> router.push(url, param ....)
 		 */
-		gotoPage(url = '', param = {}, type = 1, make = false) {
+		gotoPage(url = '', param = {}, type: type_TYPE = 1, make = false) {
 			const find = this.shallowFind(url)
 			const _to = Object.assign({}, this.curRouter)
 			const _from = Object.assign({}, find)
 			if (this.before && !make) return this.before(_to, _from, () => this.gotoPage(url, param, type, true))
-			const token = checkToken()
-
 			if (!find) {
 				toast()
 				console.error('无效的跳转', url)
@@ -241,13 +229,14 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 			if (isSwicthTab) type = 4
 
 			// 检查token
+			const token = checkToken()
 			if (!token) {
 				console.error('token失效')
 				// 请求后跳
 				// xxxxx('xxx/xxxx').then(() => {
 				// 	GOTO_LOGIN()
 				// })
-				modal('token失效', () => GOTO_LOGIN())
+				modal('token失效', () => gotoLogin())
 				return this.errorResult
 			}
 
@@ -258,7 +247,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 				if (!check) {
 					const cur = getCurrentPages()
 					const FULLPATH = `/${(cur[0] as any)?.$page.path}`
-					if (cur && FULLPATH !== LOGIN) modal('请先登录', () => GOTO_LOGIN())
+					if (cur && FULLPATH !== LOGIN) modal('请先登录', () => gotoLogin())
 					return this.errorResult
 				}
 			}
@@ -275,7 +264,7 @@ export default (routerChunks: newPagesJson_DTYPE) => {
 		/**
 		 * 按后缀名跳路由 例: login, pagesA/aa, pagesB/bb
 		 */
-		gotoRouter(name = '', query = {}, type = 1) {
+		gotoRouter(name = '', query = {}, type: type_TYPE = 1) {
 			let space = 'pages',
 				sub = name.split('/')
 			if (sub.length > 1) {
