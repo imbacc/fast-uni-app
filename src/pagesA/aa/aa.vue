@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
 	import { onLoad, onShow } from '@dcloudio/uni-app'
-	import { useRouter } from '@/router/index'
+	import { useRouter } from 'imba-uni-router'
 
 	const router = useRouter()
 

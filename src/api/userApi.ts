@@ -1,10 +1,3 @@
-import requestAction from '@/tools/cmakeInterceptor.js'
+import http from '@/tools/Request.js'
 
-import { METHOD } from '@/config/cfg.js'
-
-// 模块api
-const api = {
-	getUser: ['api/user', METHOD.GET]
-}
-
-export const getUser = () => requestAction(...api.getUser)
+export const getUser = () => http.request(['api/user', 'GET'], {})

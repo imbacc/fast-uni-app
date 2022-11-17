@@ -1,13 +1,3 @@
-import type { METHOD_DTYPE } from '#/global'
-
-// 请求体方式
-const METHOD: METHOD_DTYPE = {
-	POST: 'POST',
-	GET: 'GET',
-	PUT: 'PUT',
-	OPTIONS: 'OPTIONS'
-}
-
 // mock
 let VITE_USE_MOCK = false
 let VITE_BUILD_GZIP = false
@@ -43,4 +33,4 @@ const isCdn = `${oss}/image/`
 const pageKey = 'pageNum'
 const sizeKey = 'pageSize'
 
-export { host, version, baseUrl, env, isDev, METHOD, isCdn, pageKey, sizeKey, VITE_USE_MOCK, VITE_BUILD_GZIP }
+export { host, version, baseUrl, env, isDev, isCdn, pageKey, sizeKey, VITE_USE_MOCK, VITE_BUILD_GZIP }

@@ -22,7 +22,8 @@ specifiers:
   '@types/lodash': ^4.14.184
   '@types/node': ^18.7.14
   imba-cache: ^1.1.0
-  imba-request: ^1.0.14
+  imba-uni-request: ^1.1.0
+  imba-uni-router: ^1.0.1
   lodash: ^4.17.21
   mockjs: ^1.1.0
   pinia: ^2.0.21
@@ -55,7 +56,8 @@ dependencies:
   '@dcloudio/uni-mp-weixin': registry.npmmirror.com/@dcloudio/uni-mp-weixin/3.0.0-alpha-3050320220729001_postcss@8.1.0+vue@3.2.37
   '@dcloudio/uni-quickapp-webview': registry.npmmirror.com/@dcloudio/uni-quickapp-webview/3.0.0-alpha-3050320220729001_postcss@8.1.0+vue@3.2.37
   imba-cache: registry.npmmirror.com/imba-cache/1.1.0
-  imba-request: registry.npmmirror.com/imba-request/1.0.14
+  imba-uni-request: registry.npmmirror.com/imba-uni-request/1.1.0
+  imba-uni-router: registry.npmmirror.com/imba-uni-router/1.0.1
   pinia: registry.npmmirror.com/pinia/2.0.21_bw4xur2vyhvhfd4whxbr7emp4u
   qs-stringify: registry.npmmirror.com/qs-stringify/1.2.1
   vue: registry.npmmirror.com/vue/3.2.37
@@ -2975,12 +2977,26 @@ packages:
     version: 1.1.0
     dev: false
 
-  registry.npmmirror.com/imba-request/1.0.14:
-    resolution: {integrity: sha512-SMi2KSKsY95MEaMUd7wPF9Vlnu1Gp5EaLp78dmd4hNHykF3+lNM7Jvf+aQ6G6ViP0f+hS/lhPBWadLbSKegcMQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/imba-request/-/imba-request-1.0.14.tgz}
-    name: imba-request
-    version: 1.0.14
+  registry.npmmirror.com/imba-cache/1.1.1:
+    resolution: {integrity: sha512-42w0/dyR0SLruVNIS9AkRBccbrWXkZOPLez0gfbPNc5ooT8SJ3aMI/qPG3GrMEdm+fDzjri7PRPNv3G7KclkJg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/imba-cache/-/imba-cache-1.1.1.tgz}
+    name: imba-cache
+    version: 1.1.1
+    dev: false
+
+  registry.npmmirror.com/imba-uni-request/1.1.0:
+    resolution: {integrity: sha512-QIh/b7dRrVx38vdtZhCFJ3tRXy+GQg7qirtHvpv9CWxr5Spkk53nZEoQV0jE36jPEr53S+fjWWl+XIKLtHBuyA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/imba-uni-request/-/imba-uni-request-1.1.0.tgz}
+    name: imba-uni-request
+    version: 1.1.0
     dependencies:
-      imba-cache: registry.npmmirror.com/imba-cache/1.1.0
+      imba-cache: registry.npmmirror.com/imba-cache/1.1.1
+      qs-stringify: registry.npmmirror.com/qs-stringify/1.2.1
+    dev: false
+
+  registry.npmmirror.com/imba-uni-router/1.0.1:
+    resolution: {integrity: sha512-Yti29W/uoZIsMTgtKlwf33X0+8jNUmXNzKdZ/6C2CbptWVwt22ncQiPNI0+kfcpKSkNUjHmEk+HoHiiA5K+SMg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/imba-uni-router/-/imba-uni-router-1.0.1.tgz}
+    name: imba-uni-router
+    version: 1.0.1
+    dependencies:
       qs-stringify: registry.npmmirror.com/qs-stringify/1.2.1
     dev: false
 

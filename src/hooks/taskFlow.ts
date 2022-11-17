@@ -1,27 +1,28 @@
-// 队列
 class Flow {
-  constructor(effects) {
-    this.effects = effects
-  }
-  
-  push(fun) {
-	  this.effects.push(fun)
-  }
+	private effects: Array<Function> = []
 
-  async run(cb) {
-    const tasklist = this.effects.flat()
-    for (const task of tasklist) {
-      if (typeof task === 'function') {
-        await task()
-      } else if (task instanceof Flow) {
-        await task.run()
-      } else if (Array.isArray(task)) {
-        await new Flow(task).run()
-      }
-    }
+	constructor(effects: Array<Function>) {
+		this.effects = effects
+	}
 
-    cb?.()
-  }
+	push(fun: Function) {
+		this.effects.push(fun)
+	}
+
+	async run(cb?: Function) {
+		const tasklist = this.effects.flat()
+		for (const task of tasklist) {
+			if (typeof task === 'function') {
+				await task()
+			} else if ((task as unknown) instanceof Flow) {
+				await (task as any).run()
+			} else if (Array.isArray(task)) {
+				await new Flow(task).run()
+			}
+		}
+
+		cb?.()
+	}
 }
 
 export default (effects = []) => new Flow(effects)

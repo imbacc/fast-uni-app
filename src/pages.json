@@ -47,8 +47,8 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"iconPath": "static/img/index/home.png",
-				"selectedIconPath": "static/img/index/home.png",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
 				"text": "首页"
 			},
 			{

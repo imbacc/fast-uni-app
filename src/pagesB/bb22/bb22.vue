@@ -12,14 +12,13 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
 	import { onLoad, onShow } from '@dcloudio/uni-app'
-	import { useRouter } from '@/router/index'
+	import { useRouter } from 'imba-uni-router'
 	const router = useRouter()
 
 	const option = ref({})
 
 	onLoad((option) => {
 		console.log('%c [ option ]-19', 'font-size:14px; background:#41b883; color:#ffffff;', option)
-		option.value = option
 	})
 
 	onShow(() => {
@@ -27,14 +26,14 @@
 	})
 
 	const test_redirectTo = () => {
-		router.gotoRouter('pagesA/aa22', { test: 'test_redirectTo' }, 2)
+		router.replace('pagesA/aa22', { test: 'test_redirectTo' })
 	}
 	const test_reLaunch = () => {
-		router.gotoRouter('pagesA/aa22', { test: 'test_reLaunch' }, 3)
+		router.replaceAll('pagesA/aa22', { test: 'test_reLaunch' })
 	}
 
 	const test_switchTab = () => {
-		router.gotoRouter('user', { test: 'test_switchTab' }, 4)
+		router.swicthTab('user', { test: 'test_switchTab' })
 	}
 </script>
 

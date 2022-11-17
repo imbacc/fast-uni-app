@@ -9,7 +9,7 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { onLoad } from '@dcloudio/uni-app'
-	import { useRouter } from '@/router/index'
+	import { useRouter } from 'imba-uni-router'
 	import { useUserStore } from '@/store/user'
 
 	const router = useRouter()
@@ -28,9 +28,9 @@
 			content: 'back?',
 			success: () => {
 				router
-					.hook(() => console.log('test hook1'))
-					.gotoRouter('index', { test: 'test index' })
-					.hook(() => console.log('test hook2'))
+					.hooks(() => console.log('test hook1'))
+					.push('index', { test: 'test index' })
+					.hooks(() => console.log('test hook2'))
 			}
 		})
 	}
