@@ -5,7 +5,5 @@ dist
 dist-ssr
 README.md
 jsconfig.json
-.hbuilderx
-manifest.json
-package.json
-pages.json
+.vscode
+.history
