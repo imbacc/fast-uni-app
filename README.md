@@ -1,13 +1,5 @@
 # uni-app-vue3-ts
 
-### 使用
-
-```
-imba create <name> [-f|--force]
-cd <name>
-pnpm install
-```
-
 ```
  ├── node_modules
  ├── src
