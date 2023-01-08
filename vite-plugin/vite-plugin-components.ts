@@ -3,8 +3,8 @@ import Components from 'unplugin-vue-components/vite'
 
 // 定义自己的解析器
 // const diyResolver = (name) => {
-// 	// where `name` is always CapitalCase
-// 	if (name.startsWith('Van')) return { importName: name.slice(3), path: 'vant' }
+// // where `name` is always CapitalCase
+// if (name.startsWith('Van')) return { importName: name.slice(3), path: 'vant' }
 // }
 
 // 按需引入组件 + 自动引入组件
@@ -33,6 +33,6 @@ export default () => {
     directives: true,
     // 用于变换目标的过滤器
     include: [/\.vue$/, /\.vue\?vue/],
-    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/]
+    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
   })
 }

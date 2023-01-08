@@ -5,18 +5,18 @@ export default defineConfig({
   theme: {
     extend: {
       colors: {
-        white: '#ffffff'
+        white: '#ffffff',
       },
       fontFamily: {
-        PFSC: ['PingFang SC, Arial, Microsoft YaHei, sans-serif']
-      }
-    }
+        PFSC: ['PingFang SC, Arial, Microsoft YaHei, sans-serif'],
+      },
+    },
   },
   shortcuts: {
-    h100b: 'h-[100%]',
-    w100b: 'w-[100%]',
-    hw100b: 'h-[100%] w-[100%]',
-    fw400: 'font-PFSC font-normal',
+    'h100b': 'h-[100%]',
+    'w100b': 'w-[100%]',
+    'hw100b': 'h-[100%] w-[100%]',
+    'fw400': 'font-PFSC font-normal',
     'flex-center': 'flex justify-center',
     'flex-align': 'flex items-center',
     'flex-center-align': 'flex justify-center items-center',
@@ -26,7 +26,7 @@ export default defineConfig({
     'flex-between': 'flex justify-between',
     'flex-around': 'flex justify-around',
     'flex-rowmn': 'flex flex-row',
-    'flex-column': 'flex flex-col'
+    'flex-column': 'flex flex-col',
   },
-  plugins: []
+  plugins: [],
 })

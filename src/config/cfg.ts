@@ -3,26 +3,26 @@ let VITE_USE_MOCK = false
 let VITE_BUILD_GZIP = false
 
 // 线上环境配置 和 开发环境配置
-let host,
-	version,
-	baseUrl = ''
+let host
+let version
+let baseUrl = ''
 const env = process.env.NODE_ENV // env
 const isDev = Boolean(env === 'development') // 是否是开发环境
 
 if (isDev) {
-	VITE_USE_MOCK = false
-	VITE_BUILD_GZIP = false
-	console.log('开发环境')
-	host = 'http://192.168.0.195:81'
-	version = '/v1/'
-	baseUrl = `${host}${version}`
+  VITE_USE_MOCK = false
+  VITE_BUILD_GZIP = false
+  console.log('开发环境')
+  host = 'http://192.168.0.195:81'
+  version = '/v1/'
+  baseUrl = `${host}${version}`
 } else {
-	VITE_USE_MOCK = false
-	VITE_BUILD_GZIP = true
-	console.log('生产环境')
-	host = 'http://192.168.0.195:81/'
-	version = '/v1/'
-	baseUrl = `${host}${version}`
+  VITE_USE_MOCK = false
+  VITE_BUILD_GZIP = true
+  console.log('生产环境')
+  host = 'http://192.168.0.195:81/'
+  version = '/v1/'
+  baseUrl = `${host}${version}`
 }
 
 // oss, cdn

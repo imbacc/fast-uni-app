@@ -1,4 +1,4 @@
-import http from '@/tools/Request'
+import http from '@/tools/request'
 
 export const getTest = (data = {}) => http.request(['api/get_test', 'GET'], data)
 export const getTest222 = (data = {}) => http.request(['api/get_test/:id', 'GET'], data)

@@ -1,7 +1,7 @@
 import { createHtmlPlugin } from 'vite-plugin-html'
 const env = process.env
-const isDev = env.NODE_ENV === 'development'
-const path = isDev ? 'assets/inject' : 'assets/inject'
+// const isDev = env.NODE_ENV === 'development'
+// const path = isDev ? 'assets/inject' : 'assets/inject'
 
 // inject
 const title = env.VITE_GLOB_APP_TITLE
@@ -17,9 +17,9 @@ export default () => {
       data: {
         title,
         injectHeader,
-        injectScript
-      }
+        injectScript,
+      },
     },
-    minify: true
+    minify: true,
   })
 }

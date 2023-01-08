@@ -1,24 +1,27 @@
 {
-	"compilerOptions": {
-		"target": "esnext",
-		"useDefineForClassFields": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"strict": true,
-		"jsx": "preserve",
-		"sourceMap": true,
-		"resolveJsonModule": true,
-		"esModuleInterop": true,
-		"noImplicitAny": true,
-		"skipLibCheck": false,
-		"lib": ["esnext", "dom"],
-		"types": ["@dcloudio/types", "@types/node"],
-		"typeRoots": ["types"],
-		"paths": {
-			"@/*": ["./src/*"],
-			"#/*": ["./types/*"]
-		}
-	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts", "src/**/*.d.ts"],
-	"exclude": ["node_modules", ".history"]
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node",
+    "lib": ["es6", "es5", "es2020", "esnext", "dom"],
+    "useDefineForClassFields": true,
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": false,
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "types": ["@dcloudio/types", "@types/node"],
+    "typeRoots": ["types"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "#/*": ["./types/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts", "src/**/*.d.ts"],
+  "exclude": ["node_modules", ".history"]
 }

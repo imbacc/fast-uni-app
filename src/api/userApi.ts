@@ -1,3 +1,3 @@
-import http from '@/tools/Request.js'
+import http from '@/tools/request'
 
 export const getUser = () => http.request(['api/user', 'GET'], {})

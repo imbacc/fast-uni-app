@@ -1,5 +1,20 @@
 # uni-app-vue3-ts
 
+# cli创建安装
+```
+# npm
+npm i -g imba-uni
+# yarn
+yarn global add imba-uni
+# pnpm
+pnpm i -g imba-uni
+```
+
+# 使用
+```
+imba create <name> [-f|--force]
+```
+
 ```
  ├── node_modules
  ├── src
