@@ -1,6 +1,6 @@
 {
   "name": "fast-uni-app",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
