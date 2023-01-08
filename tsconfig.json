@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "target": "es5",
+    "module": "esnext",
+    "target": "esnext",
     "moduleResolution": "node",
-    "lib": ["es6", "es5", "es2020", "esnext", "dom"],
+    "lib": ["esnext", "dom"],
     "useDefineForClassFields": true,
     "strict": true,
     "jsx": "preserve",
