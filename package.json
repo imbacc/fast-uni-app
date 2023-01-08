@@ -1,6 +1,6 @@
 {
-	"name": "uni-preset-vue",
-	"version": "0.0.0",
+	"name": "fast-uni-app",
+	"version": "1.0.4",
 	"scripts": {
 		"dev:app": "uni -p app",
 		"dev:custom": "uni -p",
@@ -30,7 +30,10 @@
 		"build:quickapp-webview": "uni build -p quickapp-webview",
 		"build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
 		"build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-		"lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,ts,less,scss,vue,html,md}\""
+		"lint:prettier": "prettier --write --loglevel warn \"src/**/*.{js,json,tsx,css,ts,less,scss,vue,html,md}\"",
+		"adduser": "npm adduser --access=public --registry=https://registry.npmjs.org/",
+		"pub": "bumpp --commit --tag --push && npm run pub2",
+		"pub2": "npm run build && npm publish --access=public --registry=https://registry.npmjs.org/"
 	},
 	"dependencies": {
 		"@dcloudio/uni-app": "3.0.0-alpha-3050320220729001",
@@ -45,10 +48,10 @@
 		"@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3050320220729001",
 		"@dcloudio/uni-mp-weixin": "3.0.0-alpha-3050320220729001",
 		"@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3050320220729001",
-		"imba-cache": "^1.1.0",
-		"imba-uni-request": "^1.1.0",
-		"imba-uni-router": "^1.0.1",
-		"pinia": "^2.0.21",
+		"imba-cache": "^1.1.1",
+		"imba-uni-request": "^1.1.2",
+		"imba-uni-router": "^1.0.5",
+		"pinia": "^2.0.28",
 		"qs-stringify": "^1.2.1",
 		"vue": "3.2.37",
 		"vue-i18n": "^9.1.9"
@@ -61,6 +64,7 @@
 		"@dcloudio/vite-plugin-uni": "3.0.0-alpha-3050320220729001",
 		"@rollup/plugin-replace": "^4.0.0",
 		"@types/node": "^18.7.14",
+		"bumpp": "^8.2.1",
 		"mockjs": "^1.1.0",
 		"postcss": "8.1.0",
 		"rollup": "^2.79.0",
