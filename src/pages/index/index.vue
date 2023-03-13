@@ -2,7 +2,6 @@
   <view class="index_content">
     <skeleton v-if="showLoading" />
     <view v-else class="index_body">
-      <!-- 路由配置 => common/router/index -->
       修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!!
       <view class="mt20">
         <button type="button" @click="goto_aa">
@@ -10,8 +9,13 @@
         </button>
       </view>
       <view class="mt20">
-        <button type="button" @click="goto_hook_error">
-          试错 hook pagesA aa
+        <button type="button" @click="goto_hook_test">
+          测试hooks aa
+        </button>
+      </view>
+      <view class="mt20">
+        <button type="button" @click="goto_hook_stop">
+          中断 hook pagesA aa
         </button>
       </view>
       <view class="mt20">
@@ -43,11 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getTest, getTest222, getTest333 } from '@/api/testApi'
-import { onLoad } from '@dcloudio/uni-app'
 import { useRouter, useRoute } from 'imba-uni-router'
-import { useUserStore } from '@/store/user'
-import { ref } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -93,9 +93,87 @@ const goto_aa = () => {
     })
 }
 
-const goto_hook_error = () => {
+const goto_hook_test = () => {
+  const sleep = () => {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve()
+      }, 300)
+    })
+  }
+
   router
     .hooks((next) => {
+      console.log('sync 1--------')
+      next()
+      // next(false) 传入true 或 false 不传默认为true
+    })
+    .hooks((next) => {
+      console.log('sync 2--------')
+      next()
+    })
+    .hooks((next) => {
+      console.log('sync 3--------')
+      next()
+    })
+    .hooks((next) => {
+      console.log('async 4---------')
+      setTimeout(() => {
+        console.log('async 5---------')
+        next()
+      }, 333)
+    })
+    .hooks((next) => {
+      console.log('6---------')
+      new Promise<void>((resolve) => {
+        setTimeout(() => {
+          console.log('7---------')
+          resolve()
+        }, 300)
+      }).then(() => {
+        next()
+      })
+    })
+    .hooks(async (next) => {
+      console.log('8---------')
+      await sleep()
+      console.log('9---------')
+      await next()
+    })
+    .hooks((next) => {
+      console.log('Promise then 10---------')
+      sleep().then(() => {
+        console.log('Promise then 11-------------')
+        next()
+      })
+    })
+    .push('/pages/index/user', { aa: 'i am params' }, { bb: 'i am query' })
+    .hooks((next) => {
+      console.log('hooks 12--------------')
+      next()
+      console.log('hooks 13----------------')
+    })
+    .hooks((next) => {
+      console.log('last hooks 14-------------')
+      next()
+    })
+
+  // setTimeout(() => {
+  //   router.push('/pagesA/aa22/aa22')
+  //   setTimeout(() => {
+  //     router.push('/pagesB/bb/bb')
+  //     setTimeout(() => {
+  //       uni.navigateBack()
+  //       console.log('%c [ router ]-94', 'font-size:14px; background:#41b883; color:#ffffff;', router)
+  //     }, 18000)
+  //   }, 12000)
+  // }, 6000)
+}
+
+const goto_hook_stop = () => {
+  router
+    .hooks((next) => {
+      console.log('返回false中断跳转和后面的hooks')
       next(false)
     })
     .push('/pagesA/aa/aa', { aa: 'fff' })
@@ -108,7 +186,7 @@ const goto_hook_error = () => {
 const goto_bb = () => {
   router
     .hooks((next) => {
-      if (userStore.userRole.length === 0) console.error('不登录点我肯定报错!')
+      // if (userStore.userRole.length === 0) console.error('不登录点我肯定报错!')
       next()
     })
     .push('pagesB/bb', { bb: 'www' })
@@ -151,9 +229,9 @@ const action = () => {
       app_666,
       user_get_user,
     ]
-    const pro: Array<Promise<any>> = []
-    all.forEach(request => pro.push(request()))
-    Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
+    // const pro: Array<Promise<any>> = []
+    // all.forEach(request => pro.push(request()))
+    // Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
   }
   all_request()
 }

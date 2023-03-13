@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "esnext",
+    "target": "es6",
     "moduleResolution": "node",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "es6",
+      "dom"
+    ],
     "useDefineForClassFields": true,
     "strict": true,
     "jsx": "preserve",
@@ -15,13 +19,36 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "types": ["@dcloudio/types", "@types/node"],
-    "typeRoots": ["types"],
+    "types": [
+      "@dcloudio/types",
+      "@types/lodash-es",
+      "vite/client"
+    ],
+    "typeRoots": [
+      "types",
+      "node_modules/@types"
+    ],
     "paths": {
-      "@/*": ["./src/*"],
-      "#/*": ["./types/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "#/*": [
+        "./types/*"
+      ]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts", "src/**/*.d.ts"],
-  "exclude": ["node_modules", ".history"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist",
+    ".history"
+  ]
 }

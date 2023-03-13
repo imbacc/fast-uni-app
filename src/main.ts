@@ -1,13 +1,16 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
 
-import store from '@/store/index'
 import router from '@/router/index'
+import direct from '@/directive/index'
+
+import 'virtual:windi.css'
 
 export function createApp() {
   const app = createSSRApp(App)
-  app.use(store)
+  app.use(createPinia())
   app.use(router)
+  app.use(direct)
 
   // //导入组件全局
   // app.component('skeleton', skeleton)

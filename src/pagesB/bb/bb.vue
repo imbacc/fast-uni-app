@@ -1,26 +1,23 @@
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { onLoad, onShow } from '@dcloudio/uni-app'
+<template>
+  <view class="">
+    bb子页面
+    <view class="">
+      option: {{ test }}
+    </view>
+  </view>
+</template>
 
-const option = ref({})
+<script lang="ts" setup>
+const test = ref<any>({})
 
 onLoad((option) => {
   console.log('%c [ option ]-15', 'font-size:14px; background:#41b883; color:#ffffff;', option)
-  option.value = option
+  test.value = option
 })
 
 onShow(() => {
   console.log('%c [ onShow ]-21', 'font-size:14px; background:#41b883; color:#ffffff;')
 })
 </script>
-
-<template>
-  <view class="">
-    bb子页面
-    <view class="">
-      option: {{ option }}
-    </view>
-  </view>
-</template>
 
 <style></style>

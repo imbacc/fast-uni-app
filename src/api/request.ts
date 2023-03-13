@@ -1,8 +1,11 @@
 import type { CacheEnv, Header_DTYPE } from 'imba-uni-request/dist/types/imba-uni-request'
 
 import { UniRequest } from 'imba-uni-request'
-import { useUserStore } from '@/store/user'
-import { baseUrl, pageKey, sizeKey, env } from '@/config/cfg'
+
+const baseUrl = ''
+const pageKey = ''
+const sizeKey = ''
+const env = 'development'
 
 const userStore = useUserStore()
 

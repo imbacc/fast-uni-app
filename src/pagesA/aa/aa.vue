@@ -1,18 +1,3 @@
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
-import { useRouter } from 'imba-uni-router'
-
-const router = useRouter()
-
-const option = ref({})
-
-onLoad((option) => {
-  console.log('%c [ option ]-16', 'font-size:14px; background:#41b883; color:#ffffff;', option)
-  option.value = JSON.stringify(option)
-})
-</script>
-
 <template>
   <view class="">
     aa子页面
@@ -24,5 +9,17 @@ onLoad((option) => {
     </view>
   </view>
 </template>
+
+<script lang="ts" setup>
+import { useRouter } from 'imba-uni-router'
+
+const router = useRouter()
+
+const option = ref({})
+
+onLoad((option) => {
+  option.value = JSON.stringify(option)
+})
+</script>
 
 <style></style>

@@ -1,5 +1,6 @@
 import Components from 'unplugin-vue-components/vite'
-// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+// import IconsResolver from 'unplugin-icons/resolver'
 
 // 定义自己的解析器
 // const diyResolver = (name) => {
@@ -17,10 +18,12 @@ export default () => {
     // 搜索子目录
     deep: true,
     // 自定义组件的解析程序
-    // resolvers: [AntDesignVueResolver()],
+    // 解析器 -> element plus ui解析
+    // resolvers: [IconsResolver()],
     // 生成“components.d.ts”全局声明，
     // 还接受自定义文件名的路径
-    dts: false,
+    dts: 'types/vite-plugin/auto-components.d.ts',
+    // types: [{ from: 'vue-router', names: ['RouterLink', 'RouterView'] }],
     // 允许子目录作为组件的命名空间前缀。
     directoryAsNamespace: false,
     // 用于忽略命名空间前缀的子目录路径
@@ -32,7 +35,7 @@ export default () => {
     // 要安装Babel，请运行：`npm install-D@Babel/parser@Babel/traverse`
     directives: true,
     // 用于变换目标的过滤器
-    include: [/\.vue$/, /\.vue\?vue/],
-    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
+    include: [/\.vue?$/],
+    exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.history[\\/]/],
   })
 }

@@ -36,6 +36,6 @@ imba create <name> [-f|--force]
  |     ├── package.json            依赖包及配置信息文件
  |     ├── pages.json              页面配置
  |     ├── uni.scss                预处理 常用样式 全局主题
- ├── vue.config.js                 vue.config
- ├── windi.config.js               windicss
+ ├── vite.config.ts                vite.config
+ ├── windi.config.ts               windicss
 ```

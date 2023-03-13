@@ -14,21 +14,13 @@
 
 /* 颜色变量 */
 
-html, body, page {
-    height: 100%;
-}
-
-.h100b {
-    height: 100%;
-}
-
-.w100b {
-    width: 100%;
-}
-
-.hw100b {
-    @extend .h100b;
-    @extend .w100b;
+html,
+body,
+#app {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
 }
 
 /* 行为相关颜色 */
