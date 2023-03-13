@@ -82,12 +82,12 @@ onLoad(() => {
 const goto_aa = () => {
   console.log('%c [ route ]-40', 'font-size:14px; background:#41b883; color:#ffffff;', route)
   router
-    .hooks((next) => {
+    .hooks((next: Function) => {
       console.log('我是goto_aa hook 头号选手')
       next()
     })
     .push('/pagesA/aa/aa', { aa: 'key', bb: 111 })
-    .hooks((next) => {
+    .hooks((next: Function) => {
       console.log('我是goto_aa hook 车尾选手')
       next()
     })
@@ -95,11 +95,11 @@ const goto_aa = () => {
 
 const goto_hook_error = () => {
   router
-    .hooks((next) => {
+    .hooks((next: Function) => {
       next(false)
     })
     .push('/pagesA/aa/aa', { aa: 'fff' })
-    .hooks((next) => {
+    .hooks((next: Function) => {
       console.log('2222222222222222')
       next()
     })
@@ -107,12 +107,12 @@ const goto_hook_error = () => {
 
 const goto_bb = () => {
   router
-    .hooks((next) => {
+    .hooks((next: Function) => {
       if (userStore.userRole.length === 0) console.error('不登录点我肯定报错!')
       next()
     })
     .push('pagesB/bb', { bb: 'www' })
-    .hooks((next) => {
+    .hooks((next: Function) => {
       console.log('登陆了，就执行到这里嘛!')
       next()
     })
@@ -152,8 +152,8 @@ const action = () => {
       user_get_user,
     ]
     const pro: Array<Promise<any>> = []
-    all.forEach(request => pro.push(request()))
-    Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
+    // all.forEach(request => pro.push(request()))
+    // Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
   }
   all_request()
 }

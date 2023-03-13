@@ -1,12 +1,11 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
 
-import store from '@/store/index'
 import router from '@/router/index'
 
 export function createApp() {
   const app = createSSRApp(App)
-  app.use(store)
+  app.use(createPinia())
   app.use(router)
 
   // //导入组件全局

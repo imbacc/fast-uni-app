@@ -9,7 +9,7 @@ const readPagesJSON = () => {
   const json = readFileSync(jsonFilePath, 'utf8')
   // 去除注释
   const reg = /("([^\\\"]*(\\.)?)*")|('([^\\\']*(\\.)?)*')|(\/{2,}.*?(\r|\n|$))|(\/\*(\n|.)*?\*\/)/g
-  return json.replace(reg, word => (/^\/{2,}/.test(word) || /^\/\*/.test(word) ? '' : word))
+  return json.replace(reg, (word) => (/^\/{2,}/.test(word) || /^\/\*/.test(word) ? '' : word))
 }
 
 export default () => {

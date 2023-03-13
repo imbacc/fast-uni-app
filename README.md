@@ -37,5 +37,4 @@ imba create <name> [-f|--force]
  |     ├── pages.json              页面配置
  |     ├── uni.scss                预处理 常用样式 全局主题
  ├── vue.config.js                 vue.config
- ├── windi.config.js               windicss
 ```

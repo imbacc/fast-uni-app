@@ -1,6 +1,6 @@
 import type { METHOD_DTYPE, Inject_DTYPE, RequestConfig_DTYPE } from 'imba-uni-request/dist/types/imba-uni-request'
 
-import http from '@/tools/request'
+import http from '@/api/request'
 
 export const sendCodeHooks = (
   apiUrl: string | [string, METHOD_DTYPE] | [string, METHOD_DTYPE, number],
