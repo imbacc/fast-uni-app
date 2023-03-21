@@ -1,44 +1,38 @@
 import { router } from '@/router/create'
 
-const sleep = () => {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, 600)
-  })
-}
-
 export default {
   install: () => {
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to: any, from, next) => {
       console.log('beforeEach1111111')
-      next()
-    })
 
-    router.beforeEach((to, from, next) => {
-      uni.showLoading({ title: 'beforeEach222222' })
-      setTimeout(() => {
-        console.log('beforeEach222222')
-        uni.hideLoading()
+      const userStore = useUserStore()
+      const authStore = useAuthStore()
+
+      // 白名单跳过
+      if (authStore.hasIgnore(to.path)) {
         next()
-      }, 300)
-    })
+        return
+      }
 
-    router.afterEach((to, from) => {
-      console.log('afterEach-----------')
-    })
+      // 没有登陆
+      if (!userStore.hasLogin) {
+        next('/login')
+        return
+      }
 
-    router.beforeEach(async (to, from, next) => {
-      uni.showLoading({ title: 'beforeEach333333333' })
-      await sleep()
-      uni.hideLoading()
-      console.log('beforeEach333333333')
+      console.log('%c [ meta ]-26', 'font-size:14px; background:#41b883; color:#ffffff;', to.meta)
+      const metaAuth = to.meta.auth as Array<string>
+      console.log('%c [ metaAuth ]-26', 'font-size:14px; background:#41b883; color:#ffffff;', metaAuth)
+      // 判断是否有权限
+      if (metaAuth) {
+        if (!authStore.hasAuth(metaAuth)) {
+          console.error('没有权限!', window?.location?.pathname)
+          next('/401')
+          return
+        }
+      }
+
       next()
-    })
-
-    router.afterEach((to, from) => {
-      console.log('%c [ to ]-7', 'font-size:14px; background:#41b883; color:#ffffff;', to)
-      console.log('%c [ from ]-7', 'font-size:14px; background:#41b883; color:#ffffff;', from)
     })
 
     router.onError((err: any) => {

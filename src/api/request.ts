@@ -1,15 +1,15 @@
-import type { CacheEnv, Header_DTYPE } from 'imba-uni-request/dist/types/imba-uni-request'
+import { ImbaUniRequest } from 'imba-uni-request'
 
-import { UniRequest } from 'imba-uni-request'
+import { useUserStore } from '@/store/user'
 
 const baseUrl = ''
 const pageKey = ''
 const sizeKey = ''
-const env = 'development'
+// const env = 'development'
 
 const userStore = useUserStore()
 
-const http = new UniRequest({
+const http = new ImbaUniRequest({
   /**
    *  `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
    *  它可以通过设置一个 `baseURL` 便于为实例的方法传递相对 URL
@@ -19,17 +19,12 @@ const http = new UniRequest({
    * 超时时间，单位毫秒
    * 默认 30s = 1000 * 30
    */
-  timeOut: 1000 * 30,
+  timeout: 1000 * 30,
   /**
    * 设置请求的 header，header 中不能设置 Referer。
    * 平台差异说明：App、H5端会自动带上cookie，且H5端不可手动修改
    */
   headers: {},
-  /**
-   * 缓存&SWR环境 'development' | 'production' | 'dev' | 'prod'
-   * 默认 dev
-   */
-  cacheEnv: env as CacheEnv,
   /**
    * 缓存&SWR 是否开启
    * 默认 true
@@ -39,7 +34,7 @@ const http = new UniRequest({
    * 缓存&SWR 缓存时间 默认分单位 mm
    * 默认 -1
    */
-  cacheTime: 1,
+  cacheTime: -1,
   /**
    * 缓存&SWR 缓存单位 mm | ss
    * 默认 mm
@@ -54,12 +49,12 @@ const http = new UniRequest({
    * 请求重试错误次数
    * 默认 2
    */
-  retryCount: 2,
+  retryCount: 1,
   /**
    * 重试内时间定位 单位秒
    * 默认 5
    */
-  retryInterval: 5,
+  retryInterval: 3,
   /**
    * 分页字段设置
    */
@@ -75,7 +70,7 @@ const http = new UniRequest({
   printConsole: true,
 })
 
-let errorTime: any = null
+let errorTime
 const errorMsg = (title: string) => {
   clearTimeout(errorTime)
   errorTime = setTimeout(() => {
@@ -85,14 +80,15 @@ const errorMsg = (title: string) => {
 }
 
 const goLogion = () => {
-  uni.removeStorage({ key: 'token' })
-  uni.reLaunch({ url: '/pages/login/login' })
+  userStore.logout()
+  // uni.reLaunch({ url: '/pages/login/login' })
+  uni.$emit('showLoginPopup', true)
 }
 
 // 请求拦截
 http.interceptors.request.use((config) => {
-  const token = userStore.token
-  if (token) (config.header as Header_DTYPE)['x-access-token'] = token
+  const token = userStore.token || false
+  if (token) (config.header as any).Authorization = token
   return config
 })
 
@@ -100,9 +96,7 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use((res) => {
   const { statusCode, errMsg } = res
 
-  if (errMsg === 'request:fail') {
-    return false
-  }
+  if (errMsg === 'request:fail') return false
 
   if (statusCode === 401) {
     console.error('401错误', errMsg)
@@ -117,21 +111,28 @@ http.interceptors.response.use((res) => {
     return false
   }
 
-  if (errMsg?.toString().indexOf('fail') !== -1 || statusCode === 0) {
-    console.error('网络异常:', errMsg)
+  if (errMsg && (errMsg.toString().includes('fail') || statusCode === 0)) {
     errorMsg('网络异常')
     return false
   }
 
-  const { code, msg, data } = res?.data
+  const { code, msg, data } = res.data
 
-  if (code === 0) {
-    console.log('拦截通知:', msg)
-    return data
+  if (data.code === 200) {
+    console.log('拦截通知:', data.msg)
+    if (data.rows) return { ...data }
+    if (data.data === null) return true
+    return data.data
   } else {
-    if (msg) errorMsg(msg || '服务器打瞌睡了')
-    console.error('服务报错:', msg)
-    return false
+    if (data.code === 401) {
+      errorMsg('登录信息已失效')
+      goLogion()
+      return false
+    }
+
+    if (data.msg) errorMsg(data.msg ? data.msg : '服务器打瞌睡了')
+    console.error('服务报错:', data.msg)
+    return 'false'
   }
 })
 

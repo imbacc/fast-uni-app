@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', {
     setStoreCache(params: Partial<key_valueof_CONVERT<userStore_DTYPE>>) {
       useSetStoreCache(this, params)
     },
-    clear() {
+    logout() {
       useClearStore(this)
     },
   },

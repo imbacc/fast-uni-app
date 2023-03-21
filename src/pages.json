@@ -46,13 +46,15 @@
     "selectedColor": "#F5612A",
     "list": [
       {
-        "pagePath": "pages/index/index",
         "iconPath": "static/logo.png",
         "selectedIconPath": "static/logo.png",
+        "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "pagePath": "pages/index/user",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png",
+        "pagePath": "pages/index/index",
         "text": "我的"
       }
     ]

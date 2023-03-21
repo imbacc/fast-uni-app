@@ -10,3 +10,19 @@ onHide(() => {
   console.log('App Hide')
 })
 </script>
+
+<style>
+html,
+body,
+page,
+#app {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.red1 {
+  border: 1rpx solid red;
+}
+</style>

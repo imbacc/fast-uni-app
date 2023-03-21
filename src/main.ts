@@ -1,10 +1,10 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
 
+import 'uno.css'
+
 import router from '@/router/index'
 import direct from '@/directive/index'
-
-import 'virtual:windi.css'
 
 export function createApp() {
   const app = createSSRApp(App)

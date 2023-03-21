@@ -1,4 +1,4 @@
-import type { PluginOption, UserConfig } from 'vite'
+import type { UserConfig } from 'vite'
 import type { ENV_DTYPE } from './types/vite-plugin/auto-env'
 
 import { resolve } from 'path'
@@ -9,12 +9,10 @@ import { viteMockServe } from 'vite-plugin-mock'
 import envPlugin, { formatEnv } from './vite-plugin/vite-plugin-env'
 // uni-app
 import uni from '@dcloudio/vite-plugin-uni'
-// windicss
-import windicssPlugin from 'vite-plugin-windicss'
+// Unocss
+import Unocss from 'unocss/vite'
 // auto import api
 import autoImportPlugin from './vite-plugin/vite-plugin-auto-import'
-// auto create routerJson
-import vitePluginRouterJson from './vite-plugin/vite-plugin-routerJson'
 // auto import router
 import routerPagePlugin from './vite-plugin/vite-plugin-routerPage'
 // auto components
@@ -27,6 +25,12 @@ import compressionPlugin from 'vite-plugin-compression'
 import packageJson from './package.json'
 import dayjs from 'dayjs'
 
+const { dependencies, name, version } = packageJson
+const __APP_INFO__ = {
+  package: { dependencies, name, version },
+  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+}
+
 // https://vitejs.dev/config/
 const config: UserConfig = {
   // 编译
@@ -37,7 +41,6 @@ const config: UserConfig = {
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
-    brotliSize: true,
     chunkSizeWarningLimit: 500,
     assetsInlineLimit: 4096,
     rollupOptions: {
@@ -57,6 +60,10 @@ const config: UserConfig = {
     exclude: ['lodash-es'],
   },
 
+  define: {
+    __APP_INFO__: JSON.stringify(__APP_INFO__),
+  },
+
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -65,13 +72,16 @@ const config: UserConfig = {
   },
 
   // 插件
-  plugins: [uni(),
+  plugins: [
+    uni(),
     autoImportPlugin(),
     componentsPlugin(),
     routerPagePlugin(),
     componentsPlugin(),
-    windicssPlugin(),
-    vitePluginRouterJson() as PluginOption,
+    Unocss({
+      // 微信等浏览器白屏问题设为true
+      // hmrTopLevelAwait: false,
+    }),
   ],
 }
 

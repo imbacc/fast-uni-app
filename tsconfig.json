@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "target": "esnext",
     "module": "esnext",
-    "target": "es6",
     "moduleResolution": "node",
     "lib": [
       "esnext",
       "es6",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "scripthost"
     ],
     "useDefineForClassFields": true,
     "strict": true,
@@ -16,13 +18,15 @@
     "checkJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitAny": false,
     "alwaysStrict": true,
-    "noImplicitAny": true,
     "skipLibCheck": true,
     "types": [
       "@dcloudio/types",
       "@types/lodash-es",
-      "vite/client"
+      "vite/client",
+      "miniprogram-api-typings",
+      "mini-types"
     ],
     "typeRoots": [
       "types",

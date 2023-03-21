@@ -2,44 +2,46 @@
   <view class="index_content">
     <skeleton v-if="showLoading" />
     <view v-else class="index_body">
-      修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!! 修改了pages.json一定要重启!!!
-      <view class="mt20">
+      <view class="h-300rpx w-300rpx bg-[#000] text-[red] flex-center-align">
+        测试unocss
+      </view>
+      <view class="mt-20rpx">
         <button type="button" @click="goto_aa">
           跳转pagesA aa
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="goto_hook_test">
           测试hooks aa
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="goto_hook_stop">
           中断 hook pagesA aa
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="goto_aa22">
           跳转pagesA aa22 [需要授权] before after
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="goto_bb">
           跳转pagesB bb [需要授权] before
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="goto_bb22">
           跳转pagesB bb22 [需要授权]
         </button>
       </view>
-      <view class="mt20">
+      <view class="mt-20rpx">
         <button type="button" @click="action">
           我是引入调用 Action api
         </button>
       </view>
 
-      <button class="mt20" @click="test_action">
+      <button class="mt-20rpx" @click="test_action">
         test api
       </button>
     </view>
@@ -206,34 +208,34 @@ const goto_bb22 = () => {
 
 const action = () => {
   console.log('11111111', 11111111)
-  const test_api_get_test = () => getTest() // 请求test_api.js 里的 get_test
-  const test_api_get_test222 = () => getTest222({ _id: 222 }) // 请求test_api.js 里的 get_test222
-  const test_api_get_test333 = () => getTest333({ is: 'param', xx: 'xx' }) // 请求test_api.js 里的 get_test222
-  const app_111 = () => getTest({ test: '111' })
-  const app_222 = () => getTest({ _id: 222 })
-  const app_333 = () => getTest({ _id: 333 })
-  const app_444 = () => getTest({ test: '444' })
-  const app_555 = () => getTest({ test: '555' })
-  const app_666 = () => getTest({ _id: 666, body: '这是POST请求,我是body' })
-  const user_get_user = () => getTest()
-  const all_request = () => {
-    const all = [
-      test_api_get_test,
-      test_api_get_test222,
-      test_api_get_test333,
-      app_111,
-      app_222,
-      app_333,
-      app_444,
-      app_555,
-      app_666,
-      user_get_user,
-    ]
-    // const pro: Array<Promise<any>> = []
-    // all.forEach(request => pro.push(request()))
-    // Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
-  }
-  all_request()
+  // const test_api_get_test = () => getTest() // 请求test_api.js 里的 get_test
+  // const test_api_get_test222 = () => getTest222({ _id: 222 }) // 请求test_api.js 里的 get_test222
+  // const test_api_get_test333 = () => getTest333({ is: 'param', xx: 'xx' }) // 请求test_api.js 里的 get_test222
+  // const app_111 = () => getTest({ test: '111' })
+  // const app_222 = () => getTest({ _id: 222 })
+  // const app_333 = () => getTest({ _id: 333 })
+  // const app_444 = () => getTest({ test: '444' })
+  // const app_555 = () => getTest({ test: '555' })
+  // const app_666 = () => getTest({ _id: 666, body: '这是POST请求,我是body' })
+  // const user_get_user = () => getTest()
+  // const all_request = () => {
+  //   const all = [
+  //     test_api_get_test,
+  //     test_api_get_test222,
+  //     test_api_get_test333,
+  //     app_111,
+  //     app_222,
+  //     app_333,
+  //     app_444,
+  //     app_555,
+  //     app_666,
+  //     user_get_user,
+  //   ]
+  //   // const pro: Array<Promise<any>> = []
+  //   // all.forEach(request => pro.push(request()))
+  //   // Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
+  // }
+  // all_request()
 }
 
 const test_action = () => {

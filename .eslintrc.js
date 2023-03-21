@@ -1,1 +1,2 @@
-module.exports = require('imba-eslint-config')
+const { eslintConfig } = require('imba-config')
+module.exports = eslintConfig

@@ -23,6 +23,5 @@ node_modules
 dist
 dist-ssr
 *.local
-.history
 .pnpm-debug.log
 .history
