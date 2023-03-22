@@ -34,7 +34,7 @@ specifiers:
   husky: ^8.0.3
   imba-cache: ^1.1.1
   imba-config: ^1.0.0
-  imba-uni-request: ^1.1.2
+  imba-uni-request: ^1.1.4
   imba-uni-router: ^1.0.8
   lint-staged: ^13.2.0
   lodash-es: ^4.17.21
@@ -43,6 +43,7 @@ specifiers:
   postcss: ^8.4.21
   qs-stringify: ^1.2.1
   rollup: ^2.79.0
+  sass: ^1.59.3
   typescript: ^4.7.4
   unocss: ^0.50.6
   unocss-preset-weapp: ^0.5.2
@@ -72,7 +73,7 @@ dependencies:
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47
   dayjs: 1.11.7
   imba-cache: 1.1.1
-  imba-uni-request: 1.1.2
+  imba-uni-request: 1.1.4
   imba-uni-router: 1.0.8
   lodash-es: 4.17.21
   pinia: 2.0.28_hzshndipis44jxgl2vucyyqvmq
@@ -103,12 +104,13 @@ devDependencies:
   mockjs: 1.1.0
   postcss: 8.4.21
   rollup: 2.79.0
+  sass: 1.59.3
   typescript: 4.8.2
   unocss: 0.50.6_2sisk3d7rzbszuos6wkxsyk4lq
   unocss-preset-weapp: 0.5.2_rollup@2.79.0
   unplugin-auto-import: 0.15.1_rollup@2.79.0
   unplugin-vue-components: 0.22.4_z24ilfpwbhu3oqpdabinwcm7qu
-  vite: 4.0.3_@types+node@18.7.14
+  vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
   vite-plugin-compression: 0.5.1_vite@4.0.3
   vite-plugin-html: 3.2.0_vite@4.0.3
   vite-plugin-mock: 2.9.6_skjeqclr3ictk2agfqmi3pupua
@@ -2144,7 +2146,7 @@ packages:
       magic-string: 0.27.0
       picocolors: 1.0.0
       terser: 5.15.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     transitivePeerDependencies:
       - postcss
       - supports-color
@@ -3420,7 +3422,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.2.12
       magic-string: 0.30.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -3440,7 +3442,7 @@ packages:
       regenerator-runtime: 0.13.11
       systemjs: 6.14.0
       terser: 5.15.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3455,7 +3457,7 @@ packages:
       '@babel/core': 7.21.3
       '@babel/plugin-transform-typescript': 7.21.3_@babel+core@7.21.3
       '@vue/babel-plugin-jsx': 1.1.1_@babel+core@7.21.3
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
       vue: 3.2.47
     transitivePeerDependencies:
       - supports-color
@@ -3468,7 +3470,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
       vue: 3.2.47
 
   /@vue/babel-helper-vue-transform-on/1.0.2:
@@ -5987,14 +5989,24 @@ packages:
     resolution: {integrity: sha512-42w0/dyR0SLruVNIS9AkRBccbrWXkZOPLez0gfbPNc5ooT8SJ3aMI/qPG3GrMEdm+fDzjri7PRPNv3G7KclkJg==}
     dev: false
 
+  /imba-cache/1.1.8:
+    resolution: {integrity: sha512-6pFj4YVp6pbHnIo/RutAsrcygRvtKWAF3PWjizhFUBi522b/yOyjGe4WASCBzPH2QvjB1EPAvfqz52TfGoNBTg==}
+    dev: false
+
   /imba-config/1.0.0:
     resolution: {integrity: sha512-wtF/u6enumofOdjwcvXDBzgisdVGITKtPOoiuIFCLVHuzOB3zqMz/fzFC4UDCTf2pSF8gECAIS+jQ1o1AFAzgQ==}
     dev: true
 
-  /imba-uni-request/1.1.2:
-    resolution: {integrity: sha512-Sm3pmadNdYAx8psa0A1pZGsQHQXBAH5BNQcB2W4tYPvuwkOzZE0Vbk8JXHLTupGIRJKzHOFrcGB2FlqVDhTtdA==}
+  /imba-uni-cache/1.0.3:
+    resolution: {integrity: sha512-LEsvTq7LjQoWwal6n3msWiKP8L5PDqOdWIeCs0aqMguSXCSgxIyJD6ien2ZsuEW0R7M/I3LWIlj9XqSKd3s/7g==}
     dependencies:
-      imba-cache: 1.1.1
+      imba-cache: 1.1.8
+    dev: false
+
+  /imba-uni-request/1.1.4:
+    resolution: {integrity: sha512-afBGuj4ClnDQi/aGJOzj06H8muRHUeEW7iL7vUQDZmiVyOLTWL/yyINK+vbs5HdL/h/diqW8NF8Kw9aqK0JfGg==}
+    dependencies:
+      imba-uni-cache: 1.0.3
       qs-stringify: 1.2.1
     dev: false
 
@@ -6003,6 +6015,9 @@ packages:
     dependencies:
       qs-stringify: 1.2.1
     dev: false
+
+  /immutable/4.3.0:
+    resolution: {integrity: sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg==}
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -7893,6 +7908,15 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
+  /sass/1.59.3:
+    resolution: {integrity: sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      immutable: 4.3.0
+      source-map-js: 1.0.2
+
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
@@ -8669,7 +8693,7 @@ packages:
       acorn: 8.8.0
       chokidar: 3.5.3
       rollup: 2.79.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.4
     dev: true
@@ -8769,7 +8793,7 @@ packages:
       chalk: 4.1.2
       debug: 4.3.4
       fs-extra: 10.1.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8791,7 +8815,7 @@ packages:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     dev: true
 
   /vite-plugin-mock/2.9.6_skjeqclr3ictk2agfqmi3pupua:
@@ -8811,7 +8835,7 @@ packages:
       fast-glob: 3.2.11
       mockjs: 1.1.0
       path-to-regexp: 6.2.1
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -8834,13 +8858,13 @@ packages:
       json5: 2.2.1
       local-pkg: 0.4.2
       picocolors: 1.0.0
-      vite: 4.0.3_@types+node@18.7.14
+      vite: 4.0.3_jfygdx3e4xjq6lqqbolwadzs3i
       yaml: 2.1.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite/4.0.3_@types+node@18.7.14:
+  /vite/4.0.3_jfygdx3e4xjq6lqqbolwadzs3i:
     resolution: {integrity: sha512-HvuNv1RdE7deIfQb8mPk51UKjqptO/4RXZ5yXSAvurd5xOckwS/gg8h9Tky3uSbnjYTgUm0hVCet1cyhKd73ZA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -8870,6 +8894,7 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.20.0
+      sass: 1.59.3
     optionalDependencies:
       fsevents: 2.3.2
 
