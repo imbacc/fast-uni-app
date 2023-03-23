@@ -1,6 +1,6 @@
 {
   "name": "fast-uni-app",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
@@ -30,6 +30,8 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
+    "adduser": "pnpm adduser --access=public --registry=https://registry.npmjs.org/",
+    "pub": "bumpp --commit --tag --push",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.vue",
     "czc": "pnpm run lint && git add . && cz",
@@ -72,14 +74,13 @@
     "@rollup/plugin-replace": "^4.0.0",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.14",
-    "bumpp": "^8.2.1",
-    "change-case": "^4.1.2",
+    "bumpp": "^9.0.0",
     "commitizen": "^4.2.6",
     "commitlint": "^17.4.0",
     "cz-customizable": "^7.0.0",
     "eslint": "^8.31.0",
     "husky": "^8.0.3",
-    "imba-config": "^1.0.0",
+    "imba-config": "^1.0.1",
     "lint-staged": "^13.2.0",
     "mockjs": "^1.1.0",
     "postcss": "^8.4.21",
@@ -93,8 +94,7 @@
     "vite": "4.0.3",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.2.0",
-    "vite-plugin-mock": "^2.9.6",
-    "vite-plugin-pages": "^0.26.0"
+    "vite-plugin-mock": "^2.9.6"
   },
   "config": {
     "commitizen": {

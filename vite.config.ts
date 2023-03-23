@@ -13,8 +13,6 @@ import uni from '@dcloudio/vite-plugin-uni'
 import Unocss from 'unocss/vite'
 // auto import api
 import autoImportPlugin from './vite-plugin/vite-plugin-auto-import'
-// auto import router
-import routerPagePlugin from './vite-plugin/vite-plugin-routerPage'
 // auto components
 import componentsPlugin from './vite-plugin/vite-plugin-components'
 // html inject
@@ -76,7 +74,6 @@ const config: UserConfig = {
     uni(),
     autoImportPlugin(),
     componentsPlugin(),
-    routerPagePlugin(),
     componentsPlugin(),
     Unocss({
       // 微信等浏览器白屏问题设为true
