@@ -54,7 +54,7 @@
       {
         "iconPath": "static/logo.png",
         "selectedIconPath": "static/logo.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/index/user",
         "text": "我的"
       }
     ]

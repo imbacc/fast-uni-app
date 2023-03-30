@@ -1,6 +1,6 @@
 import type { userStore_DTYPE } from '#/store/user'
 
-import { getCacheLoca } from 'imba-cache'
+import { getCacheLoca } from 'imba-uni-cache'
 
 export const useUserStore = defineStore('user', {
   state: (): userStore_DTYPE => {

@@ -2,7 +2,7 @@
   <view class="index_content">
     <skeleton v-if="showLoading" />
     <view v-else class="index_body">
-      <view class="h-300rpx w-300rpx bg-[#000] text-[red] flex-center-align">
+      <view class="h-300rpx w-300rpx bg-[#000] text-[red] rounded-20rpx text-40rpx m-111rpx p-10rpx flex-center-align">
         测试unocss
       </view>
       <view class="mt-20rpx">
@@ -82,7 +82,6 @@ onLoad(() => {
 // }
 
 const goto_aa = () => {
-  console.log('%c [ route ]-40', 'font-size:14px; background:#41b883; color:#ffffff;', route)
   router
     .hooks((next) => {
       console.log('我是goto_aa hook 头号选手')
@@ -106,6 +105,7 @@ const goto_hook_test = () => {
 
   router
     .hooks((next) => {
+      uni.showLoading({ title: '加载中' })
       console.log('sync 1--------')
       next()
       // next(false) 传入true 或 false 不传默认为true
@@ -157,19 +157,20 @@ const goto_hook_test = () => {
     })
     .hooks((next) => {
       console.log('last hooks 14-------------')
+      uni.hideLoading()
       next()
     })
 
-  // setTimeout(() => {
-  //   router.push('/pagesA/aa22/aa22')
-  //   setTimeout(() => {
-  //     router.push('/pagesB/bb/bb')
-  //     setTimeout(() => {
-  //       uni.navigateBack()
-  //       console.log('%c [ router ]-94', 'font-size:14px; background:#41b883; color:#ffffff;', router)
-  //     }, 18000)
-  //   }, 12000)
-  // }, 6000)
+  setTimeout(() => {
+    router.push('/pagesA/aa22/aa22')
+    setTimeout(() => {
+      router.push('/pagesB/bb/bb')
+      setTimeout(() => {
+        uni.navigateBack()
+        console.log('%c [ router ]-94', 'font-size:14px; background:#41b883; color:#ffffff;', router)
+      }, 18000)
+    }, 12000)
+  }, 6000)
 }
 
 const goto_hook_stop = () => {
@@ -255,13 +256,13 @@ const test_action = () => {
 </script>
 
 <style scoped>
-    .index_content {
-        font-size: 50rpx;
-    }
+.index_content {
+  font-size: 50rpx;
+}
 
-    .test_size {
-        height: 200upx;
-        width: 400upx;
-        border: 1upx solid red;
-    }
+.test_size {
+  height: 200upx;
+  width: 400upx;
+  border: 1upx solid red;
+}
 </style>

@@ -1,6 +1,6 @@
 import type { authStore_DTYPE } from '#/store/auth'
 
-import { getCacheLoca } from 'imba-cache'
+import { getCacheLoca } from 'imba-uni-cache'
 
 const WHITELIST = ['/login', '/401', '/404']
 

@@ -6,7 +6,6 @@ specifiers:
   '@dcloudio/types': ^3.2.11
   '@dcloudio/uni-app': 3.0.0-alpha-3070720230316001
   '@dcloudio/uni-app-plus': 3.0.0-alpha-3070720230316001
-  '@dcloudio/uni-automator': 3.0.0-alpha-3070720230316001
   '@dcloudio/uni-cli-shared': 3.0.0-alpha-3070720230316001
   '@dcloudio/uni-components': 3.0.0-alpha-3070720230316001
   '@dcloudio/uni-h5': 3.0.0-alpha-3070720230316001
@@ -33,10 +32,13 @@ specifiers:
   husky: ^8.0.3
   imba-cache: ^1.1.1
   imba-config: ^1.0.1
+  imba-uni-cache: ^1.0.3
   imba-uni-request: ^1.1.4
   imba-uni-router: ^1.0.8
   lint-staged: ^13.2.0
   lodash-es: ^4.17.21
+  mini-types: ^0.1.7
+  miniprogram-api-typings: ^3.9.0
   mockjs: ^1.1.0
   pinia: ^2.0.28
   postcss: ^8.4.21
@@ -71,6 +73,7 @@ dependencies:
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47
   dayjs: 1.11.7
   imba-cache: 1.1.1
+  imba-uni-cache: 1.0.3
   imba-uni-request: 1.1.4
   imba-uni-router: 1.0.8
   lodash-es: 4.17.21
@@ -83,7 +86,6 @@ devDependencies:
   '@antfu/eslint-config': 0.34.0_xdoee2m3rk6cql2eld7jqbrwui
   '@commitlint/config-conventional': 17.4.0
   '@dcloudio/types': 3.2.11
-  '@dcloudio/uni-automator': 3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47
   '@dcloudio/uni-cli-shared': 3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3070720230316001
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3070720230316001_snwypj6lv3myyn26fkc3kmxsyq
@@ -98,6 +100,8 @@ devDependencies:
   husky: 8.0.3
   imba-config: 1.0.1_l643xtjkbllizx3yf2rxaqfiv4
   lint-staged: 13.2.0
+  mini-types: 0.1.7
+  miniprogram-api-typings: 3.9.0
   mockjs: 1.1.0
   postcss: 8.4.21
   rollup: 2.79.0
@@ -1714,31 +1718,6 @@ packages:
       - ts-node
       - vue
     dev: false
-
-  /@dcloudio/uni-automator/3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47:
-    resolution: {integrity: sha512-gdxjq3U6zouwlIgDP9VoPGDCkzDYwGM+nXtCbSH3VLpDVof3oEJRs1FZUJGL6MHTiz8nt++O8CwRZlPhGejjQg==}
-    peerDependencies:
-      jest: 27.0.4
-      jest-environment-node: 27.5.1
-    dependencies:
-      '@dcloudio/uni-cli-shared': 3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47
-      address: 1.2.0
-      cross-env: 7.0.3
-      debug: 4.3.4
-      default-gateway: 6.0.3
-      fs-extra: 10.1.0
-      licia: 1.37.0
-      qrcode-reader: 1.0.4
-      qrcode-terminal: 0.12.0
-      ws: 8.8.1
-    transitivePeerDependencies:
-      - bufferutil
-      - postcss
-      - supports-color
-      - ts-node
-      - utf-8-validate
-      - vue
-    dev: true
 
   /@dcloudio/uni-cli-shared/3.0.0-alpha-3070720230316001_postcss@8.4.21+vue@3.2.47:
     resolution: {integrity: sha512-1swh2R80SDrM/HwjjbcChLQnorm1yMJtR0wjHgGMv003+Qk3dyIM9Dn4oeIbHa2CiH3KoogcqUfQfzPtJuR34Q==}
@@ -3602,11 +3581,6 @@ packages:
     hasBin: true
     dev: true
 
-  /address/1.2.0:
-    resolution: {integrity: sha512-tNEZYz5G/zYunxFm7sfhAxkXEuLj3K6BKwv6ZURlsF6yiUQ65z0Q2wZW9L5cPUl9ocofGvXOdFYbFHp0+6MOig==}
-    engines: {node: '>= 10.0.0'}
-    dev: true
-
   /aggregate-error/3.1.0:
     resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
     engines: {node: '>=8'}
@@ -4341,14 +4315,6 @@ packages:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
 
-  /cross-env/7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
-    dependencies:
-      cross-spawn: 7.0.3
-    dev: true
-
   /cross-spawn/7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -4507,13 +4473,6 @@ packages:
   /deepmerge/4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npm.taobao.org/deepmerge/-/deepmerge-4.2.2.tgz}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /default-gateway/6.0.3:
-    resolution: {integrity: sha512-fwSOJsbbNzZ/CUFpqFBqYfYNLj1NbMPm8MMCIzHjC83iSJRBEGmDUxU+WP661BaBQImeC2yHwXtz+P/O9o+XEg==}
-    engines: {node: '>= 10'}
-    dependencies:
-      execa: 5.1.1
     dev: true
 
   /defaults/1.0.4:
@@ -6395,6 +6354,7 @@ packages:
 
   /licia/1.37.0:
     resolution: {integrity: sha512-jX49+WmzikOPGNrcy/giS23HCI8Pb7RF585Ei5d7oWF4WMelaZWv4odqQNdT0jtHkoUxqSvPz67Jvyq06xamUA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npm.taobao.org/licia/-/licia-1.37.0.tgz}
+    dev: false
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
@@ -6758,6 +6718,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /mini-types/0.1.7:
+    resolution: {integrity: sha512-aSoVvrIr/O9tbzFjSCeKr/T53Hu+un+FXkfWPfGcb/q8eAHXX1CDgSHv8l0GtFTlfHzznmn4hbRGB3UTWmZ3fA==}
+    dev: true
+
   /minimatch/3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
@@ -6793,6 +6757,10 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
+
+  /miniprogram-api-typings/3.9.0:
+    resolution: {integrity: sha512-QCXHHW9H4XYazb8J9EMiFyaOWHXhBG4oehkQqi+76FJpKKIlpgL0ZkXxzJ2L+6T/c5OxKm7iegovKIQGVkZDLQ==}
+    dev: true
 
   /mkdirp/0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
@@ -7431,10 +7399,12 @@ packages:
 
   /qrcode-reader/1.0.4:
     resolution: {integrity: sha512-rRjALGNh9zVqvweg1j5OKIQKNsw3bLC+7qwlnead5K/9cb1cEIAGkwikt/09U0K+2IDWGD9CC6SP7tHAjUeqvQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npm.taobao.org/qrcode-reader/-/qrcode-reader-1.0.4.tgz}
+    dev: false
 
   /qrcode-terminal/0.12.0:
     resolution: {integrity: sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npm.taobao.org/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz}
     hasBin: true
+    dev: false
 
   /qs-stringify/1.2.1:
     resolution: {integrity: sha512-2N5xGLGZUxpgAYq1fD1LmBSCbxQVsXYt5JU0nU3FuPWO8PlCnKNFQwXkZgyB6mrTdg7IbexX4wxIR403dJw9pw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npm.taobao.org/qs-stringify/-/qs-stringify-1.2.1.tgz}
@@ -8830,6 +8800,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: false
 
   /xhr/2.6.0:
     resolution: {integrity: sha512-/eCGLb5rxjx5e3mF1A7s+pLlR6CGyqWN91fv1JgER5mVWg1MZmlhBvy9kjcsOdRk8RrIujotWyJamfyrp+WIcA==}

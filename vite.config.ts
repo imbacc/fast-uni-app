@@ -46,7 +46,7 @@ const config: UserConfig = {
         // chunks 做操作 注释将减少分割
         manualChunks: {
           'vue': ['vue', 'vue-i18n'],
-          'imba-libs': ['imba-cache', 'imba-uni-request', 'imba-uni-router'],
+          'imba-libs': ['imba-uni-cache', 'imba-uni-request', 'imba-uni-router'],
           'lodash-es': ['lodash-es'],
         },
       },
