@@ -1,6 +1,6 @@
 {
   "name": "fast-uni-app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "scripts": {
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
@@ -34,7 +34,7 @@
     "pub": "bumpp --commit --tag --push",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.vue",
-    "czc": "pnpm run lint && git add . && cz",
+    "czc": "git add . && cz",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "update:uni-app": "npx @dcloudio/uvm alpha"
