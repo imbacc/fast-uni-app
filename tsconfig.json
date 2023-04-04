@@ -9,7 +9,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators":true,
-    "sourceMap": true,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "baseUrl": ".",
     "types": [
@@ -21,6 +23,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "#/*": [
+        "./types/*"
       ]
     },
     "lib": [
@@ -34,6 +39,8 @@
     "node_modules",
     "unpackage",
     "dist",
-    "src/**/*.nvue"
+    "src/**/*.nvue",
+    "test",
+    ".history"
   ]
 }

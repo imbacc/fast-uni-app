@@ -18,10 +18,6 @@
     "build:mp-toutiao": "cross-env NODE_ENV=production UNI_PLATFORM=mp-toutiao vue-cli-service uni-build",
     "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
     "build:mp-xhs": "cross-env NODE_ENV=production UNI_PLATFORM=mp-xhs vue-cli-service uni-build",
-    "build:quickapp-native": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-native vue-cli-service uni-build",
-    "build:quickapp-webview": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview vue-cli-service uni-build",
-    "build:quickapp-webview-huawei": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview-huawei vue-cli-service uni-build",
-    "build:quickapp-webview-union": "cross-env NODE_ENV=production UNI_PLATFORM=quickapp-webview-union vue-cli-service uni-build",
     "dev:app-plus": "cross-env NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch",
     "dev:custom": "cross-env NODE_ENV=development uniapp-cli custom",
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",
@@ -35,17 +31,18 @@
     "dev:mp-toutiao": "cross-env NODE_ENV=development UNI_PLATFORM=mp-toutiao vue-cli-service uni-build --watch",
     "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
     "dev:mp-xhs": "cross-env NODE_ENV=development UNI_PLATFORM=mp-xhs vue-cli-service uni-build --watch",
-    "dev:quickapp-native": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-native vue-cli-service uni-build --watch",
-    "dev:quickapp-webview": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-webview vue-cli-service uni-build --watch",
-    "dev:quickapp-webview-huawei": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-webview-huawei vue-cli-service uni-build --watch",
-    "dev:quickapp-webview-union": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-webview-union vue-cli-service uni-build --watch",
     "info": "node node_modules/@dcloudio/vue-cli-plugin-uni/commands/info.js",
-    "serve:quickapp-native": "node node_modules/@dcloudio/uni-quickapp-native/bin/serve.js",
     "test:android": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=android jest -i",
     "test:h5": "cross-env UNI_PLATFORM=h5 jest -i",
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
-    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
+    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.vue",
+    "czc": "pnpm run lint && git add . && cz",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "update:uni-app": "npx @dcloudio/uvm alpha"
   },
   "dependencies": {
     "@dcloudio/uni-app": "^2.0.2-3070920230324001",
@@ -63,22 +60,28 @@
     "@dcloudio/uni-mp-vue": "^2.0.2-3070920230324001",
     "@dcloudio/uni-mp-weixin": "^2.0.2-3070920230324001",
     "@dcloudio/uni-mp-xhs": "^2.0.2-3070920230324001",
-    "@dcloudio/uni-quickapp-native": "^2.0.2-3070920230324001",
     "@dcloudio/uni-quickapp-webview": "^2.0.2-3070920230324001",
     "@dcloudio/uni-stacktracey": "^2.0.2-3070920230324001",
     "@dcloudio/uni-stat": "^2.0.2-3070920230324001",
+    "@vue/composition-api": "1.7.0",
     "@vue/shared": "^3.0.0",
     "core-js": "^3.8.3",
     "flyio": "^0.6.2",
+    "imba-cache": "^1.1.9",
+    "imba-uni-cache": "^1.0.3",
+    "imba-uni-request": "^1.1.4",
+    "imba-uni-router": "^1.0.8",
+    "lodash-es": "^4.17.21",
     "vue": ">= 2.6.14 < 2.7",
     "vue-class-component": "^6.3.2",
     "vue-property-decorator": "^8.0.0",
     "vuex": "^3.2.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^0.38.0",
+    "@babel/core": "7.0.0",
     "@babel/plugin-syntax-typescript": "^7.2.0",
     "@dcloudio/types": "^3.3.2",
-    "@dcloudio/uni-automator": "^2.0.2-3070920230324001",
     "@dcloudio/uni-cli-i18n": "^2.0.2-3070920230324001",
     "@dcloudio/uni-cli-shared": "^2.0.2-3070920230324001",
     "@dcloudio/uni-helper-json": "*",
@@ -93,13 +96,28 @@
     "@vue/cli-plugin-typescript": "~5.0.8",
     "@vue/cli-service": "~5.0.0",
     "babel-plugin-import": "^1.11.0",
+    "commitizen": "^4.3.0",
+    "commitlint": "^17.5.1",
+    "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.2",
+    "cz-customizable": "^7.0.0",
+    "eslint": "^8.37.0",
+    "husky": "^8.0.3",
+    "imba-config": "^1.0.1",
     "jest": "^25.4.0",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
+    "postcss": "^8.4.21",
     "postcss-comment": "^2.0.0",
+    "sass": "^1.60.0",
     "typescript": "~4.5.5",
-    "vue-template-compiler": ">= 2.6.14 < 2.7"
+    "unocss": "^0.50.6",
+    "unocss-preset-weapp": "^0.5.2",
+    "unocss-webpack-uniapp2": "^0.1.4",
+    "unplugin-auto-import": "^0.15.2",
+    "unplugin-vue-components": "^0.24.1",
+    "vue-template-compiler": ">= 2.6.14 < 2.7",
+    "webpack": "^5.77.0"
   },
   "browserslist": [
     "Android >= 4.4",
@@ -107,5 +125,10 @@
   ],
   "uni-app": {
     "scripts": {}
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
