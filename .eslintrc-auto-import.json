@@ -1,6 +1,5 @@
 {
   "globals": {
-    "API": true,
     "Component": true,
     "ComponentPublicInstance": true,
     "ComputedRef": true,
@@ -10,7 +9,6 @@
     "Ref": true,
     "VNode": true,
     "acceptHMRUpdate": true,
-    "bindPhone": true,
     "computed": true,
     "createApp": true,
     "createPinia": true,
@@ -22,7 +20,6 @@
     "getActivePinia": true,
     "getCurrentInstance": true,
     "getCurrentScope": true,
-    "getUserinfo": true,
     "h": true,
     "inject": true,
     "isProxy": true,
@@ -101,7 +98,7 @@
     "useSetStoreCache": true,
     "useSlots": true,
     "useUserStore": true,
-    "userLogin": true,
+    "useVersionStore": true,
     "watch": true,
     "watchEffect": true,
     "watchPostEffect": true,

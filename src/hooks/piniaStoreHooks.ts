@@ -1,6 +1,6 @@
 import type { StateTree, Store } from 'pinia'
 
-import { setCacheLoca, delCache } from 'imba-cache'
+import { setCacheLoca, delCache } from 'imba-uni-cache'
 
 export const useHas = (keys: string | Array<string>, state: StateTree) => {
   return Array.isArray(keys) ? keys.some((s) => state[s]) : state[keys]
@@ -8,9 +8,12 @@ export const useHas = (keys: string | Array<string>, state: StateTree) => {
 
 export const useSetStoreCache = <T>(_this: Store, params: Partial<key_valueof_CONVERT<T>>) => {
   _this.$patch(params)
-  for (const key in params) {
-    queueMicrotask(() => setCacheLoca(key, params[key as keyof_CONVERT<T>] as any))
-  }
+  const t = setTimeout(() => {
+    clearTimeout(t)
+    for (const key in params) {
+      setCacheLoca(key, params[key as keyof_CONVERT<T>] as any)
+    }
+  })
 }
 
 export const useClearStore = (_this: Store) => {
@@ -18,7 +21,7 @@ export const useClearStore = (_this: Store) => {
   const newState: Record<string, any> = {}
 
   for (const key of stateKeys) {
-    queueMicrotask(() => delCache(key))
+    Promise.resolve(() => delCache(key))
     const oldState = newState[key]
     if (typeof oldState === 'string') {
       newState[key] = ''

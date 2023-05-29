@@ -16,18 +16,18 @@ export default {
 
       // 没有登陆
       if (!userStore.hasLogin) {
-        next('/login')
+        uni.$emit('showLoginPopup', true)
+        uni.showToast({ title: '没有登录!', icon: 'none' })
+        next(false)
         return
       }
 
-      console.log('%c [ meta ]-26', 'font-size:14px; background:#41b883; color:#ffffff;', to.meta)
-      const metaAuth = to.meta.auth as Array<string>
-      console.log('%c [ metaAuth ]-26', 'font-size:14px; background:#41b883; color:#ffffff;', metaAuth)
+      const metaAuth = to.auth as Array<string>
       // 判断是否有权限
       if (metaAuth) {
         if (!authStore.hasAuth(metaAuth)) {
           console.error('没有权限!', window?.location?.pathname)
-          next('/401')
+          next(false)
           return
         }
       }
@@ -36,7 +36,7 @@ export default {
     })
 
     router.onError((err: any) => {
-      console.log('%c [ err ]-18', 'font-size:14px; background:#41b883; color:#ffffff;', err)
+      console.log('%c [ router error ]', 'font-size:14px; background:red; color:#ffffff;', err)
     })
   },
 }

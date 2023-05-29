@@ -9,7 +9,7 @@ export default () => {
     // 自动引入的api从这里找
     imports: ['vue', 'pinia', 'uni-app'],
     // 自动引入的目录
-    dirs: ['src/api/*', 'src/store', 'src/hooks'],
+    dirs: ['src/api', 'src/store', 'src/hooks'],
     // 根据项目情况配置eslintrc，默认是不开启的
     eslintrc: {
       enabled: true, // @default false

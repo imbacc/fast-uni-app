@@ -1,10 +1,8 @@
 import { ImbaUniRequest } from 'imba-uni-request'
 
-import { useUserStore } from '@/store/user'
-
-const baseUrl = ''
-const pageKey = ''
-const sizeKey = ''
+const baseUrl = import.meta.env.VITE_GLOB_API_URL
+const pageKey = 'pageKey'
+const sizeKey = 'sizeKey'
 // const env = 'development'
 
 const userStore = useUserStore()
@@ -54,12 +52,11 @@ const http = new ImbaUniRequest({
    * 重试内时间定位 单位秒
    * 默认 5
    */
-  retryInterval: 3,
+  retryInterval: 1,
   /**
    * 分页字段设置
    */
-  pageKey,
-  sizeKey,
+  pageKey: ['pageKey', 'pageSize'],
   /**
    * 打印API接口地址是否MD5化
    */
@@ -118,19 +115,16 @@ http.interceptors.response.use((res) => {
 
   const { code, msg, data } = res.data
 
-  if (data.code === 200) {
-    console.log('拦截通知:', data.msg)
-    if (data.rows) return { ...data }
-    if (data.data === null) return true
-    return data.data
+  if (code === 200) {
+    return data
   } else {
-    if (data.code === 401) {
+    if (code === 401) {
       errorMsg('登录信息已失效')
       goLogion()
       return false
     }
 
-    if (data.msg) errorMsg(data.msg ? data.msg : '服务器打瞌睡了')
+    if (msg) errorMsg(msg || '服务器打瞌睡了')
     console.error('服务报错:', data.msg)
     return 'false'
   }

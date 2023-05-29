@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 onLaunch(() => {
+  useUserStore().userLogin()
+  useVersionStore().checkVersion()
   console.log('App Launch')
 })
 onShow(() => {

@@ -1,4 +1,5 @@
 export interface userStore_DTYPE {
+  openid: string
   token: string
-  userInfo: any
+  userInfo: Record<string, any>
 }

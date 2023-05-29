@@ -9,16 +9,6 @@
     <view class="tiny-skeleton-li" />
     <view class="tiny-skeleton-li" />
     <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
-    <view class="tiny-skeleton-li" />
     <view class="tiny-skeleton-li" style="width: 61%" />
   </view>
 </template>

@@ -14,7 +14,7 @@ import Unocss from 'unocss/vite'
 // auto import api
 import autoImportPlugin from './vite-plugin/vite-plugin-auto-import'
 // auto components
-import componentsPlugin from './vite-plugin/vite-plugin-components'
+import componentsPlugin from './vite-plugin/vite-plugin-auto-components'
 // html inject
 import htmlInjectPlugin from './vite-plugin/vite-plugin-htmlInject'
 // 使用gzip或brotli来压缩资源
