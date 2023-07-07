@@ -17,3 +17,4 @@ Dockerfile
 optim
 src/libs/**/*
 pages.json
+mock/*

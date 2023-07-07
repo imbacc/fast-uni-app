@@ -1,69 +1,65 @@
 import { ImbaUniRequest } from 'imba-uni-request'
 
 const baseUrl = import.meta.env.VITE_GLOB_API_URL
-const pageKey = 'pageKey'
-const sizeKey = 'sizeKey'
 // const env = 'development'
-
-const userStore = useUserStore()
 
 const http = new ImbaUniRequest({
   /**
-   *  `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
-   *  它可以通过设置一个 `baseURL` 便于为实例的方法传递相对 URL
-   */
+     *  `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
+     *  它可以通过设置一个 `baseURL` 便于为实例的方法传递相对 URL
+     */
   baseURL: baseUrl,
   /**
-   * 超时时间，单位毫秒
-   * 默认 30s = 1000 * 30
-   */
+     * 超时时间，单位毫秒
+     * 默认 30s = 1000 * 30
+     */
   timeout: 1000 * 30,
   /**
-   * 设置请求的 header，header 中不能设置 Referer。
-   * 平台差异说明：App、H5端会自动带上cookie，且H5端不可手动修改
-   */
+     * 设置请求的 header，header 中不能设置 Referer。
+     * 平台差异说明：App、H5端会自动带上cookie，且H5端不可手动修改
+     */
   headers: {},
   /**
-   * 缓存&SWR 是否开启
-   * 默认 true
-   */
+     * 缓存&SWR 是否开启
+     * 默认 true
+     */
   cacheBool: true,
   /**
-   * 缓存&SWR 缓存时间 默认分单位 mm
-   * 默认 -1
-   */
+     * 缓存&SWR 缓存时间 默认分单位 mm
+     * 默认 -1
+     */
   cacheTime: -1,
   /**
-   * 缓存&SWR 缓存单位 mm | ss
-   * 默认 mm
-   */
+     * 缓存&SWR 缓存单位 mm | ss
+     * 默认 mm
+     */
   cacheUnit: 'mm',
   /**
-   * 是否请求错误后重试
-   * 默认 true
-   */
+     * 是否请求错误后重试
+     * 默认 true
+     */
   retryBool: true,
   /**
-   * 请求重试错误次数
-   * 默认 2
-   */
+     * 请求重试错误次数
+     * 默认 2
+     */
   retryCount: 1,
   /**
-   * 重试内时间定位 单位秒
-   * 默认 5
-   */
+     * 重试内时间定位 单位秒
+     * 默认 5
+     */
   retryInterval: 1,
   /**
-   * 分页字段设置
-   */
+     * 分页字段设置
+     */
   pageKey: ['pageKey', 'pageSize'],
   /**
-   * 打印API接口地址是否MD5化
-   */
+     * 打印API接口地址是否MD5化
+     */
   printMD5: false,
   /**
-   * 是否开启打印请求数据
-   */
+     * 是否开启打印请求数据
+     */
   printConsole: true,
 })
 
@@ -77,14 +73,14 @@ const errorMsg = (title: string) => {
 }
 
 const goLogion = () => {
-  userStore.logout()
+  useUserStore().logout()
   // uni.reLaunch({ url: '/pages/login/login' })
   uni.$emit('showLoginPopup', true)
 }
 
 // 请求拦截
 http.interceptors.request.use((config) => {
-  const token = userStore.token || false
+  const token = useUserStore().token || false
   if (token) (config.header as any).Authorization = token
   return config
 })
@@ -99,6 +95,12 @@ http.interceptors.response.use((res) => {
     console.error('401错误', errMsg)
     errorMsg('登录信息已失效')
     goLogion()
+    return false
+  }
+
+  if (statusCode === 403) {
+    console.error('403错误', errMsg)
+    errorMsg(`403错误${errMsg}`)
     return false
   }
 
@@ -125,8 +127,8 @@ http.interceptors.response.use((res) => {
     }
 
     if (msg) errorMsg(msg || '服务器打瞌睡了')
-    console.error('服务报错:', data.msg)
-    return 'false'
+    console.error('服务报错:', msg)
+    return false
   }
 })
 

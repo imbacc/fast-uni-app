@@ -45,6 +45,8 @@
         test api
       </button>
     </view>
+
+    <login-popup />
   </view>
 </template>
 
