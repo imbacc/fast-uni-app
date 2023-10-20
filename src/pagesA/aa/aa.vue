@@ -17,8 +17,8 @@ const router = useRouter()
 
 const option = ref({})
 
-onLoad((option) => {
-  option.value = JSON.stringify(option)
+onLoad((options) => {
+  option.value = JSON.stringify(options)
 })
 </script>
 

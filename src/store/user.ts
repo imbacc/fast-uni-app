@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', {
   },
   getters: {
     hasLogin(state): boolean {
-      return Boolean(state.token && state.userInfo)
+      return Boolean(state.token && state.userInfo?.id)
     },
   },
   actions: {

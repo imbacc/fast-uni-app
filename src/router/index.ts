@@ -22,11 +22,19 @@ export default {
         return
       }
 
+      //  // 没有绑定手机号
+      //  if (!userStore.userInfo?.phone) {
+      //   uni.$emit('showLoginPopup', true)
+      //   uni.showToast({ title: '请绑定手机号!', icon: 'none' })
+      //   next(false)
+      //   return
+      // }
+
       const metaAuth = to.auth as Array<string>
       // 判断是否有权限
       if (metaAuth) {
         if (!authStore.hasAuth(metaAuth)) {
-          console.error('没有权限!', window?.location?.pathname)
+          uni.showModal({ title: '系统提示', content: '没有权限!', showCancel: false })
           next(false)
           return
         }

@@ -10,9 +10,9 @@
 <script lang="ts" setup>
 const test = ref<any>({})
 
-onLoad((option) => {
-  console.log('%c [ option ]-15', 'font-size:14px; background:#41b883; color:#ffffff;', option)
-  test.value = option
+onLoad((options) => {
+  console.log('%c [ option ]-15', 'font-size:14px; background:#41b883; color:#ffffff;', options)
+  test.value = options
 })
 
 onShow(() => {

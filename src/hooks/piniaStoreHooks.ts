@@ -1,6 +1,6 @@
 import type { StateTree, Store } from 'pinia'
 
-import { setCacheLoca, delCache } from 'imba-uni-cache'
+import { setCacheLoca } from 'imba-uni-cache'
 
 export const useHas = (keys: string | Array<string>, state: StateTree) => {
   return Array.isArray(keys) ? keys.some((s) => state[s]) : state[keys]
@@ -21,7 +21,7 @@ export const useClearStore = (_this: Store) => {
   const newState: Record<string, any> = {}
 
   for (const key of stateKeys) {
-    Promise.resolve(() => delCache(key))
+    uni.removeStorage({ key })
     const oldState = newState[key]
     if (typeof oldState === 'string') {
       newState[key] = ''

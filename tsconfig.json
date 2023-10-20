@@ -18,19 +18,22 @@
     "checkJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "noImplicitAny": false,
     "alwaysStrict": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
     "types": [
-      "@dcloudio/types",
-      "@types/lodash-es",
-      "vite/client",
-      "miniprogram-api-typings",
-      "mini-types"
+      "vite/client"
     ],
     "typeRoots": [
       "types",
-      "node_modules/@types"
+      "types/vite-plugin/auto-components.d.ts",
+      "types/vite-plugin/auto-import.d.ts",
+      "node_modules/@types",
+      "node_modules/@types/lodash-es",
+      "node_modules/mini-types",
+      "node_modules/miniprogram-api-typings",
+      "node_modules/@uni-helper/uni-app-types",
+      "node_modules/@uni-helper/uni-ui-types"
     ],
     "paths": {
       "@/*": [

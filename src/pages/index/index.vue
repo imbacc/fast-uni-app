@@ -46,12 +46,14 @@
       </button>
     </view>
 
-    <login-popup />
+    <LoginPopup />
   </view>
 </template>
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'imba-uni-router'
+
+import LoginPopup from '@/components/login-popup/index.vue'
 
 const router = useRouter()
 const route = useRoute()

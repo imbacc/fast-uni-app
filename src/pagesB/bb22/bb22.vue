@@ -23,8 +23,8 @@ const router = useRouter()
 
 const option = ref({})
 
-onLoad((option) => {
-  console.log('%c [ option ]-19', 'font-size:14px; background:#41b883; color:#ffffff;', option)
+onLoad((options) => {
+  console.log('%c [ options ]-19', 'font-size:14px; background:#41b883; color:#ffffff;', options)
 })
 
 onShow(() => {

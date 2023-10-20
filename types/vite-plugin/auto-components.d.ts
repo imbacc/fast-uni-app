@@ -7,9 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    LoginPopup: typeof import('./../../src/components/login-popup/login-popup.vue')['default']
+    LoginPopup: typeof import('./../../src/components/login-popup/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Skeleton: typeof import('./../../src/components/skeleton/skeleton.vue')['default']
+    Skeleton: typeof import('./../../src/components/skeleton/index.vue')['default']
   }
 }

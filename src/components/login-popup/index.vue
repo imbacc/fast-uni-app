@@ -1,12 +1,12 @@
 <template>
-  <uni-popup ref="popupRef" type="bottom">
+  <UniPopup ref="popupRef" type="bottom">
     <view class="bg-[#fff] h-400rpx w100b border-20rpx">
       <view class="p-25rpx relative flex-align flex-between">
         <view class="flex-align">
-          <uni-icons type="home" size="26" color="#666666" />
-          <uni-title type="h3" title="登录" align="center" />
+          <UniTitle type="home" size="26" color="#666666" />
+          <UniTitle type="h3" title="登录" align="center" />
         </view>
-        <uni-icons type="closeempty" size="26" color="#666666" @click="closePopup" />
+        <UniIcons type="closeempty" size="26" color="#666666" @click="closePopup" />
       </view>
 
       <view class="flex-warp">
@@ -39,15 +39,19 @@
         </view>
       </view>
     </view>
-  </uni-popup>
+  </UniPopup>
 </template>
 
 <script setup lang="ts">
 import type { userLogin_PARAMS } from '#/api/user'
 
+import UniIcons from '@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue'
+import UniTitle from '@dcloudio/uni-ui/lib/uni-title/uni-title.vue'
+import UniPopup from '@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue'
+
 import { uniOn } from '@/tools/mitt'
 
-const props = defineProps<{ show: boolean }>()
+const props = defineProps<{ show?: boolean }>()
 
 const userStore = useUserStore()
 const authStore = useAuthStore()
@@ -60,10 +64,6 @@ const atUserPhoneLock = ref(false)
 watch(() => props.show, (newVal) => changePopup(newVal === true))
 
 onMounted(() => {
-  if (!userStore.openid) {
-    initInfo()
-  }
-
   uniOn('showLoginPopup', (bool) => {
     changePopup(bool)
   })
@@ -87,17 +87,11 @@ const closePopup = () => {
   popupRef.value?.close()
 }
 
-const initInfo = () => {
-  userStore.userLogin().then((res) => {
-    atUserInfoLock.value = false
-    uni.hideLoading()
-  })
-}
-
-const getUserinfo = (e) => {
+const getUserinfo = () => {
   if (atUserInfoLock.value) return
 
   if (uni.getUserProfile) {
+    atUserInfoLock.value = true
     uni.getUserProfile({
       desc: '注册用户信息与小程序应用关联',
       lang: 'zh_CN',
@@ -127,7 +121,11 @@ const getUserinfo = (e) => {
           } else {
             if (userStore.openid) {
               uni.showToast({ title: '获取不到openid!', icon: 'none' })
-              initInfo()
+              userStore.userLogin().then((res) => {
+                atUserInfoLock.value = false
+                uni.hideLoading()
+                getUserinfo()
+              })
             }
             uni.showToast({ title: '用户授权失败!', icon: 'none' })
           }
