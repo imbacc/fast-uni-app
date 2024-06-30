@@ -2,17 +2,12 @@
   <view>
     电话胖别 穿新的球鞋上街
 
-    <UniFilePicker
-      v-model="fileList" file-mediatype="image" :limit="3" title="最多选择3张图片" @select="selectUpload"
-      @delete="fileDelete"
-    />
-    </view>
+    <uv-upload :fileList="fileList" name="1" :maxCount="3" @afterRead="selectUpload" @delete="deletePic"></uv-upload>
+  </view>
 </template>
 
 <script setup lang="ts">
 import { formatFileList } from '@/tools/formatFileList'
-
-import UniFilePicker from '@dcloudio/uni-ui/lib/uni-file-picker/uni-file-picker.vue'
 
 const fileList = ref<any[]>([])
 
@@ -65,6 +60,9 @@ const fileDelete = (e) => {
     fileList.value.splice(idx, 1)
   }
   changeCommitment()
+}
+
+const deletePic = (event) => {
 }
 </script>
 

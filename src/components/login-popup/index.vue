@@ -1,18 +1,20 @@
 <template>
-  <UniPopup ref="popupRef" type="bottom">
+  <uv-popup ref="popupRef" mode="bottom">
     <view class="bg-[#fff] h-400rpx w100b border-20rpx">
       <view class="p-25rpx relative flex-align flex-between">
         <view class="flex-align">
-          <UniTitle type="home" size="26" color="#666666" />
-          <UniTitle type="h3" title="登录" align="center" />
+          <uv-text text="登录" size="26" color="#666666"></uv-text>
         </view>
-        <UniIcons type="closeempty" size="26" color="#666666" @click="closePopup" />
+        <uv-icon name="close" size="26" color="#666666" @click="closePopup"></uv-icon>
       </view>
 
-      <view class="flex-warp">
-        <view v-if="!checkBool"
-          class="w-700rpx h-64rpx bg-[#229449] rounded-8rpx text-26rpx font-bold text-[#fff] mt-20rpx flex-center-align">
-          授权登录
+      <view class="flex-column">
+        <view v-if="!checkBool" class="flex-center">
+          <view
+            class="w-700rpx h-64rpx bg-[#229449] rounded-8rpx text-26rpx font-bold text-[#fff] mt-20rpx flex-center-align"
+            @click="getUserinfo">
+            小程序授权登录
+          </view>
         </view>
         <button v-else-if="userStore.userInfo.id && !userStore.userInfo.phone"
           class="w-700rpx h-64rpx bg-[#229449] rounded-8rpx text-26rpx font-bold text-[#fff] mt-20rpx flex-center-align"
@@ -39,15 +41,11 @@
         </view>
       </view>
     </view>
-  </UniPopup>
+  </uv-popup>
 </template>
 
 <script setup lang="ts">
 import type { userLogin_PARAMS } from '#/api/user'
-
-import UniIcons from '@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue'
-import UniTitle from '@dcloudio/uni-ui/lib/uni-title/uni-title.vue'
-import UniPopup from '@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue'
 
 import { uniOn } from '@/tools/mitt'
 
