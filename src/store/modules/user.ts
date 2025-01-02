@@ -5,9 +5,9 @@ import { getCacheLoca } from 'imba-uni-cache'
 export const useUserStore = defineStore('user', {
   state: (): userStore_DTYPE => {
     return {
-      openid: uni.getStorageSync('openid') || '',
-      token: uni.getStorageSync('token') || '',
-      userInfo: getCacheLoca('userInfo') || {},
+      openid: '',
+      token: '',
+      userInfo: {},
     }
   },
   getters: {
@@ -16,11 +16,8 @@ export const useUserStore = defineStore('user', {
     },
   },
   actions: {
-    setStoreCache(params: Partial<key_valueof_CONVERT<userStore_DTYPE>>) {
-      useSetStoreCache(this, params)
-    },
     logout() {
-      useClearStore(this)
+      this.utClearCache()
     },
     userLogin() {
       return new Promise<void>((resolve) => {
@@ -39,11 +36,12 @@ export const useUserStore = defineStore('user', {
               console.log('%c [ res ]-37', 'font-size:14px; background:#41b883; color:#ffffff;', res)
               uni.hideLoading()
               if (res) {
-                this.setStoreCache({ openid: res.openid || '', token: res.token || '' })
+                this.utSetCache({ openid: res.openid || '', token: res.token || '' })
                 setTimeout(() => uni.$emit('homeInit'))
                 if (res.id) {
-                  this.setStoreCache({ userInfo: res })
-                  authStore.pushAuth('user')
+                  this.utSetCache({ userInfo: res })
+                  authStore.pushRouterAuth('user')
+                  authStore.pushMeshAuth('user')
                   if (!res.id || !res.phone) {
                     const cur = getCurrentPages()
                     if (cur[0].route === 'pages/login/login') return

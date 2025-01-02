@@ -9,7 +9,7 @@ export default () => {
     // 自动引入的api从这里找
     imports: ['vue', 'pinia', 'uni-app', { 'imba-uni-router': ['useRouter', 'useRoute'] }],
     // 自动引入的目录
-    dirs: ['src/api/*', 'src/store', 'src/hooks'],
+    dirs: ['src/api/*', 'src/store/modules', 'src/hooks', 'src/utils'],
     // 根据项目情况配置eslintrc，默认是不开启的
     eslintrc: {
       enabled: true, // @default false

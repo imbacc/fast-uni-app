@@ -5,9 +5,19 @@
       <view class="h-300rpx w-300rpx bg-[#000] text-[red] rounded-20rpx text-40rpx m-111rpx p-10rpx flex-center-align">
         测试unocss
       </view>
+
+      <view class="h-100rpx w-200rpx bg-[#000] text-[red] rounded-20rpx text-40rpx m-111rpx p-10rpx flex-center-align">
+        测试diretive
+      </view>
+      <button @click="setAuth">1. 测试pagesA aa授权</button>
       <view class="mt-20rpx">
         <button type="button" @click="goto_aa">
-          跳转pagesA aa
+          需要授权 跳转pagesA aa
+        </button>
+      </view>
+      <view class="mt-20rpx">
+        <button type="button" @click="goto_fff">
+          需要授权 跳转 fff 页面
         </button>
       </view>
       <view class="mt-20rpx">
@@ -15,35 +25,30 @@
           测试hooks aa
         </button>
       </view>
-      <view class="mt-20rpx">
+      <!-- <view class="mt-20rpx">
         <button type="button" @click="goto_hook_stop">
           中断 hook pagesA aa
         </button>
-      </view>
+      </view> -->
       <view class="mt-20rpx">
         <button type="button" @click="goto_aa22">
-          跳转pagesA aa22 [需要授权] before after
+          需要授权 跳转pagesA aa22
         </button>
       </view>
       <view class="mt-20rpx">
         <button type="button" @click="goto_bb">
-          跳转pagesB bb [需要授权] before
+          需要授权 跳转pagesB bb
         </button>
       </view>
       <view class="mt-20rpx">
         <button type="button" @click="goto_bb22">
-          跳转pagesB bb22 [需要授权]
-        </button>
-      </view>
-      <view class="mt-20rpx">
-        <button type="button" @click="action">
-          我是引入调用 Action api
+          跳转pagesB bb22
         </button>
       </view>
 
-      <button class="mt-20rpx" @click="test_action">
+      <!-- <button class="mt-20rpx" @click="test_action">
         test api
-      </button>
+      </button> -->
     </view>
 
     <LoginPopup />
@@ -53,11 +58,12 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'imba-uni-router'
 
-import LoginPopup from '@/components/login-popup/index.vue'
+import LoginPopup from '@/components/LoginPopup/index.vue'
 
 const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const showLoading = ref(true)
 // const list = ref([
@@ -84,6 +90,11 @@ onLoad(() => {
 //   userStore.token = '1111'
 //   userStore.setCache('aaa', 'bbb')
 // }
+
+function setAuth() {
+  authStore.pushRouterAuth(['aa', 'aa'])
+  uni.showToast({ title: '设置授权成功' })
+}
 
 const goto_aa = () => {
   router
@@ -165,16 +176,16 @@ const goto_hook_test = () => {
       next()
     })
 
-  setTimeout(() => {
-    router.push('/pagesA/aa22/aa22')
-    setTimeout(() => {
-      router.push('/pagesB/bb/bb')
-      setTimeout(() => {
-        uni.navigateBack()
-        console.log('%c [ router ]-94', 'font-size:14px; background:#41b883; color:#ffffff;', router)
-      }, 18000)
-    }, 12000)
-  }, 6000)
+  // setTimeout(() => {
+  //   router.push('/pagesA/aa22/aa22')
+  //   setTimeout(() => {
+  //     router.push('/pagesB/bb/bb')
+  //     setTimeout(() => {
+  //       uni.navigateBack()
+  //       console.log('%c [ router ]-94', 'font-size:14px; background:#41b883; color:#ffffff;', router)
+  //     }, 18000)
+  //   }, 12000)
+  // }, 6000)
 }
 
 const goto_hook_stop = () => {
@@ -196,7 +207,7 @@ const goto_bb = () => {
       // if (userStore.userRole.length === 0) console.error('不登录点我肯定报错!')
       next()
     })
-    .push('pagesB/bb', { bb: 'www' })
+    .push('/pagesB/bb/bb', { bb: 'www' })
     .hooks((next) => {
       console.log('登陆了，就执行到这里嘛!')
       next()
@@ -204,43 +215,15 @@ const goto_bb = () => {
 }
 
 const goto_aa22 = () => {
-  router.push('pagesA/aa22', { bb: 'gggg' })
+  router.push('/pagesA/aa22/aa22', { bb: 'gggg' })
 }
 
 const goto_bb22 = () => {
-  router.push('pagesB/bb22', { bb: 'qwer' })
+  router.push('/pagesB/bb22/bb22', { bb: 'qwer' })
 }
 
-const action = () => {
-  console.log('11111111', 11111111)
-  // const test_api_get_test = () => getTest() // 请求test_api.js 里的 get_test
-  // const test_api_get_test222 = () => getTest222({ _id: 222 }) // 请求test_api.js 里的 get_test222
-  // const test_api_get_test333 = () => getTest333({ is: 'param', xx: 'xx' }) // 请求test_api.js 里的 get_test222
-  // const app_111 = () => getTest({ test: '111' })
-  // const app_222 = () => getTest({ _id: 222 })
-  // const app_333 = () => getTest({ _id: 333 })
-  // const app_444 = () => getTest({ test: '444' })
-  // const app_555 = () => getTest({ test: '555' })
-  // const app_666 = () => getTest({ _id: 666, body: '这是POST请求,我是body' })
-  // const user_get_user = () => getTest()
-  // const all_request = () => {
-  //   const all = [
-  //     test_api_get_test,
-  //     test_api_get_test222,
-  //     test_api_get_test333,
-  //     app_111,
-  //     app_222,
-  //     app_333,
-  //     app_444,
-  //     app_555,
-  //     app_666,
-  //     user_get_user,
-  //   ]
-  //   // const pro: Array<Promise<any>> = []
-  //   // all.forEach(request => pro.push(request()))
-  //   // Promise.allSettled(pro).then(res => setTimeout(() => console.log('Promise.allSettled=', res), 10))
-  // }
-  // all_request()
+function goto_fff() {
+  router.push('/pagesB/bb22/bb22', { bb: 'qwer' })
 }
 
 const test_action = () => {

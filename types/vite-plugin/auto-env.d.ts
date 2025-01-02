@@ -1,4 +1,4 @@
-export type ENV_DTYPE = {
+export interface ENV_DTYPE {
   VITE_HOST: string // HOST
   VITE_GLOB_APP_TITLE: string // 标题
   VITE_USE_MOCK: boolean // mock

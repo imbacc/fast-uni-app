@@ -13,7 +13,7 @@ export const useSendCode = (
   console.log('%c [ text ]-13', 'font-size:14px; background:#41b883; color:#ffffff;', text)
 
   const testTel = (phone: string) => {
-    return /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1589]))\d{8}$/.test(
+    return /^(?:(?:\+|00)86)?1(?:3\d|4[5-79]|5[0-35-9]|6[5-7]|7[0-8]|8\d|9[1589])\d{8}$/.test(
       phone,
     )
   }

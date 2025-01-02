@@ -1,7 +1,8 @@
 import type { UserConfig } from 'vite'
 import type { ENV_DTYPE } from './types/vite-plugin/auto-env'
 
-import { resolve } from 'path'
+import process from 'node:process'
+import { resolve } from 'node:path'
 import { loadEnv, defineConfig } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
 
@@ -9,6 +10,8 @@ import { viteMockServe } from 'vite-plugin-mock'
 import envPlugin, { formatEnv } from './vite-plugin/vite-plugin-env'
 // uni-app
 import uni from '@dcloudio/vite-plugin-uni'
+// tsx写法
+import vueTsx from '@vitejs/plugin-vue-jsx'
 // Unocss
 import Unocss from 'unocss/vite'
 // auto import api
@@ -18,7 +21,7 @@ import componentsPlugin from './vite-plugin/vite-plugin-auto-components'
 // html inject
 import htmlInjectPlugin from './vite-plugin/vite-plugin-htmlInject'
 // 使用gzip或brotli来压缩资源
-import compressionPlugin from 'vite-plugin-compression'
+// import compressionPlugin from 'vite-plugin-compression'
 
 import packageJson from './package.json'
 import dayjs from 'dayjs'
@@ -88,8 +91,8 @@ export default defineConfig(({ command, mode }) => {
   console.log('command=', command)
   console.log('mode=', mode)
 
-  config.plugins?.push(htmlInjectPlugin(VITE_GLOB_APP_TITLE))
   config.plugins?.push(envPlugin(VITE_ENV))
+  config.plugins?.push(htmlInjectPlugin(VITE_GLOB_APP_TITLE))
 
   if (command === 'build' && mode === 'production') {
     // 编译环境配置
@@ -103,7 +106,10 @@ export default defineConfig(({ command, mode }) => {
   } else {
     // 开发环境配置
     if (VITE_USE_MOCK) {
-      config.plugins?.push(viteMockServe({ mockPath: 'mock', supportTs: false }))
+      const mockPlugins = viteMockServe({ mockPath: 'mock' })
+      if (!config.plugins?.includes(mockPlugins)) {
+        config.plugins?.push(mockPlugins)
+      }
     }
   }
   return config

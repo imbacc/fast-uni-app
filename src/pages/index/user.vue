@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatFileList } from '@/tools/formatFileList'
+import { formatFileList } from '@/utils/formatFileList'
 
 const fileList = ref<any[]>([])
 

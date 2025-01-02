@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import type { userLogin_PARAMS } from '#/api/user'
 
-import { uniOn } from '@/tools/mitt'
+import { uniOn } from '@/utils/mitt'
 
 const props = defineProps<{ show?: boolean }>()
 
@@ -62,9 +62,20 @@ const atUserPhoneLock = ref(false)
 watch(() => props.show, (newVal) => changePopup(newVal === true))
 
 onMounted(() => {
+  // #ifdef H5
+  userStore.userInfo = { id: 1, name: 'teest' }
+  userStore.token = 'token'
+  if (!authStore.hasMeshAuth(['user'])) {
+    authStore.pushMeshAuth('user')
+    authStore.pushRouterAuth('user')
+  }
+  // #endif
+
+  // #ifdef MP
   uniOn('showLoginPopup', (bool) => {
     changePopup(bool)
   })
+  // #endif
 })
 
 let t
@@ -110,7 +121,7 @@ const getUserinfo = () => {
           if (res) {
             userStore.userInfo = res
             userStore.token = res.token
-            authStore.pushAuth('user')
+            authStore.pushMeshAuth('user')
             atUserInfoLock.value = false
             if (userStore.userInfo.phone && userStore.userInfo.phone.length >= 11) {
               return

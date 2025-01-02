@@ -1,7 +1,7 @@
 <template>
   <view class="login_index">
     <view class="is_lab" @click="loginSubmit">
-      我是登陆界面 登陆吧
+      我是登陆页面 登陆吧
     </view>
 
     <view class="is_lab" @tap="goBack">

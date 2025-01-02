@@ -1,10 +1,16 @@
 import { createRouter } from 'imba-uni-router'
 
-import pages from '@/pages.json'
+import intercept from './intercept'
+import convert from './convert'
 
-const router = createRouter(pages as any)
-
-export {
-  router,
-  pages,
+const createRouterMode = () => {
+  return {
+    install: () => {
+      const router = createRouter(convert())
+      intercept(router)
+      return router
+    },
+  }
 }
+
+export { createRouterMode }
