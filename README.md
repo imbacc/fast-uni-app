@@ -18,11 +18,6 @@ pnpm i -g imba-uni
 - **vite启动，vue3书写** - 各平台快速编译，vue3 ts书写
 
 
-# 使用
-```
-imba create <name> [-f|--force]
-```
-
 ```
  ├── node_modules
  ├── src
