@@ -63,8 +63,8 @@ importers:
         specifier: ^1.1.16
         version: 1.1.16
       imba-pinia-plugin:
-        specifier: ^1.0.5
-        version: 1.0.5(imba-cache@1.1.16)(pinia@2.1.7(typescript@5.1.6)(vue@3.4.31(typescript@5.1.6)))
+        specifier: ^1.0.10
+        version: 1.0.10(imba-cache@1.1.16)(pinia@2.1.7(typescript@5.1.6)(vue@3.4.31(typescript@5.1.6)))
       imba-uni-cache:
         specifier: ^1.0.7
         version: 1.0.7(imba-cache@1.1.16)
@@ -3906,8 +3906,8 @@ packages:
   imba-md5@1.0.0:
     resolution: {integrity: sha512-5PwK4bhU86f6/YxMgvfuqQkAOO6bBr8Thow5OQxbAGHUOoxwzQ8/MgyTw47F5+o4YJXRMdjQORINAWZBfcooMQ==}
 
-  imba-pinia-plugin@1.0.5:
-    resolution: {integrity: sha512-JOneEA0dkR8hKw+XkOCkvXvyUF2StuzG/Bxil94VIb90QydIfulQWGEdSLFPiiOdSe72VxsSbn0V2mQgAtfEZQ==}
+  imba-pinia-plugin@1.0.10:
+    resolution: {integrity: sha512-0xFhUXAP+yzbgiYz2LSeaEMKRWrjF2fLErb/b3H2Bjbr2MAgYs8lykkJnn/KmpinB/C1AF/e0jfNdZvcu+ZpOA==}
     peerDependencies:
       imba-cache: '>=1.1.0'
       pinia: '>=2.3.0'
@@ -11175,7 +11175,7 @@ snapshots:
 
   imba-md5@1.0.0: {}
 
-  imba-pinia-plugin@1.0.5(imba-cache@1.1.16)(pinia@2.1.7(typescript@5.1.6)(vue@3.4.31(typescript@5.1.6))):
+  imba-pinia-plugin@1.0.10(imba-cache@1.1.16)(pinia@2.1.7(typescript@5.1.6)(vue@3.4.31(typescript@5.1.6))):
     dependencies:
       imba-cache: 1.1.16
       pinia: 2.1.7(typescript@5.1.6)(vue@3.4.31(typescript@5.1.6))

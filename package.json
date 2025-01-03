@@ -60,7 +60,7 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-4040320241223001",
     "dayjs": "^1.11.7",
     "imba-cache": "^1.1.16",
-    "imba-pinia-plugin": "^1.0.5",
+    "imba-pinia-plugin": "^1.0.10",
     "imba-uni-cache": "^1.0.7",
     "imba-uni-request": "^1.1.15",
     "imba-uni-router": "^1.0.11",
