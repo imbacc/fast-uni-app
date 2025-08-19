@@ -8,12 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     LoginPopup: typeof import('./../../src/components/LoginPopup/index.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
     Skeleton: typeof import('./../../src/components/Skeleton/index.vue')['default']
-    WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
-    WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']
-    WdText: typeof import('wot-design-uni/components/wd-text/wd-text.vue')['default']
     WdUpload: typeof import('wot-design-uni/components/wd-upload/wd-upload.vue')['default']
   }
 }

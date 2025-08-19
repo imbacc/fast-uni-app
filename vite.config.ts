@@ -48,24 +48,24 @@ const config: UserConfig = {
     cssCodeSplit: true,
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: true,
+    sourcemap: false,
     chunkSizeWarningLimit: 500,
     assetsInlineLimit: 4096,
     rollupOptions: {
-      output: {
-        // chunks 做操作 注释将减少分割
-        manualChunks: {
-          'vue': ['vue', 'vue-i18n'],
-          'imba-libs': ['imba-uni-cache', 'imba-uni-request', 'imba-uni-router'],
-          'lodash-es': ['lodash-es'],
-        },
-      },
+      // output: {
+      //   // chunks 做操作 注释将减少分割
+      //   manualChunks: {
+      //     // 'vue': ['vue', 'vue-i18n'],
+      //     'imba-libs': ['imba-uni-cache', 'imba-uni-request', 'imba-uni-router'],
+      //     'lodash-es': ['lodash-es'],
+      //   },
+      // },
     },
   },
 
   // 部门优化选项
   optimizeDeps: {
-    exclude: ['lodash-es'],
+    // exclude: ['lodash-es'],
   },
 
   define: {
@@ -119,6 +119,10 @@ export default defineConfig(async ({ command, mode }) => {
       // }))
     }
   } else {
+    if (config.build) {
+      config.build.sourcemap = true
+    }
+
     // 开发环境配置
     if (VITE_USE_MOCK) {
       const mockPlugins = viteMockServe({ mockPath: 'mock' })

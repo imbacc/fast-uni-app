@@ -91,7 +91,7 @@ onLoad(() => {
 // }
 
 function setAuth() {
-  authStore.pushRouterAuth(['aa', 'aa'])
+  authStore.pushRouterAuth(['aa', 'aa', 'user'])
   uni.showToast({ title: '设置授权成功' })
   userStore.utSetCache({ openid: 'openid', token: 'token', userInfo: { id: 123, nickname: 'nickname', phone: '133****1234' } })
 }
