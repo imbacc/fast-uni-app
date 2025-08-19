@@ -1,11 +1,11 @@
 <template>
-  <uv-popup ref="popupRef" mode="bottom">
+  <wd-popup v-model="popupShow" @close="closePopup">
     <view class="bg-[#fff] h-400rpx w100b border-20rpx">
       <view class="p-25rpx relative flex-align flex-between">
         <view class="flex-align">
-          <uv-text text="登录" size="26" color="#666666"></uv-text>
+          <wd-text text="登录" size="26" color="#666666"></wd-text>
         </view>
-        <uv-icon name="close" size="26" color="#666666" @click="closePopup"></uv-icon>
+        <wd-icon name="close" size="26" color="#666666" @click="closePopup"></wd-icon>
       </view>
 
       <view class="flex-column">
@@ -41,7 +41,7 @@
         </view>
       </view>
     </view>
-  </uv-popup>
+  </wd-popup>
 </template>
 
 <script setup lang="ts">
@@ -54,7 +54,7 @@ const props = defineProps<{ show?: boolean }>()
 const userStore = useUserStore()
 const authStore = useAuthStore()
 
-const popupRef = ref()
+const popupShow = ref(false)
 const checkBool = ref(true)
 const atUserInfoLock = ref(false)
 const atUserPhoneLock = ref(false)
@@ -85,7 +85,7 @@ const changePopup = (bool) => {
     clearTimeout(t)
     if (bool) {
       checkBool.value = false
-      popupRef.value?.open()
+      popupShow.value = true
     } else {
       closePopup()
     }
@@ -93,7 +93,7 @@ const changePopup = (bool) => {
 }
 
 const closePopup = () => {
-  popupRef.value?.close()
+  popupShow.value = false
 }
 
 const getUserinfo = () => {

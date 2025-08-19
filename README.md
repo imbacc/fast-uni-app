@@ -3,9 +3,12 @@
 
 ## ✨ Features
 
-- **api自动导入** - 包库api自动导入行为 unplugin-auto-import
-- **组件自动导入** - 在使用Template 时自动导入组件，<XXX></XXX>
-- **专属小库** - imba-uni-cache：https://www.npmjs.com/package/imba-uni-cache imba-uni-request：https://www.npmjs.com/package/imba-uni-request imba-uni-router：https://www.npmjs.com/package/imba-uni-router
+- **api自动导入**
+- **组件自动导入** 
+- **专属小库**
+imba-uni-cache：https://www.npmjs.com/package/imba-uni-cache 
+imba-uni-request：https://www.npmjs.com/package/imba-uni-request 
+imba-uni-router：https://www.npmjs.com/package/imba-uni-router
 - **vite启动，vue3书写** - 各平台快速编译，vue3 ts书写
 
 

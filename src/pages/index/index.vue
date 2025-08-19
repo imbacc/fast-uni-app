@@ -1,47 +1,44 @@
 <template>
-  <view class="index_content">
+  <view class="index_content pt-safe">
     <skeleton v-if="showLoading" />
-    <view v-else class="index_body">
+    <view v-else class="index_body p-safe">
       <view class="h-300rpx w-300rpx bg-[#000] text-[red] rounded-20rpx text-40rpx m-111rpx p-10rpx flex-center-align">
         测试unocss
       </view>
 
-      <view class="h-100rpx w-200rpx bg-[#000] text-[red] rounded-20rpx text-40rpx m-111rpx p-10rpx flex-center-align">
-        测试diretive
-      </view>
       <button @click="setAuth">1. 测试pagesA aa授权</button>
       <view class="mt-20rpx">
-        <button type="button" @click="goto_aa">
+        <button type="primary" @click="goto_aa">
           需要授权 跳转pagesA aa
         </button>
       </view>
       <view class="mt-20rpx">
-        <button type="button" @click="goto_fff">
+        <button type="primary" @click="goto_fff">
           需要授权 跳转 fff 页面
         </button>
       </view>
       <view class="mt-20rpx">
-        <button type="button" @click="goto_hook_test">
+        <button type="primary" @click="goto_hook_test">
           测试hooks aa
         </button>
       </view>
       <!-- <view class="mt-20rpx">
-        <button type="button" @click="goto_hook_stop">
+        <button type="primary" @click="goto_hook_stop">
           中断 hook pagesA aa
         </button>
       </view> -->
       <view class="mt-20rpx">
-        <button type="button" @click="goto_aa22">
+        <button type="primary" @click="goto_aa22">
           需要授权 跳转pagesA aa22
         </button>
       </view>
       <view class="mt-20rpx">
-        <button type="button" @click="goto_bb">
+        <button type="primary" @click="goto_bb">
           需要授权 跳转pagesB bb
         </button>
       </view>
       <view class="mt-20rpx">
-        <button type="button" @click="goto_bb22">
+        <button type="primary" @click="goto_bb22">
           跳转pagesB bb22
         </button>
       </view>
@@ -51,14 +48,14 @@
       </button> -->
     </view>
 
-    <LoginPopup />
+    <!-- <LoginPopup /> -->
+
+    <view class="fixed bottom-0 pb-safe"></view>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'imba-uni-router'
-
-import LoginPopup from '@/components/LoginPopup/index.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -82,7 +79,9 @@ const showLoading = ref(true)
 // ])
 
 onLoad(() => {
-  showLoading.value = false
+  setTimeout(() => {
+    showLoading.value = false
+  }, 500)
 })
 
 // store用法
@@ -94,6 +93,7 @@ onLoad(() => {
 function setAuth() {
   authStore.pushRouterAuth(['aa', 'aa'])
   uni.showToast({ title: '设置授权成功' })
+  userStore.utSetCache({ openid: 'openid', token: 'token', userInfo: { id: 123, nickname: 'nickname', phone: '133****1234' } })
 }
 
 const goto_aa = () => {

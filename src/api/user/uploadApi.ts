@@ -13,7 +13,7 @@ export const uploadApi = (filePath: string) => {
           try {
             data = JSON.parse(res.data)
           } catch (error) {
-
+            console.error(error)
           }
           if (data.code === 500 && data.msg) {
             uni.showToast({ title: '上传失败!', icon: 'error' })

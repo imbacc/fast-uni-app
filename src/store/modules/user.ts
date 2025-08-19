@@ -56,7 +56,7 @@ export const useUserStore = defineStore('user', {
           },
           fail: () => {
             uni.hideLoading()
-            uni.showToast({ title: 'Code授权失败!', icon: 'none' })
+            // uni.showToast({ title: 'Code授权失败!', icon: 'none' })
             resolve()
           },
         })

@@ -1,4 +1,6 @@
-export default (router) => {
+import type { createRouter } from 'imba-uni-router'
+
+export default (router: ReturnType<typeof createRouter>) => {
   router.beforeEach((to: any, from, next) => {
     console.log('beforeEach1111111')
 
@@ -42,7 +44,7 @@ export default (router) => {
     next()
   })
 
-  router.onError((err: any) => {
+  router.onError((err) => {
     console.log('%c [ router error ]', 'font-size:14px; background:red; color:#ffffff;', err)
   })
 }

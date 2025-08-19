@@ -1,28 +1,35 @@
-class Flow {
-  private effects: Array<Function> = []
+type Task = Function | Flow | Task[]
 
-  constructor(effects: Array<Function>) {
+class Flow {
+  private effects: Task[] = []
+
+  constructor(effects: Task[] = []) {
     this.effects = effects
   }
 
-  push(fun: Function) {
-    this.effects.push(fun)
+  push(task: Task) {
+    this.effects.push(task)
   }
 
-  async run(cb?: Function) {
-    const tasklist = this.effects.flat()
-    for (const task of tasklist) {
-      if (typeof task === 'function') {
-        await task()
-      } else if ((task as unknown) instanceof Flow) {
-        await (task as any).run()
-      } else if (Array.isArray(task)) {
-        await new Flow(task).run()
+  async run(cb?: () => void): Promise<void> {
+    try {
+      const tasklist = this.effects.flat()
+      for (const task of tasklist) {
+        if (typeof task === 'function') {
+          await task()
+        } else if (task instanceof Flow) {
+          await task.run()
+        } else if (Array.isArray(task)) {
+          await new Flow(task).run()
+        }
       }
+      cb?.()
+    } catch (error) {
+      console.error('Flow execution error:', error)
+      throw error
     }
-
-    cb?.()
   }
 }
 
-export default (effects = []) => new Flow(effects)
+export { Flow }
+export default (effects: Task[] = []) => new Flow(effects)

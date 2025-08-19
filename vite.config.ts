@@ -11,9 +11,9 @@ import envPlugin, { formatEnv } from './vite-plugin/vite-plugin-env'
 // uni-app
 import uni from '@dcloudio/vite-plugin-uni'
 // tsx写法
-import vueTsx from '@vitejs/plugin-vue-jsx'
+// import vueTsx from '@vitejs/plugin-vue-jsx'
 // Unocss
-import Unocss from 'unocss/vite'
+// import Unocss from 'unocss/vite'
 // auto import api
 import autoImportPlugin from './vite-plugin/vite-plugin-auto-import'
 // auto components
@@ -23,12 +23,19 @@ import htmlInjectPlugin from './vite-plugin/vite-plugin-htmlInject'
 // 使用gzip或brotli来压缩资源
 // import compressionPlugin from 'vite-plugin-compression'
 
+// 基于文件名 (*.<h5|mp-weixin|app>.*) 的按平台编译插件 index.h5.vue -> h5平台
+import platform from '@uni-helper/vite-plugin-uni-platform'
+
 import packageJson from './package.json'
 import dayjs from 'dayjs'
 
 const { dependencies, name, version } = packageJson
 const __APP_INFO__ = {
-  package: { dependencies, name, version },
+  package: {
+    name,
+    version,
+    // dependencies,
+  },
   lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
 }
 
@@ -36,7 +43,7 @@ const __APP_INFO__ = {
 const config: UserConfig = {
   // 编译
   build: {
-    minify: 'esbuild',
+    // minify: 'esbuild',
     target: 'modules',
     cssCodeSplit: true,
     outDir: 'dist',
@@ -72,27 +79,35 @@ const config: UserConfig = {
     },
   },
 
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        silenceDeprecations: ['legacy-js-api'],
+      },
+    },
+  },
+
   // 插件
   plugins: [
+    platform(),
     uni(),
     autoImportPlugin(),
     componentsPlugin(),
     componentsPlugin(),
-    Unocss({
-      // 微信等浏览器白屏问题设为true
-      // hmrTopLevelAwait: false,
-    }),
   ],
 }
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(async ({ command, mode }) => {
+  const Unocss = (await import('unocss/vite')).default
   const VITE_ENV = formatEnv(loadEnv(mode, process.cwd())) as ENV_DTYPE
-  const { VITE_GLOB_APP_TITLE, VITE_USE_MOCK, VITE_BUILD_GZIP } = VITE_ENV
+  const { VITE_APP_TITLE, VITE_USE_MOCK, VITE_BUILD_GZIP } = VITE_ENV
   console.log('command=', command)
   console.log('mode=', mode)
 
+  config.plugins?.push(Unocss())
   config.plugins?.push(envPlugin(VITE_ENV))
-  config.plugins?.push(htmlInjectPlugin(VITE_GLOB_APP_TITLE))
+  config.plugins?.push(htmlInjectPlugin(VITE_APP_TITLE))
 
   if (command === 'build' && mode === 'production') {
     // 编译环境配置

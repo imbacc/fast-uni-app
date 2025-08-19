@@ -5,61 +5,61 @@ const baseUrl = import.meta.env.VITE_GLOB_API_URL
 
 const http = new ImbaUniRequest({
   /**
-     *  `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
-     *  它可以通过设置一个 `baseURL` 便于为实例的方法传递相对 URL
-     */
+   *  `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
+   *  它可以通过设置一个 `baseURL` 便于为实例的方法传递相对 URL
+   */
   baseURL: baseUrl,
   /**
-     * 超时时间，单位毫秒
-     * 默认 30s = 1000 * 30
-     */
+   * 超时时间，单位毫秒
+   * 默认 30s = 1000 * 30
+   */
   timeout: 1000 * 30,
   /**
-     * 设置请求的 header，header 中不能设置 Referer。
-     * 平台差异说明：App、H5端会自动带上cookie，且H5端不可手动修改
-     */
+   * 设置请求的 header，header 中不能设置 Referer。
+   * 平台差异说明：App、H5端会自动带上cookie，且H5端不可手动修改
+   */
   headers: {},
   /**
-     * 缓存&SWR 是否开启
-     * 默认 true
-     */
+   * 缓存是否开启
+   * 默认 true
+   */
   cacheBool: true,
   /**
-     * 缓存&SWR 缓存时间 默认分单位 mm
-     * 默认 -1
-     */
+   * 缓存时间 默认分单位 mm
+   * 默认 -1
+   */
   cacheTime: -1,
   /**
-     * 缓存&SWR 缓存单位 mm | ss
-     * 默认 mm
-     */
+   * 缓存单位 mm | ss
+   * 默认 mm
+   */
   cacheUnit: 'mm',
   /**
-     * 是否请求错误后重试
-     * 默认 true
-     */
+   * 是否请求错误后重试
+   * 默认 true
+   */
   retryBool: true,
   /**
-     * 请求重试错误次数
-     * 默认 2
-     */
+   * 请求重试错误次数
+   * 默认 2
+   */
   retryCount: 1,
   /**
-     * 重试内时间定位 单位秒
-     * 默认 5
-     */
+   * 重试内时间定位 单位秒
+   * 默认 5
+   */
   retryInterval: 1,
   /**
-     * 分页字段设置
-     */
+   * 分页字段设置
+   */
   pageKey: ['pageKey', 'pageSize'],
   /**
-     * 打印API接口地址是否MD5化
-     */
+   * 打印API接口地址是否MD5化
+   */
   printMD5: false,
   /**
-     * 是否开启打印请求数据
-     */
+   * 是否开启打印请求数据
+   */
   printConsole: true,
 })
 

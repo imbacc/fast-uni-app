@@ -7,53 +7,66 @@ export const useSendCode = (
   inject?: Inject_DTYPE,
   options?: Partial<RequestConfig_DTYPE>,
 ) => {
-  let time = 0
-  let lock = false
-  let text = '获取验证码'
-  console.log('%c [ text ]-13', 'font-size:14px; background:#41b883; color:#ffffff;', text)
+  const time = ref(0)
+  const lock = ref(false)
+  const text = ref('获取验证码')
 
   const testTel = (phone: string) => {
-    return /^(?:(?:\+|00)86)?1(?:3\d|4[5-79]|5[0-35-9]|6[5-7]|7[0-8]|8\d|9[1589])\d{8}$/.test(
-      phone,
-    )
+    return /^(?:(?:\+|00)86)?1(?:3\d|4[5-79]|5[0-35-9]|6[5-7]|7[0-8]|8\d|9[1589])\d{8}$/.test(phone)
   }
 
-  const refushCode = () => {
-    const t = setInterval(() => {
-      if (time <= 0) {
-        clearInterval(t)
-        lock = false
-        text = '重新获取'
+  let t
+  const refreshCode = () => {
+    clearTimer()
+    t = setInterval(() => {
+      if (time.value <= 0) {
+        lock.value = false
+        text.value = '重新获取'
       } else {
-        time = time -= 1
-        text = `已发送(${time}s)`
+        time.value = time.value -= 1
+        text.value = `已发送(${time.value}s)`
       }
     }, 1000)
   }
 
+  const clearTimer = () => {
+    if (t) {
+      clearInterval(t)
+      t = null
+    }
+  }
+
   const getCode = (phone: string) => {
-    if (lock) return
+    if (lock.value) return
     if (!testTel(phone)) {
       console.error('不是有效的手机号码!')
       return
     }
 
-    text = '正在发送...'
-    lock = true
+    text.value = '正在发送...'
+    lock.value = true
     http.request(apiUrl, inject, options).then((res) => {
       if (res) {
-        time = 120
-        lock = true
-        refushCode()
+        time.value = 120
+        lock.value = true
+        refreshCode()
       } else {
-        lock = false
-        text = '重新发送'
+        lock.value = false
+        text.value = '重新发送'
       }
+    }).catch((error) => {
+      lock.value = false
+      text.value = '重新发送'
+      console.error('验证码发送失败:', error)
     })
   }
 
   return {
+    text,
+    lock,
+    time,
     getCode,
-    refushCode,
+    refreshCode,
+    clearTimer,
   }
 }

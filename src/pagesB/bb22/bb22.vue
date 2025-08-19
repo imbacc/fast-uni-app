@@ -32,14 +32,14 @@ onShow(() => {
 })
 
 const test_redirectTo = () => {
-  router.replace('pagesA/aa22', { test: 'test_redirectTo' })
+  router.replace('/pagesA/aa22/aa22', { test: 'test_redirectTo' })
 }
 const test_reLaunch = () => {
-  router.replaceAll('pagesA/aa22', { test: 'test_reLaunch' })
+  router.replaceAll('/pagesA/aa22/aa22', { test: 'test_reLaunch' })
 }
 
 const test_switchTab = () => {
-  router.swicthTab('user', { test: 'test_switchTab' })
+  router.swicthTab('/pages/index/user', { test: 'test_switchTab' })
 }
 </script>
 

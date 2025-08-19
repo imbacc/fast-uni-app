@@ -2,7 +2,7 @@
   <view>
     电话胖别 穿新的球鞋上街
 
-    <uv-upload :fileList="fileList" name="1" :maxCount="3" @afterRead="selectUpload" @delete="deletePic"></uv-upload>
+    <wd-upload :fileList="fileList" name="1" @remove="deletePic"></wd-upload>
   </view>
 </template>
 

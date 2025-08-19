@@ -1,2 +1,2 @@
-import plugin from 'imba-pinia-plugin'
+import plugin from 'imba-uni-pinia-plugin'
 export default plugin

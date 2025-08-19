@@ -2,10 +2,7 @@
   "easycom": {
     // 导入
     // "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
-    "autoscan": true,
-    "custom": {
-      "^uv-(.*)": "@climblee/uv-ui/components/uv-$1/uv-$1.vue"
-    }
+    "autoscan": true
   },
   "pages": [
     // pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
@@ -77,7 +74,9 @@
           }
         },
         {
-          "auth": ["user"],
+          "auth": [
+            "user"
+          ],
           "path": "aa22/aa22",
           "style": {
             "navigationBarBackgroundColor": "#F5612A",
@@ -91,7 +90,9 @@
       "root": "pagesB",
       "pages": [
         {
-          "auth": ["user"],
+          "auth": [
+            "user"
+          ],
           "path": "bb/bb",
           "style": {
             "navigationBarBackgroundColor": "#F5612A",
@@ -100,7 +101,9 @@
           }
         },
         {
-          "auth": ["user"],
+          "auth": [
+            "user"
+          ],
           "path": "bb22/bb22",
           "style": {
             "navigationBarBackgroundColor": "#F5612A",

@@ -5,10 +5,8 @@
     "moduleResolution": "node",
     "lib": [
       "esnext",
-      "es6",
       "dom",
-      "dom.iterable",
-      "scripthost"
+      "dom.iterable"
     ],
     "useDefineForClassFields": true,
     "strict": true,
@@ -22,18 +20,10 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "types": [
-      "vite/client"
-    ],
-    "typeRoots": [
-      "types",
-      "types/vite-plugin/auto-components.d.ts",
-      "types/vite-plugin/auto-import.d.ts",
-      "node_modules/@types",
-      "node_modules/@types/lodash-es",
-      "node_modules/mini-types",
-      "node_modules/miniprogram-api-typings",
-      "node_modules/@uni-helper/uni-app-types",
-      "node_modules/@uni-helper/uni-ui-types"
+      "@dcloudio/uni-app",
+      "@dcloudio/types",
+      "@uni-helper/uni-types",
+      "wot-design-uni/global",
     ],
     "paths": {
       "@/*": [
@@ -43,6 +33,11 @@
         "./types/*"
       ]
     }
+  },
+  "vueCompilerOptions": {
+    "plugins": [
+      "@uni-helper/uni-types/volar-plugin"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -54,6 +49,7 @@
   ],
   "exclude": [
     "node_modules",
+    "unpackage",
     "test",
     "dist",
     ".history"

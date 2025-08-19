@@ -123,6 +123,11 @@
     "uniOnce": true,
     "useAuthStore": true,
     "useUserStore": true,
-    "useVersionStore": true
+    "useVersionStore": true,
+    "Flow": true,
+    "CommonUtil": true,
+    "useMessage": true,
+    "useNotify": true,
+    "useToast": true
   }
 }
